@@ -1,6 +1,3 @@
-/* File: wordmachine.c */
-/* Definisi Word Machine: Model Akuisisi Versi I */
-
 // C libraries
 #include <stdio.h>
 

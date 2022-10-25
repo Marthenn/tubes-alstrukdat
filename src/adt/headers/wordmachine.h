@@ -10,6 +10,7 @@
 
 #define NMax 50
 #define BLANK '\n'
+#define FILE_BLANK ' '
 
 typedef struct
 {
@@ -18,8 +19,8 @@ typedef struct
 } Word;
 
 /* State Mesin Word */
-extern boolean EndWord;
-extern Word currentWord;
+extern boolean EndWord, EndFileWord;
+extern Word currentWord, currentFileWord;
 
 void IgnoreBlanks();
 /* Mengabaikan satu atau beberapa BLANK
@@ -46,5 +47,34 @@ void CopyWord();
           currentChar = BLANK atau currentChar = MARK;
           currentChar adalah karakter sesudah karakter terakhir yang diakuisisi.
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
+
+void IgnoreFileBlanks();
+/* Mengabaikan satu atau beberapa BLANK dalam file txt
+   I.S. : currentFileChar sembarang
+   F.S. : currentFileChar ≠ BLANK atau currentFileChar = MARK */
+
+void STARTFILEWORD(char *path);
+/* I.S. : currentFileChar sembarang
+   F.S. : EndFileWord = true, dan currentFileChar = MARK;
+          atau EndFileWord = false, currentWord adalah kata yang sudah diakuisisi,
+          currentFileChar karakter pertama sesudah karakter terakhir kata */
+
+void ADVFILEWORD();
+/* I.S. : currentFileChar adalah karakter pertama kata yang akan diakuisisi
+   F.S. : currentWord adalah kata terakhir yang sudah diakuisisi,
+          currentFileChar adalah karakter pertama dari kata berikutnya, mungkin MARK
+          Jika currentFileChar = MARK, EndFileWord = true.
+   Proses : Akuisisi kata menggunakan procedure SalinWord */
+
+void CopyFileWord();
+/* Mengakuisisi kata, menyimpan dalam currentWord
+   I.S. : currentFileChar adalah karakter pertama dari kata
+   F.S. : currentWord berisi kata yang sudah diakuisisi;
+          currentFileChar = BLANK atau currentFileChar = MARK;
+          currentFileChar adalah karakter sesudah karakter terakhir yang diakuisisi.
+          Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
+
+void DisplayWord(Word kata);
+// menampilkan word
 
 #endif

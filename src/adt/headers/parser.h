@@ -1,5 +1,4 @@
-/* File: wordmachine.h */
-/* Definisi Word Machine: Model Akuisisi Versi I */
+/* File: parser.h */
 
 #ifndef __PARSER_H__
 #define __PARSER_H__
@@ -34,6 +33,4 @@ Word NewWord(char* s, int length);
 boolean IsPrefixEqual(Word kata);
 // mengembalikan true jika kata sama dengan currentWord (tidak case-sensitive)
 
-void DisplayWord(Word kata);
-// menampilkan word
 #endif

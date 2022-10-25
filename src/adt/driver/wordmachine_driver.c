@@ -1,6 +1,3 @@
-/* File: wordmachine.c */
-/* Definisi Word Machine: Model Akuisisi Versi I */
-
 // C libraries
 #include <stdio.h>
 
@@ -21,19 +18,32 @@ int  main(){
 
 	STARTWORD();
 
-	while (EndWord == false) {
+	i = 0;
+
+	// test from input
+	while (EndWord == false && i < 10) {
 
         printf("input : ");
         
-		for (i=0;i<currentWord.Length;i++) {
-
-			printf("%c", currentWord.TabWord[i]);
-
-		}
+		DisplayWord(currentWord);
 
 		printf("\n");
+
 		ADVWORD();
+
+		i++;
 	}
 
+	//test from file
+
+	STARTFILEWORD("../../config/food_config.txt");
+
+    while (EndFileWord == false)
+    {
+        DisplayWord(currentFileWord);
+        printf("\n");
+        ADVFILEWORD();
+    }
+	
 	return 0;
 }

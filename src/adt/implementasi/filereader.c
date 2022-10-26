@@ -21,9 +21,17 @@ void ReadFoodConfig()
 
     while (EndFileWord == false)
     {
+
         DisplayWord(currentFileWord);
-        printf("\n");
+
+        if (currentFileChar == '\n')
+        {
+            printf("\n");
+            ADV_FILE();
+        }
+
         ADVFILEWORD();
+        printf(" ");
     }
     
 }

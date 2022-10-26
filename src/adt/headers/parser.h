@@ -27,10 +27,17 @@
 #define CATALOG_WORD NewWord("CATALOG", 7)
 #define COOKBOOK_WORD NewWord("COOKBOOK", 8)
 
+#define NUM_CHAR_MIN '0'
+#define NUM_CHAR_MAX '9'
+#define NUM_UNDEF -999
+#define MAX_DIGIT 9
+
 Word NewWord(char* s, int length);
 // mengembalikan data Word dengan panjang length dan karakter-karakter beserta urutannya sama dengan pada array s
 
-boolean IsPrefixEqual(Word kata);
+boolean IsWordEqual(Word kata);
 // mengembalikan true jika kata sama dengan currentWord (tidak case-sensitive)
 
+int WordToInt(Word kata);
+// mengembalikan representasi integer dari kata atau mengembalikan NUM_UNDEF jika input bukan angka atau banyak digit lebih besar dari 9
 #endif

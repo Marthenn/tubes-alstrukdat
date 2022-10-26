@@ -25,5 +25,11 @@ int main(){
     printf("4: ");printf("%d",isChild(t, newElType(0, (union data){.i=4})));printf("\n");
     printf("5: ");printf("%d",isChild(t, newElType(0, (union data){.i=5})));printf("\n");
     printf("6: ");printf("%d",isChild(t, newElType(0, (union data){.i=6})));printf("\n");
+    printf("--------\n");
+    printf("CHECK PART OF\n");
+    printf("1: %d\n",isPartOf(t, newElType(0, (union data){.i=1})));
+    printf("2: %d\n",isPartOf(t, newElType(0, (union data){.i=2})));
+    printf("5: %d\n",isPartOf(t, newElType(0, (union data){.i=5})));
+    printf("7: %d\n",isPartOf(t, newElType(0, (union data){.i=7})));
     return 0;
 }

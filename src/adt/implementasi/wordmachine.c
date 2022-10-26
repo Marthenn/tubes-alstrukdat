@@ -103,7 +103,7 @@ void CopyWord()
 void IgnoreFileBlanks()
 /* Mengabaikan satu atau beberapa BLANK dalam file txt
    I.S. : currentFileChar sembarang
-   F.S. : currentFileChar ≠ BLANK atau currentFileChar = MARK */
+   F.S. : currentFileChar ≠ FILE_BLANK atau currentFileChar = MARK */
 
 {
 	// KAMUS LOKAL
@@ -145,14 +145,11 @@ void ADVFILEWORD()
    F.S. : currentWord adalah kata terakhir yang sudah diakuisisi,
           currentFileChar adalah karakter pertama dari kata berikutnya, mungkin MARK
           Jika currentFileChar = MARK, EndFileWord = true.
-   Proses : Akuisisi kata menggunakan procedure SalinWord */
+   Proses : Akuisisi kata menggunakan procedure CopyFileWord */
 {
 	// KAMUS LOKAL
 
 	// ALGORITMA
-
-
-	IgnoreFileBlanks();
 
 	if (FILE_EOP)
 	{
@@ -177,7 +174,7 @@ void CopyFileWord()
 	// ALGORITMA
 	
 	i = 0;
-	while ((FILE_EOP == false) && (currentFileChar != FILE_BLANK)) 
+	while ((FILE_EOP == false) && (currentFileChar != FILE_BLANK) && (currentFileChar != '\n')) 
 	{
 		if (i < NMax)
 		{
@@ -189,6 +186,8 @@ void CopyFileWord()
 	}
 	
 	currentFileWord.Length = i;
+
+	IgnoreFileBlanks();
 }
 
 void DisplayWord(Word kata)

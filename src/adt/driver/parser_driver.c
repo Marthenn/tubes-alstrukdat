@@ -15,7 +15,7 @@
 int  main(){
 
     // KAMUS
-	int i;
+	int i, res;
 
     // ALGORITMA
 
@@ -27,86 +27,86 @@ int  main(){
 		DisplayWord(currentWord);
 		printf("\n");
 		
-        if (IsPrefixEqual(START_WORD) == true)
+        if (IsWordEqual(START_WORD) == true)
 		{
 			printf("input command START\n");
 		}
 
-		else if (IsPrefixEqual(EXIT_WORD) == true)
+		else if (IsWordEqual(EXIT_WORD) == true)
 		{
 			printf("input command EXIT\n");
 		}
 
-		else if (IsPrefixEqual(BUY_WORD) == true)
+		else if (IsWordEqual(BUY_WORD) == true)
 		{
 			printf("input command BUY\n");
 		}
 
-		else if (IsPrefixEqual(DELIVERY_WORD) == true)
+		else if (IsWordEqual(DELIVERY_WORD) == true)
 		{
 			printf("input command DELIVERY\n");
 		}
 
-		else if (IsPrefixEqual(MOVE_NORTH_WORD) == true)
+		else if (IsWordEqual(MOVE_NORTH_WORD) == true)
 		{
 			printf("input command MOVE NORTH\n");
 		}
 
-		else if (IsPrefixEqual(MOVE_EAST_WORD) == true)
+		else if (IsWordEqual(MOVE_EAST_WORD) == true)
 		{
 			printf("input command MOVE EAST\n");
 		}
 
-		else if (IsPrefixEqual(MOVE_WEST_WORD) == true)
+		else if (IsWordEqual(MOVE_WEST_WORD) == true)
 		{
 			printf("input command MOVE WEST\n");
 		}
-		else if (IsPrefixEqual(MOVE_SOUTH_WORD) == true)
+		else if (IsWordEqual(MOVE_SOUTH_WORD) == true)
 		{
 			printf("input command MOVE SOUTH\n");
 		}
 		
-		else if (IsPrefixEqual(MIX_WORD) == true)
+		else if (IsWordEqual(MIX_WORD) == true)
 		{
 			printf("input command MIX\n");
 		}
 		
-		else if (IsPrefixEqual(CHOP_WORD) == true)
+		else if (IsWordEqual(CHOP_WORD) == true)
 		{
 			printf("input command CHOP\n");
 		}
 		
-		else if (IsPrefixEqual(FRY_WORD) == true)
+		else if (IsWordEqual(FRY_WORD) == true)
 		{
 			printf("input command FRY\n");
 		}
 		
-		else if (IsPrefixEqual(BOIL_WORD) == true)
+		else if (IsWordEqual(BOIL_WORD) == true)
 		{
 			printf("input command BOIL\n");
 		}
 		
-		else if (IsPrefixEqual(WAIT_WORD) == true)
+		else if (IsWordEqual(WAIT_WORD) == true)
 		{
 			printf("input command WAIT\n");
 		}
 		
-		else if (IsPrefixEqual(UNDO_WORD) == true)
+		else if (IsWordEqual(UNDO_WORD) == true)
 		{
 			printf("input command UNDO\n");
 		}
 		
-		else if (IsPrefixEqual(REDO_WORD) == true)
+		else if (IsWordEqual(REDO_WORD) == true)
 		{
 			printf("input command REDO\n");
 		}
 		
-		else if (IsPrefixEqual(CATALOG_WORD) == true)
+		else if (IsWordEqual(CATALOG_WORD) == true)
 		{
 			printf("input command CATALOG\n");
 		}
 		
-		else if (IsPrefixEqual(COOKBOOK_WORD) == true)
+		else if (IsWordEqual(COOKBOOK_WORD) == true)
 		{
 			printf("input command COOKBOOK\n");
 		}
@@ -115,6 +115,14 @@ int  main(){
 			printf("Input command tidak valid\n");
 		}
 
+		res =  WordToInt(currentWord);
+		printf("representasi integer dari input : %d", res);
+
+		if (res == NUM_UNDEF) {
+			printf(" (input is not number)");
+		}
+
+		printf("\n");
 		ADVWORD();
 	}
 

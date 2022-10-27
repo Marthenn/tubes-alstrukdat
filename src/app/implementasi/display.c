@@ -42,16 +42,14 @@ void Help(){
     printf("    Membatalkan perintah terakhir\n");
     printf("13. REDO\n");
     printf("    Melakukan perintah yang dibatalkan\n");
-    printf("14. WAIT\n");
-    printf("    Menunggu waktu berlalu\n");
-    printf("15. CATALOG\n");
+    printf("14. CATALOG\n");
     printf("    Melihat daftar bahan makanan yang tersedia\n");
-    printf("16. COOKBOOK\n");
+    printf("15. COOKBOOK\n");
     printf("    Melihat daftar resep yang tersedia\n");
-    printf("17. INVENTORY\n");
+    printf("16. INVENTORY\n");
     printf("    Melihat bahan makanan yang ada di inventory\n");
-    printf("18. HELP\n");
+    printf("17. HELP\n");
     printf("    Menampilkan semua perintah yang tersedia\n");
-    printf("19. EXIT\n");
+    printf("18. EXIT\n");
     printf("    Keluar dari simulasi\n");
 }

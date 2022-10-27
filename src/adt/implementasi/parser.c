@@ -33,6 +33,31 @@ boolean IsInputEqual(Word kata)
     return IsWordEqual(kata, currentWord);
 }
 
+boolean IsInputPrefixEqual(Word kata)
+// mengembalikan true jika kata sama dengan prefix currentWord (tidak case-sensitive)
+{
+    // KAMUS LOKAL
+    int i;
+
+    // ALGORITMA
+    if (kata.Length > currentWord.Length)
+    {
+        return false;
+    }
+
+    for (i = 0; i < kata.Length; i++)
+    {
+        if ((kata.TabWord[i] != currentWord.TabWord[i]) && (kata.TabWord[i] + GAP != currentWord.TabWord[i]))
+        {
+            return false;
+        }
+    }
+
+    return true;
+
+    
+}
+
 boolean IsWordEqual(Word kata1, Word kata2)
 // mengembalikan true jika kata1 sama dengan kata2 (tidak case-sensitive)
 {
@@ -127,7 +152,8 @@ void CopyDefinedWord(Word *kata1, Word kata2)
 }
 
 void DisplayWord(Word kata)
-// menampilkan word
+// I.S. kata terdefinisi
+// F.S. kata ditampilkan ke layar 
 {
     // KAMUS LOKAL
     int i;
@@ -141,9 +167,46 @@ void DisplayWord(Word kata)
 }
 
 void DisplayWordLine(Word kata)
-// menampilkan word dengan new line di akhir
+// I.S. kata terdefinisi 
+// F.S. kata ditampilkan ke layar dengan new line di akhir
 {
     DisplayWord(kata);
     printf("\n");
+}
+
+ListStatik SplitWord(Word kata, char separator)
+// mengembalikan list berisi subkata yang dipisahkan karakter separator
+{
+    // KAMUS LOKAL
+    ListStatik l;
+    Word subkata, copiedKata;
+    int i, count, elmtCount;
+
+    // ALGORITMA
+    i = 0;
+
+    while(i < kata.Length && ListLength(l) < CAPACITY)
+    {
+        while(kata.TabWord[i] == separator && i < kata.Length)
+        {
+            i++;
+        }
+
+        count = 0;
+        while(kata.TabWord[i] != separator && i < kata.Length)
+        {
+            subkata.TabWord[count] = kata.TabWord[i];
+            count++;
+        }
+
+        if (count > 0)
+        {
+            subkata.Length = count;
+            CopyDefinedWord(&copiedKata, subkata);
+            InsertFirst(&l,NewElType(4, (union Data){.w=copiedKata}));
+        }
+    }
+
+    return l;
 }
 

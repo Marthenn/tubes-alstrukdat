@@ -41,6 +41,8 @@ boolean Compare(ElType a, ElType b){
             case 3:
                 return GetIDMakanan(a.val.m)==GetIDMakanan(b.val.m);
                 break;
+            case 4:
+                return IsWordEqual(a.val.w, b.val.w);
         }
     }else{
         return false;
@@ -60,6 +62,9 @@ void PrintElType(ElType a){
             break;
         case 3:
             DisplayMakanan(a.val.m);
+            break;
+        case 4:
+            DisplayWord(a.val.w);
             break;
         default:
             printf("undefined");

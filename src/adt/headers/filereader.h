@@ -31,6 +31,7 @@ void ReadIntLine(int *num);
 // nilai num == NUM_UNDEF jika kata dalam satu line tidak dapat direpresentasikan sebagai integer
 
 void ReadTime(Waktu *time);
+
 // I.S. nilai komponen pada time sembarang;
 // F.S. time merupakan representasi waktu dari baris yang sedang dibaca, mesin kata dan mesin karakter menuju line berikutnya.
 

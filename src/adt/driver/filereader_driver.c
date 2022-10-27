@@ -14,8 +14,8 @@ int  main(){
 
     // KAMUS
 	int i;
-
+	Matriks map;
     // ALGORITMA
-	ReadAllConfig();
+	ReadAllConfig(&map);
 	return 0;
 }

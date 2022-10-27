@@ -6,9 +6,9 @@
 #include "wordmachine.h"
 #include "waktu.h"
 
-#define FOOD_CONFIG_PATH ".../config/food_config.txt"
-#define RECIPE_CONFIG_PATH ".../config/recipe_config.txt"
-#define MAP_CONFIG_PATH ".../config/map_config.txt"
+#define FOOD_CONFIG_PATH "../../config/food_config.txt"
+#define RECIPE_CONFIG_PATH "../../config/recipe_config.txt"
+#define MAP_CONFIG_PATH "../../config/map_config.txt"
 
 void STARTFILELINE(Word *kata, char *path);
 /* I.S. : currentFileChar sembarang
@@ -29,6 +29,10 @@ void ReadIntLine(int *num);
 // I.S. nilai num sembarang;
 // F.S. nilai num merupakan representasi integer dari Word yang ada pada line saat ini pada file yang sedang dibaca, mesin kata dan mesin karakter menuju line berikutnya.
 // nilai num == NUM_UNDEF jika kata dalam satu line tidak dapat direpresentasikan sebagai integer
+
+void ReadInt(int *num);
+// I.S. nilai num sembarang
+// F.S. nilai num merupakan representasi integer dari currentFileWord, mesin karakter mengakuisisi kata selanjutnya
 
 void ReadTime(Waktu *time);
 

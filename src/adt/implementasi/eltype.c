@@ -16,8 +16,9 @@ union Data GetVal(ElType e){
     return e.val;
 }
 
-void SetVal(ElType *e, union Data val){
+void SetVal(ElType *e, int type, union Data val){
     e->val = val;
+    e->type = type;
 }
 
 void CopyElType(ElType *a, ElType b){
@@ -35,6 +36,9 @@ boolean Compare(ElType a, ElType b){
                 return a.val.f==b.val.f;
                 break;
             case 2:
+                return a.val.c==b.val.c;
+                break;
+            case 3:
                 return GetIDMakanan(a.val.m)==GetIDMakanan(b.val.m);
                 break;
         }
@@ -52,6 +56,9 @@ void PrintElType(ElType a){
             printf("%f",a.val.f);
             break;
         case 2:
+            printf("%c",a.val.c);
+            break;
+        case 3:
             DisplayMakanan(a.val.m);
             break;
         default:

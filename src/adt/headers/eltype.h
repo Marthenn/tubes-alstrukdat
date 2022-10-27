@@ -7,7 +7,8 @@
 union Data{
     /*type 0*/ int i;
     /*type 1*/ float f;
-    /*type 2*/ Makanan m;
+    /*type 2*/ char c;
+    /*type 3*/ Makanan m;
 };
 
 typedef struct ElType{
@@ -46,7 +47,7 @@ union Data GetVal(ElType e);
  * @param e 
  * @param val 
  */
-void SetVal(ElType *e, union Data val);
+void SetVal(ElType *e, int type, union Data val);
 
 /**
  * @brief copy the value of an ElType object

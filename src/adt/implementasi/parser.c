@@ -7,7 +7,7 @@
 #include "../headers/parser.h"
 
 #include <stdio.h>
-Word currentWord;
+Word currentWordParser;
 
 Word NewWord(char* s, int length)
 // mengembalikan data Word dengan panjang length dan karakter-karakter beserta urutannya sama dengan pada array s
@@ -29,9 +29,9 @@ Word NewWord(char* s, int length)
 }
 
 boolean IsInputEqual(Word kata)
-// mengembalikan true jika kata sama dengan currentWord (tidak case-sensitive)
+// mengembalikan true jika kata sama dengan currentWordParser (tidak case-sensitive)
 {
-    return IsWordEqual(kata, currentWord);
+    return IsWordEqual(kata, currentWordParser);
 }
 
 boolean IsWordEqual(Word kata1, Word kata2)

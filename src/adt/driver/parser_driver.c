@@ -25,7 +25,7 @@ int  main(){
 	while (EndWord == false) {
 
 		printf("input sebenarnya (case-sensitive) : ");
-		DisplayWord(currentWord);
+		DisplayWord(currentWordParser);
 		printf("\n");
 		
         if (IsInputEqual(START_WORD) == true)
@@ -116,7 +116,7 @@ int  main(){
 			printf("Input command tidak valid\n");
 		}
 
-		res =  WordToInt(currentWord);
+		res =  WordToInt(currentWordParser);
 		printf("representasi integer dari input : %d", res);
 
 		if (res == NUM_UNDEF) {
@@ -125,12 +125,12 @@ int  main(){
 		
 		printf("\n");
 
-		CopyDefinedWord(&copyResult, currentWord);
+		CopyDefinedWord(&copyResult, currentWordParser);
 		
 		printf("Hasil copy dari currentWord : ");
 		DisplayWordLine(copyResult);
 
-		ConcatWord(&kalimat, currentWord);
+		ConcatWord(&kalimat, currentWordParser);
 		ConcatWord(&kalimat, BLANK_WORD);
 		printf("Kata gabungan dari awal : ");
 		DisplayWordLine(kalimat);

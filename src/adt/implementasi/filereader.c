@@ -77,7 +77,7 @@ void ReadIntLine(int *num)
     ReadLine(&kata);
     *num = WordToInt(kata);
 }
-void ReadTime(waktu *time)
+void ReadTime(Waktu *time)
 // I.S. nilai komponen pada time sembarang;
 // F.S. time merupakan representasi waktu dari baris yang sedang dibaca, mesin kata dan mesin karakter menuju line berikutnya.
 {
@@ -108,11 +108,11 @@ void ReadTime(waktu *time)
 void ReadFoodConfig()
 {
     // KAMUS LOKAL
-    makanan food;
+    Makanan food;
     Word kata, judul, hari, jam, menit;
     int N, i, id;
-    waktu expiredTime, deliveryTime;
-    point actionPoint;
+    Waktu expiredTime, deliveryTime;
+    Point actionPoint;
     // ALGORITMA
 
     STARTFILELINE(&kata, FOOD_CONFIG_PATH);

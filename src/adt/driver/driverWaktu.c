@@ -13,7 +13,7 @@ void _assert(boolean x, char ID[])
 }
 
 int main() {
-    waktu t, t2, t0;
+    Waktu t, t2, t0;
     createWaktu(&t, 5, 2, 10);
     _assert(getHari(t) == 5, "HARI");
     _assert(getJam(t) == 2, "JAM");

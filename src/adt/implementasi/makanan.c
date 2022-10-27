@@ -5,52 +5,52 @@
 #include "../headers/parser.h"
 
 /* *** KONSTRUKTOR *** */
-void createMakanan(makanan *m, int ID, Word Nama, waktu Kedaluarsa, 
-                    waktu Pengiriman, point LokasiAksi)
+void CreateMakanan(Makanan *m, int id, Word nama, Waktu kedaluarsa, 
+                    Waktu pengiriman, Point lokasiAksi)
 /* I.S. m sembarang. ID, Nama, Kedaluarsa, LokasiAksi, Pengiriman terdefinisi */
 /* F.S. terbentuk makanan m */
 {
-    m->ID = ID;
-    m->Nama = Nama;
-    m->Kedaluarsa = Kedaluarsa;
-    m->LokasiAksi = LokasiAksi;
-    m->Pengiriman = Pengiriman;
+    m->id = id;
+    m->nama = nama;
+    m->kedaluarsa = kedaluarsa;
+    m->lokasiAksi = lokasiAksi;
+    m->pengiriman = pengiriman;
 }
 
 /* *** GETTER *** */
-int getIDMakanan(makanan m){
-    return m.ID;
+int GetIDMakanan(Makanan m){
+    return m.id;
 }
-Word getNama(makanan m) {
-    return m.Nama;
+Word GetNama(Makanan m) {
+    return m.nama;
 }
-waktu getKedaluarsa(makanan m) {
-    return m.Kedaluarsa;
+Waktu GetKedaluarsa(Makanan m) {
+    return m.kedaluarsa;
 }
-point getLokasiAksi(makanan m) {
-    return m.LokasiAksi;
+Point GetLokasiAksi(Makanan m) {
+    return m.lokasiAksi;
 }
-waktu getPengiriman(makanan m) {
-    return m.Pengiriman;
+Waktu GetPengiriman(Makanan m) {
+    return m.pengiriman;
 }
 
-void displayMakanan(makanan m)
+void DisplayMakanan(Makanan m)
 {
-    printf("id : %d\n", getIDMakanan(m));
+    printf("id : %d\n", GetIDMakanan(m));
 
     printf("nama makanan : ");
-    DisplayWordLine(m.Nama);
+    DisplayWordLine(m.nama);
 
     printf("Waktu kadaluarsa : ");
-    cetakWaktuLengkap(m.Kedaluarsa);
+    cetakWaktuLengkap(m.kedaluarsa);
     printf("\n");
 
     printf("Waktu pengiriman : ");
-    cetakWaktuLengkap(m.Pengiriman);
+    cetakWaktuLengkap(m.pengiriman);
     printf("\n");
 
     printf("Lokasi aksi : ");
-    cetakPoint(m.LokasiAksi);
+    cetakPoint(m.lokasiAksi);
     printf("\n");
 
 }

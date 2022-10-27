@@ -4,6 +4,7 @@
 #define __FILEREADER_H__
 
 #include "wordmachine.h"
+#include "waktu.h"
 
 #define FOOD_CONFIG_PATH ".../config/food_config.txt"
 #define RECIPE_CONFIG_PATH ".../config/recipe_config.txt"
@@ -29,7 +30,7 @@ void ReadIntLine(int *num);
 // F.S. nilai num merupakan representasi integer dari Word yang ada pada line saat ini pada file yang sedang dibaca, mesin kata dan mesin karakter menuju line berikutnya.
 // nilai num == NUM_UNDEF jika kata dalam satu line tidak dapat direpresentasikan sebagai integer
 
-void ReadTime(waktu *time);
+void ReadTime(Waktu *time);
 // I.S. nilai komponen pada time sembarang;
 // F.S. time merupakan representasi waktu dari baris yang sedang dibaca, mesin kata dan mesin karakter menuju line berikutnya.
 

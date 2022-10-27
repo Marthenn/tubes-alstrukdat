@@ -60,7 +60,7 @@ void START_FILE(char *path)
 
        FILE_EOP = false;
 
-       file = fopen("../../config/food_config.txt", "r");
+       file = fopen(path, "r");
 
        if (file)
        {

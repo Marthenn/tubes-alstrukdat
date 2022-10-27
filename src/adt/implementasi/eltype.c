@@ -34,6 +34,8 @@ boolean Compare(ElType a, ElType b){
             case 1:
                 return a.val.f==b.val.f;
                 break;
+            case 2:
+                return a.val.c==b.val.c;
         }
     }else{
         return false;
@@ -47,6 +49,9 @@ void PrintElType(ElType a){
             break;
         case 1:
             printf("%f",a.val.f);
+            break;
+        case 2:
+            printf("%c", a.val.c);
             break;
         default:
             printf("undefined");

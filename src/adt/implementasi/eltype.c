@@ -1,31 +1,31 @@
 #include <stdio.h>
 #include "../headers/eltype.h"
 
-ElType newElType(int type, union data val){
+ElType NewElType(int type, union Data val){
     ElType e;
     e.type = type;
     e.val = val;
     return e;
 }
 
-int getType(ElType e){
+int GetType(ElType e){
     return e.type;
 }
 
-union data getVal(ElType e){
+union Data GetVal(ElType e){
     return e.val;
 }
 
-void setVal(ElType *e, union data val){
+void SetVal(ElType *e, union Data val){
     e->val = val;
 }
 
-void copyElType(ElType *a, ElType b){
+void CopyElType(ElType *a, ElType b){
     a->type = b.type;
     a->val = b.val;
 }
 
-boolean compare(ElType a, ElType b){
+boolean Compare(ElType a, ElType b){
     if(a.type==b.type){
         switch(a.type){
             case 0:
@@ -40,7 +40,7 @@ boolean compare(ElType a, ElType b){
     }
 }
 
-void printElType(ElType a){
+void PrintElType(ElType a){
     switch(a.type){
         case 0:
             printf("%d",a.val.i);

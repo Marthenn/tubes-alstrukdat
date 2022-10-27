@@ -7,14 +7,14 @@
 typedef struct{
     ElType data[100];
     int length;
-} set;
+} Set;
 
 /**
  * @brief Create a Set object with length 0
  * 
  * @param s 
  */
-void createSet(set *s);
+void CreateSet(Set *s);
 
 /**
  * @brief Check if the set is empty
@@ -22,7 +22,7 @@ void createSet(set *s);
  * @param s 
  * @return boolean 
  */
-boolean isEmpty(set s);
+boolean IsEmpty(Set s);
 
 /**
  * @brief Check if the set is full
@@ -30,7 +30,7 @@ boolean isEmpty(set s);
  * @param s 
  * @return boolean 
  */
-boolean isFull(set s);
+boolean IsFull(Set s);
 
 /**
  * @brief Get the length of the set
@@ -38,7 +38,7 @@ boolean isFull(set s);
  * @param s 
  * @return int 
  */
-int length(set s);
+int Length(Set s);
 
 /**
  * @brief Check if the set contains the element
@@ -47,7 +47,7 @@ int length(set s);
  * @param e 
  * @return boolean 
  */
-boolean isMember(set s, ElType e);
+boolean IsMember(Set s, ElType e);
 
 /**
  * @brief Add an element to the set
@@ -55,7 +55,7 @@ boolean isMember(set s, ElType e);
  * @param s 
  * @param e 
  */
-void add(set *s, ElType e);
+void Add(Set *s, ElType e);
 
 /**
  * @brief Remove an element from the set
@@ -63,14 +63,14 @@ void add(set *s, ElType e);
  * @param s 
  * @param e 
  */
-void removeSet(set *s, ElType e);
+void RemoveSet(Set *s, ElType e);
 
 /**
  * @brief Print the set
  * 
  * @param s 
  */
-void printSet(set s);
+void PrintSet(Set s);
 
 /**
  * @brief Get the union of two sets
@@ -79,7 +79,7 @@ void printSet(set s);
  * @param s2 
  * @return set 
  */
-set unionSet(set s1, set s2);
+Set UnionSet(Set s1, Set s2);
 
 /**
  * @brief Get the intersection of two sets
@@ -88,7 +88,7 @@ set unionSet(set s1, set s2);
  * @param s2 
  * @return set 
  */
-set intersection(set s1, set s2);
+Set Intersection(Set s1, Set s2);
 
 /**
  * @brief Get the difference of two sets (s1 - s2)
@@ -97,7 +97,7 @@ set intersection(set s1, set s2);
  * @param s2 
  * @return set 
  */
-set difference(set s1, set s2);
+Set Difference(Set s1, Set s2);
 
 /**
  * @brief Check if the set is subset of another set
@@ -106,7 +106,7 @@ set difference(set s1, set s2);
  * @param s2 
  * @return boolean 
  */
-boolean isSubset(set s1, set s2);
+boolean IsSubset(Set s1, Set s2);
 
 /**
  * @brief Copy a set to another set
@@ -114,6 +114,6 @@ boolean isSubset(set s1, set s2);
  * @param s1 
  * @param s2 
  */
-void copySet(set *s1, set s2);
+void CopySet(Set *s1, Set s2);
 
 #endif

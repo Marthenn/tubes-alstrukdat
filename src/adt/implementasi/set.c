@@ -1,23 +1,23 @@
 #include <stdio.h>
 #include "../headers/set.h"
 
-void createSet(set *s){
+void CreateSet(Set *s){
     (*s).length = 0;
 }
 
-boolean isEmpty(set s){
+boolean IsEmpty(Set s){
     return s.length == 0;
 }
 
-boolean isFull(set s){
+boolean IsFull(Set s){
     return s.length == 100;
 }
 
-boolean isMember(set s, ElType e){
+boolean IsMember(Set s, ElType e){
     int i = 0;
     boolean found = false;
     while(i < s.length && !found){
-        if(compare(s.data[i], e)){
+        if(Compare(s.data[i], e)){
             found = true;
         }
         i++;
@@ -25,19 +25,19 @@ boolean isMember(set s, ElType e){
     return found;
 }
 
-void add(set *s, ElType e){
-    if(!isMember(*s, e) && !isFull(*s)){
+void Add(Set *s, ElType e){
+    if(!IsMember(*s, e) && !IsFull(*s)){
         (*s).data[(*s).length] = e;
         (*s).length++;
     }
 }
 
-void removeSet(set *s, ElType e){
-    if(isMember(*s,e)){
+void RemoveSet(Set *s, ElType e){
+    if(IsMember(*s,e)){
         int i = 0;
         boolean found = false;
         while(i < (*s).length && !found){
-            if(compare((*s).data[i], e)){
+            if(Compare((*s).data[i], e)){
                 found = true;
             }
             i++;
@@ -49,56 +49,56 @@ void removeSet(set *s, ElType e){
     }
 }
 
-void printSet(set s){
-    printf("{");
+void PrintSet(Set s){
+    Printf("{");
     for(int i = 0; i < s.length; i++){
-        printElType(s.data[i]);
+        PrintElType(s.data[i]);
         if(i != s.length-1){
-            printf(", ");
+            Printf(", ");
         }
     }
     printf("}");
 }
 
-set unionSet(set s1, set s2){
-    set s;
-    createSet(&s);
+Set UnionSet(Set s1, Set s2){
+    Set s;
+    CreateSet(&s);
     for(int i = 0; i < s1.length; i++){
-        add(&s, s1.data[i]);
+        Add(&s, s1.data[i]);
     }
     for(int i = 0; i < s2.length; i++){
-        add(&s, s2.data[i]);
+        Add(&s, s2.data[i]);
     }
     return s;
 }
 
-set intersection(set s1, set s2){
-    set s;
+Set Intersection(Set s1, Set s2){
+    Set s;
     createSet(&s);
     for(int i = 0; i < s1.length; i++){
-        if(isMember(s2, s1.data[i])){
-            add(&s, s1.data[i]);
+        if(IsMember(s2, s1.data[i])){
+            Add(&s, s1.data[i]);
         }
     }
     return s;
 }
 
-set difference(set s1, set s2){
-    set s;
+Set Difference(Set s1, Set s2){
+    Set s;
     createSet(&s);
     for(int i = 0; i < s1.length; i++){
-        if(!isMember(s2, s1.data[i])){
-            add(&s, s1.data[i]);
+        if(!IsMember(s2, s1.data[i])){
+            Add(&s, s1.data[i]);
         }
     }
     return s;
 }
 
-boolean isSubset(set s1, set s2){
+boolean IsSubset(Set s1, Set s2){
     boolean subset = true;
     int i = 0;
     while(i < s1.length && subset){
-        if(!isMember(s2, s1.data[i])){
+        if(!IsMember(s2, s1.data[i])){
             subset = false;
         }
         i++;
@@ -106,9 +106,9 @@ boolean isSubset(set s1, set s2){
     return subset;
 }
 
-void copySet(set *s1, set s2){
-    createSet(s1);
+void CopySet(Set *s1, Set s2){
+    CreateSet(s1);
     for(int i = 0; i < s2.length; i++){
-        add(s1, s2.data[i]);
+        Add(s1, s2.data[i]);
     }
 }

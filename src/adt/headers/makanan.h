@@ -8,25 +8,25 @@
 #include "waktu.h"
 #include "point.h"
 
-typedef struct makanan {
-    int ID;
-    Word Nama; 
-    waktu Kedaluarsa, Pengiriman;
-    point LokasiAksi;
-} makanan;
+typedef struct {
+    int id;
+    Word nama; 
+    Waktu kedaluarsa, pengiriman;
+    Point lokasiAksi;
+} Makanan;
 
 /* *** KONSTRUKTOR *** */
-void createMakanan(makanan *m, int ID, Word Nama, waktu Kedaluarsa, 
-                    waktu Pengiriman, point LokasiAksi);
+void CreateMakanan(Makanan *m, int ID, Word Nama, Waktu Kedaluarsa, 
+                    Waktu Pengiriman, Point LokasiAksi);
 /* I.S. m sembarang. ID, Nama, Kedaluarsa, LokasiAksi, Pengiriman terdefinisi */
 /* F.S. terbentuk makanan m */
 
 /* *** GETTER *** */
-int getIDMakanan(makanan m);
-Word getNama(makanan m);
-waktu getKedaluarsa(makanan m);
-point getLokasiAksi(makanan m);
-waktu getPengiriman(makanan m);
-void displayMakanan(makanan m);
+int GetIDMakanan(Makanan m);
+Word GetNama(Makanan m);
+Waktu GetKedaluarsa(Makanan m);
+Waktu GetPengiriman(Makanan m);
+Point GetLokasiAksi(Makanan m);
+void DisplayMakanan(Makanan m);
 
 #endif

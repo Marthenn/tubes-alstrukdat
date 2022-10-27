@@ -7,41 +7,41 @@
 typedef struct {
     int x; //absis
     int y; //ordinat
-} point;
+} Point;
 
 /* *** KONSTRUKTOR *** */
-void createPoint(point *p, int x, int y);
+void createPoint(Point *p, int x, int y);
 /* I.S. p sembarang, x dan y terdefinisi */
 /* F.S. terbentuk point p dengan absis x dan ordinat y */
 
 /* *** GETTER & SETTER *** */
-void setAbsis(point *p, int x);
+void setAbsis(Point *p, int x);
 /* I.S. p terdefinisi, x nilainya di dalam batas peta */
 /* F.S. Mengubah absis p menjadi x */
-void setOrdinat(point *p, int y);
+void setOrdinat(Point *p, int y);
 /* I.S. p terdefinisi, y nilainya di dalam batas peta */
 /* F.S. Mengubah ordinat p menjadi y */
 
-int getAbsis(point p);
+int GetAbsis(Point p);
 /* Mengembalikan absis dari p, yaitu p.x */
-int getOrdinat(point p);
+int GetOrdinat(Point p);
 /* Mengembalikan ordinat dari p, yaitu p.y*/
 
 /* *** OPERASI LAIN *** */
-void movePointNorth(point *p);
+void MovePointNorth(Point *p);
 /* I.S. p terdefinisi */
 /* F.S. p digeser ke utara: p.x dikurangi 1 */
-void movePointSouth(point *p);
+void MovePointSouth(Point *p);
 /* I.S. p terdefinisi */
 /* F.S. p digeser ke selatan: p.x ditambah 1 */
-void movePointWest(point *p);
+void MovePointWest(Point *p);
 /* I.S. p terdefinisi */
 /* F.S. p digeser ke barat: p.y dikurangi 1 */
-void movePointEast(point *p);
+void MovePointEast(Point *p);
 /* I.S. p terdefinisi */
 /* F.S. p digeser ke timur: p.y ditambah 1 */
 
-void cetakPoint(point p);
+void CetakPoint(Point p);
 /* I.S. p terdefinisi */
 /* F.S. mencetak (p.x, p.y) ke layar. Tidak mencetak karakter lain di awal maupun akhir*/
 #endif

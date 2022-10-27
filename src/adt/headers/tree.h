@@ -9,9 +9,9 @@ typedef struct treeNode {
     ElType info;
     Address firstChild;
     Address nextSibling;
-} treeNode;
+} TreeNode;
 
-typedef Address tree;
+typedef Address Tree;
 
 /**
  * @brief Create a new tree node
@@ -24,9 +24,9 @@ Address newTreeNode(ElType val);
  * @brief Create a tree object with known root value
  * 
  * @param Root 
- * @return tree 
+ * @return Tree 
  */
-tree newTree (ElType root);
+Tree newTree (ElType root);
 
 /**
  * @brief add a children to a tree
@@ -35,7 +35,7 @@ tree newTree (ElType root);
  * @param val 
  * @return tree 
  */
-void addChild(tree *p, ElType val);
+void addChild(Tree *p, ElType val);
 
 /**
  * @brief check if val is a children of p
@@ -44,7 +44,7 @@ void addChild(tree *p, ElType val);
  * @param val 
  * @return boolean 
  */
-boolean isChild(tree p, ElType val);
+boolean isChild(Tree p, ElType val);
 
 /**
  * @brief check if val is part of the tree
@@ -53,7 +53,7 @@ boolean isChild(tree p, ElType val);
  * @param val 
  * @return boolean 
  */
-boolean isPartOf(tree p, ElType val);
+boolean isPartOf(Tree p, ElType val);
 
 /**
  * @brief return the number of children of a tree
@@ -61,13 +61,13 @@ boolean isPartOf(tree p, ElType val);
  * @param p 
  * @return int 
  */
-int numberChildren(tree p);
+int numberChildren(Tree p);
 
 /**
  * @brief print a tree and all of its children represented by brackets e.g. (1(2(4)(5))(3))
  * 
  * @param p 
  */
-void printTree(tree p);
+void printTree(Tree p);
 
 #endif

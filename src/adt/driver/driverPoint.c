@@ -13,31 +13,31 @@ void _assert(boolean x, char ID[])
 }
 
 int main() {
-    point p;
-    createPoint(&p, 0, 0);
-    _assert(getAbsis(p) == 0, "ABSIS0");
-    _assert(getOrdinat(p) == 0, "ORDINAT0");
+    Point p;
+    CreatePoint(&p, 0, 0);
+    _assert(GetAbsis(p) == 0, "ABSIS0");
+    _assert(GetOrdinat(p) == 0, "ORDINAT0");
 
     /* MOVE */
-    movePointNorth(&p);
-    movePointNorth(&p);
-    _assert(getAbsis(p) == -2, "NORTH");
-    movePointSouth(&p);
-    movePointEast(&p);
-    _assert(getAbsis(p) == -1, "SOUTH");
-    _assert(getOrdinat(p) == 1, "EAST");
-    movePointWest(&p);
-    movePointWest(&p);
-    _assert(getOrdinat(p) == -1, "WEST");
+    MovePointNorth(&p);
+    MovePointNorth(&p);
+    _assert(GetAbsis(p) == -2, "NORTH");
+    MovePointSouth(&p);
+    MovePointEast(&p);
+    _assert(GetAbsis(p) == -1, "SOUTH");
+    _assert(GetOrdinat(p) == 1, "EAST");
+    MovePointWest(&p);
+    MovePointWest(&p);
+    _assert(GetOrdinat(p) == -1, "WEST");
 
     /* SET/GET */
-    setAbsis(&p, 200);
-    setOrdinat(&p, 150);
-    _assert(getAbsis(p) == 200, "SETABSIS");
-    _assert(getOrdinat(p) == 150, "SETORDINAT");
+    SetAbsis(&p, 200);
+    SetOrdinat(&p, 150);
+    _assert(GetAbsis(p) == 200, "SETABSIS");
+    _assert(GetOrdinat(p) == 150, "SETORDINAT");
 
     /* OUTPUT */
-    cetakPoint(p);
+    CetakPoint(p);
 
     return 0;
 }

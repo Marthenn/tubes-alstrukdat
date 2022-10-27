@@ -36,19 +36,6 @@ void addChild(tree *p, ElType val){
     }
 }
 
-void printTree(tree p){
-    printf("( ");
-    printElType(p->info);printf(" ");
-    if(p->firstChild!=NULL){
-        Address temp = p->firstChild;
-        while(temp!=NULL){
-            printTree(temp);
-            temp = temp->nextSibling;
-        }
-    }
-    printf(")");
-}
-
 boolean isChild(tree p, ElType val){
     if(p->firstChild==NULL){
         return false;
@@ -64,6 +51,25 @@ boolean isChild(tree p, ElType val){
     }
 }
 
+boolean isPartOf(tree p, ElType val){
+    if(compare(p->info,val)){
+        return true;
+    }else{
+        if(p->firstChild==NULL){
+            return false;
+        }else{
+            Address temp = p->firstChild;
+            while(temp!=NULL){
+                if(isPartOf(temp,val)){
+                    return true;
+                }
+                temp = temp->nextSibling;
+            }
+            return false;
+        }
+    }
+}
+
 int numberChildren(tree p){
     if(p->firstChild==NULL){
         return 0;
@@ -76,4 +82,17 @@ int numberChildren(tree p){
         }
         return count;
     }
+}
+
+void printTree(tree p){
+    printf("( ");
+    printElType(p->info);printf(" ");
+    if(p->firstChild!=NULL){
+        Address temp = p->firstChild;
+        while(temp!=NULL){
+            printTree(temp);
+            temp = temp->nextSibling;
+        }
+    }
+    printf(")");
 }

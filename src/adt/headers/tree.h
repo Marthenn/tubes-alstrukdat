@@ -47,6 +47,15 @@ void addChild(tree *p, ElType val);
 boolean isChild(tree p, ElType val);
 
 /**
+ * @brief check if val is part of the tree
+ * 
+ * @param p 
+ * @param val 
+ * @return boolean 
+ */
+boolean isPartOf(tree p, ElType val);
+
+/**
  * @brief return the number of children of a tree
  * 
  * @param p 

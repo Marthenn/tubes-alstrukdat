@@ -8,7 +8,7 @@
 #include "boolean.h"
 #include "charmachine.h"
 
-#define NMax 50
+#define NMax 100
 #define BLANK '\n'
 #define FILE_BLANK ' '
 
@@ -73,8 +73,5 @@ void CopyFileWord();
           currentFileChar = BLANK atau currentFileChar = MARK;
           currentFileChar adalah karakter sesudah karakter terakhir yang diakuisisi.
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
-
-void DisplayWord(Word kata);
-// menampilkan word
 
 #endif

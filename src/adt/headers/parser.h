@@ -26,6 +26,8 @@
 #define REDO_WORD NewWord("REDO", 4)
 #define CATALOG_WORD NewWord("CATALOG", 7)
 #define COOKBOOK_WORD NewWord("COOKBOOK", 8)
+#define EMPTY_WORD NewWord("", 0)
+#define BLANK_WORD NewWord(" ", 1)
 
 #define NUM_CHAR_MIN '0'
 #define NUM_CHAR_MAX '9'
@@ -35,9 +37,27 @@
 Word NewWord(char* s, int length);
 // mengembalikan data Word dengan panjang length dan karakter-karakter beserta urutannya sama dengan pada array s
 
-boolean IsWordEqual(Word kata);
+boolean IsInputEqual(Word kata);
 // mengembalikan true jika kata sama dengan currentWord (tidak case-sensitive)
+
+boolean IsWordEqual(Word kata1, Word kata2);
+// mengembalikan true jika kata1 sama dengan kata2 (tidak case-sensitive)
 
 int WordToInt(Word kata);
 // mengembalikan representasi integer dari kata atau mengembalikan NUM_UNDEF jika input bukan angka atau banyak digit lebih besar dari 9
+
+void ConcatWord(Word *kata1, Word kata2);
+// I.S. kata2 terdefinisi, kata1 dapat terdefinisi
+// F.S. kata2 dikonkatenasi di akhir kata1
+
+void CopyDefinedWord(Word *kata1, Word kata2);
+// I.S. kata1 sembarang
+// F.S. kata1 memiliki panjang dan karakter-karakter yang sama dengan kata2
+
+void DisplayWord(Word kata);
+// menampilkan word
+
+void DisplayWordLine(Word kata);
+// menampilkan word dengan new line di akhir
+
 #endif

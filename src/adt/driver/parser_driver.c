@@ -16,97 +16,98 @@ int  main(){
 
     // KAMUS
 	int i, res;
+	Word kalimat, copyResult;
 
     // ALGORITMA
 
 	STARTWORD();
-
+	kalimat = EMPTY_WORD;
 	while (EndWord == false) {
 
 		printf("input sebenarnya (case-sensitive) : ");
 		DisplayWord(currentWord);
 		printf("\n");
 		
-        if (IsWordEqual(START_WORD) == true)
+        if (IsInputEqual(START_WORD) == true)
 		{
 			printf("input command START\n");
 		}
 
-		else if (IsWordEqual(EXIT_WORD) == true)
+		else if (IsInputEqual(EXIT_WORD) == true)
 		{
 			printf("input command EXIT\n");
 		}
 
-		else if (IsWordEqual(BUY_WORD) == true)
+		else if (IsInputEqual(BUY_WORD) == true)
 		{
 			printf("input command BUY\n");
 		}
 
-		else if (IsWordEqual(DELIVERY_WORD) == true)
+		else if (IsInputEqual(DELIVERY_WORD) == true)
 		{
 			printf("input command DELIVERY\n");
 		}
 
-		else if (IsWordEqual(MOVE_NORTH_WORD) == true)
+		else if (IsInputEqual(MOVE_NORTH_WORD) == true)
 		{
 			printf("input command MOVE NORTH\n");
 		}
 
-		else if (IsWordEqual(MOVE_EAST_WORD) == true)
+		else if (IsInputEqual(MOVE_EAST_WORD) == true)
 		{
 			printf("input command MOVE EAST\n");
 		}
 
-		else if (IsWordEqual(MOVE_WEST_WORD) == true)
+		else if (IsInputEqual(MOVE_WEST_WORD) == true)
 		{
 			printf("input command MOVE WEST\n");
 		}
-		else if (IsWordEqual(MOVE_SOUTH_WORD) == true)
+		else if (IsInputEqual(MOVE_SOUTH_WORD) == true)
 		{
 			printf("input command MOVE SOUTH\n");
 		}
 		
-		else if (IsWordEqual(MIX_WORD) == true)
+		else if (IsInputEqual(MIX_WORD) == true)
 		{
 			printf("input command MIX\n");
 		}
 		
-		else if (IsWordEqual(CHOP_WORD) == true)
+		else if (IsInputEqual(CHOP_WORD) == true)
 		{
 			printf("input command CHOP\n");
 		}
 		
-		else if (IsWordEqual(FRY_WORD) == true)
+		else if (IsInputEqual(FRY_WORD) == true)
 		{
 			printf("input command FRY\n");
 		}
 		
-		else if (IsWordEqual(BOIL_WORD) == true)
+		else if (IsInputEqual(BOIL_WORD) == true)
 		{
 			printf("input command BOIL\n");
 		}
 		
-		else if (IsWordEqual(WAIT_WORD) == true)
+		else if (IsInputEqual(WAIT_WORD) == true)
 		{
 			printf("input command WAIT\n");
 		}
 		
-		else if (IsWordEqual(UNDO_WORD) == true)
+		else if (IsInputEqual(UNDO_WORD) == true)
 		{
 			printf("input command UNDO\n");
 		}
 		
-		else if (IsWordEqual(REDO_WORD) == true)
+		else if (IsInputEqual(REDO_WORD) == true)
 		{
 			printf("input command REDO\n");
 		}
 		
-		else if (IsWordEqual(CATALOG_WORD) == true)
+		else if (IsInputEqual(CATALOG_WORD) == true)
 		{
 			printf("input command CATALOG\n");
 		}
 		
-		else if (IsWordEqual(COOKBOOK_WORD) == true)
+		else if (IsInputEqual(COOKBOOK_WORD) == true)
 		{
 			printf("input command COOKBOOK\n");
 		}
@@ -121,8 +122,24 @@ int  main(){
 		if (res == NUM_UNDEF) {
 			printf(" (input is not number)");
 		}
-
+		
 		printf("\n");
+
+		CopyDefinedWord(&copyResult, currentWord);
+		
+		printf("Hasil copy dari currentWord : ");
+		DisplayWordLine(copyResult);
+
+		ConcatWord(&kalimat, currentWord);
+		ConcatWord(&kalimat, BLANK_WORD);
+		printf("Kata gabungan dari awal : ");
+		DisplayWordLine(kalimat);
+
+		if (kalimat.Length >= NMax)
+		{
+			printf("[KALIMAT PENUH!]\n");
+
+		}
 		ADVWORD();
 	}
 

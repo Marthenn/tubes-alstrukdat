@@ -31,7 +31,7 @@ IdxType GetLastIdxCol(Matriks m){
     // ALGORITMA
     return COL_EFF(m) - 1;
 }
-boolean IsIdxEff(Matriks m, IdxType i, IdxType j){
+boolean IsMatIdxEff(Matriks m, IdxType i, IdxType j){
 /* Mengirimkan true jika i, j adalah Index efektif bagi m */
 
     // KAMUS LOKAL
@@ -48,7 +48,7 @@ void CopyMatriks(Matriks mIn, Matriks *mOut){
     // ALGORITMA
     for(i = 0; i <= GetLastIdxRow(mIn); i++){
         for(j = 0; j <= GetLastIdxCol(mIn); j++){
-            ELMT(*mOut, i, j) = ELMT(mIn, i, j);
+            MAT_ELMT(*mOut, i, j) = MAT_ELMT(mIn, i, j);
         }
     }
 }
@@ -70,7 +70,7 @@ void DisplayMatriks(Matriks m){
     // ALGORITMA
     for(i = 0; i <= GetLastIdxRow(m); i++){
         for(j = 0; j <= GetLastIdxCol(m); j++){
-            PrintElType(ELMT(m, i, j));
+            PrintElType(MAT_ELMT(m, i, j));
             printf(" ");
         }
         printf("\n");

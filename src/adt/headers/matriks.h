@@ -22,7 +22,7 @@ typedef struct{
 /* *** Selektor *** */
 #define ROW_EFF(M) (M).rowEff
 #define COL_EFF(M) (M).colEff
-#define ELMT(M, i, j) (M).mem[(i)][(j)]
+#define MAT_ELMT(M, i, j) (M).mem[(i)][(j)]
 
 /* ********** DEFINISI PROTOTIPE PRIMITIF ********** */
 /* *** Konstruktor membentuk Matriks *** */
@@ -36,7 +36,7 @@ IdxType GetLastIdxRow(Matriks m);
 /* Mengirimkan Index baris terbesar m */
 IdxType GetLastIdxCol(Matriks m);
 /* Mengirimkan Index kolom terbesar m */
-boolean IsIdxEff(Matriks m, IdxType i, IdxType j);
+boolean IsMatIdxEff(Matriks m, IdxType i, IdxType j);
 /* Mengirimkan true jika i, j adalah Index efektif bagi m */
 
 /* ********** Assignment  Matriks ********** */

@@ -6,6 +6,7 @@
 
 // implementations
 #include "../implementasi/wordmachine.c"
+#include "../implementasi/parser.c"
 
 /* State Mesin Word */
 

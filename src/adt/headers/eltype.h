@@ -36,7 +36,7 @@ int GetType(ElType e);
  * @param e 
  * @return int 
  */
-union data GetVal(ElType e);
+union Data GetVal(ElType e);
 
 /**
  * @brief Set the Val of an ElType object

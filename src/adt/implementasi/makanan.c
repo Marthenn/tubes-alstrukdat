@@ -10,28 +10,28 @@ void CreateMakanan(Makanan *m, int id, Word nama, Waktu kedaluarsa,
 /* I.S. m sembarang. ID, Nama, Kedaluarsa, LokasiAksi, Pengiriman terdefinisi */
 /* F.S. terbentuk makanan m */
 {
-    m->id = id;
-    m->nama = nama;
-    m->kedaluarsa = kedaluarsa;
-    m->lokasiAksi = lokasiAksi;
-    m->pengiriman = pengiriman;
+    m->Id = id;
+    m->Nama = nama;
+    m->Kedaluarsa = kedaluarsa;
+    m->LokasiAksi = lokasiAksi;
+    m->Pengiriman = pengiriman;
 }
 
 /* *** GETTER *** */
 int GetIDMakanan(Makanan m){
-    return m.id;
+    return m.Id;
 }
 Word GetNama(Makanan m) {
-    return m.nama;
+    return m.Nama;
 }
 Waktu GetKedaluarsa(Makanan m) {
-    return m.kedaluarsa;
+    return m.Kedaluarsa;
 }
 Point GetLokasiAksi(Makanan m) {
-    return m.lokasiAksi;
+    return m.LokasiAksi;
 }
 Waktu GetPengiriman(Makanan m) {
-    return m.pengiriman;
+    return m.Pengiriman;
 }
 
 void DisplayMakanan(Makanan m)
@@ -39,18 +39,18 @@ void DisplayMakanan(Makanan m)
     printf("id : %d\n", GetIDMakanan(m));
 
     printf("nama makanan : ");
-    DisplayWordLine(m.nama);
+    DisplayWordLine(m.Nama);
 
     printf("Waktu kadaluarsa : ");
-    CetakWaktuLengkap(m.kedaluarsa);
+    CetakWaktuLengkap(m.Kedaluarsa);
     printf("\n");
 
     printf("Waktu pengiriman : ");
-    CetakWaktuLengkap(m.pengiriman);
+    CetakWaktuLengkap(m.Pengiriman);
     printf("\n");
 
     printf("Lokasi aksi : ");
-    CetakPoint(m.lokasiAksi);
+    CetakPoint(m.LokasiAksi);
     printf("\n");
 
 }

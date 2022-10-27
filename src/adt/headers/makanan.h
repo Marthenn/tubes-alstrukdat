@@ -9,15 +9,15 @@
 #include "point.h"
 
 typedef struct {
-    int id;
-    Word nama; 
-    Waktu kedaluarsa, pengiriman;
-    Point lokasiAksi;
+    int Id;
+    Word Nama; 
+    Waktu Kedaluarsa, Pengiriman;
+    Point LokasiAksi;
 } Makanan;
 
 /* *** KONSTRUKTOR *** */
-void CreateMakanan(Makanan *m, int ID, Word Nama, Waktu Kedaluarsa, 
-                    Waktu Pengiriman, Point LokasiAksi);
+void CreateMakanan(Makanan *m, int id, Word nama, Waktu kedaluarsa, 
+                    Waktu pengiriman, Point lokasiAksi);
 /* I.S. m sembarang. ID, Nama, Kedaluarsa, LokasiAksi, Pengiriman terdefinisi */
 /* F.S. terbentuk makanan m */
 

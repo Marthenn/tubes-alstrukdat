@@ -5,81 +5,81 @@
 
 #define strbol(x) (x) ? "True\n" : "False\n"
 
-makanan newDummy(int id,int mKadar,int mKirim)
+Makanan NewDummy(int id,int mKadar,int mKirim)
 /* Membuat makanan untuk dijadikan komponen queue*/
 {
     // Kamus Lokal
-    makanan tmp;
-    waktu kirim, kadar;
-    point p;
+    Makanan tmp;
+    Waktu kirim, kadar;
+    Point p;
     Word name = NewWord("-",1);
     // Algoritma
-    createPoint(&p,0,0);
-    createWaktu(&kadar,0,0,mKadar);
-    createWaktu(&kirim,0,0,mKirim);
-    createMakanan(&tmp,id,name,kadar,kirim,p);
+    CreatePoint(&p,0,0);
+    CreateWaktu(&kadar,0,0,mKadar);
+    CreateWaktu(&kirim,0,0,mKirim);
+    CreateMakanan(&tmp,id,name,kadar,kirim,p);
     return tmp;
 }
 
 int main(){
     // Kamus
     PrioQueue Q;
-    makanan tmp;
+    Makanan tmp;
     int i;
     // Algoritma
-    createEmptyPQ(&Q);
+    CreateEmptyPQ(&Q);
     printf("****** Cek isEmptyPQ dan isFullPQ ******\n");
-    printf(strbol(isEmptyPQ(Q)));
-    printf(strbol(isFullPQ(Q)));
+    printf(strbol(IsEmptyPQ(Q)));
+    printf(strbol(IsFullPQ(Q)));
     printf("****** Cek displayPQ ******\n");
-    displayPQ(Q);
+    DisplayPQ(Q);
     printf("****** Cek enqueue ******\n");
     for (i = 0;i < 4;i++){
-        enqueue(&Q,newDummy(i,i,3-i),i);
+        Enqueue(&Q,NewDummy(i,i,3-i),i);
     }
-    displayPQ(Q);
+    DisplayPQ(Q);
     printf("****** Cek getter ******\n");
-    displayMakanan(getHeadInfo(Q));
-    displayMakanan(getElmtPQ(Q,lengthPQ(Q)-1));
+    DisplayMakanan(GetHeadInfo(Q));
+    DisplayMakanan(GetElmtPQ(Q,LengthPQ(Q)-1));
     printf("****** Cek length ******\n");
     printf("length : %d\n",lengthPQ(Q));
     printf("****** Cek dequeue ******\n");
 
-    dequeue(&Q,&tmp);
-    displayMakanan(tmp);
-    displayPQ(Q);
+    Dequeue(&Q,&tmp);
+    DisplayMakanan(tmp);
+    DisplayPQ(Q);
     printf("****** Cek sifat queue yang tetap ketika enque dan deque dilakukan bergantian ******\n");
     for (i = 0;i < 20;i++){
-        enqueue(&Q,newDummy(-1,0,0),0);
-        dequeue(&Q,&tmp);
+        Enqueue(&Q,NewDummy(-1,0,0),0);
+        Dequeue(&Q,&tmp);
     }
-    displayPQ(Q);
+    DisplayPQ(Q);
     printf("Mengosongkan queue...\n");
-    while (!isEmptyPQ(Q)){
-        dequeue(&Q,&tmp);
+    while (!IsEmptyPQ(Q)){
+        Dequeue(&Q,&tmp);
     }
-    displayPQ(Q);
+    DisplayPQ(Q);
     printf("****** Uji Q ketika full ******\n");
     printf("Mengisi queue hingga penuh...\n");
     for (i = 0;i < Q.Cap;i++){
-        enqueue(&Q,newDummy(i,0,0),0);    
+        enqueue(&Q,NewDummy(i,0,0),0);    
     }
     printf(strbol(isFullPQ(Q)));
     printf("****** Cek realokasi jika queue tidak muat ******\n");
     printf("Capacity : %d\n",Q.Cap);
-    enqueue(&Q,newDummy(20,0,0),0);
+    Enqueue(&Q,NewDummy(20,0,0),0);
     printf("Capacity : %d\n",Q.Cap);
     for (i = 0;i < 40;i++){
-        enqueue(&Q,newDummy(i,0,0),0);    
+        Enqueue(&Q,NewDummy(i,0,0),0);    
     }
     printf("Capacity : %d\n",Q.Cap);
     printf("****** Cek deleteAt ******\n");
-    deleteAtPQ(&Q,&tmp,4);
-    displayMakanan(tmp);
+    DeleteAtPQ(&Q,&tmp,4);
+    DisplayMakanan(tmp);
     printf("****** Cek realokasi jika queue sepi ******\n");
     printf("Capacity awal : %d\n",Q.Cap);
-    while (lengthPQ(Q) > 20){
-        dequeue(&Q,&tmp);
+    while (LengthPQ(Q) > 20){
+        Dequeue(&Q,&tmp);
     }
     printf("Capacity akhir : %d\n",Q.Cap);
 

@@ -36,8 +36,8 @@ void Help(){
     printf("    Menggoreng satu atau lebih bahan makanan\n");
     printf("10. BOIL\n");
     printf("    Merebus suatu bahan makanan\n");
-    printf("11. WAIT\n");
-    printf("    Menunggu waktu berlalu\n");
+    printf("11. WAIT x y\n");
+    printf("    Menunggu selama x jam dan y menit\n");
     printf("12. UNDO\n");
     printf("    Membatalkan perintah terakhir\n");
     printf("13. REDO\n");

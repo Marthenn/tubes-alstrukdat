@@ -38,7 +38,7 @@ IdxType GetLastIdx(ListStatik l){
 }
 
 /* ********** Test Indeks yang valid ********** */
-boolean IsIdxEff(ListStatik l, IdxType i){
+boolean IsListIdxEff(ListStatik l, IdxType i){
 /* Mengirimkan true jika i adalah indeks yang terdefinisi utk List l */
 /* yaitu antara 0..length(l)-1 */
 
@@ -77,7 +77,7 @@ int IndexOf(ListStatik l, ElType val){
     // ALGORITMA
     i = 0;
     for(i = 0; i <= GetLastIdx(l); i++){
-        if(Compare(ELMT(l, i), val)){
+        if(Compare(LIST_ELMT(l, i), val)){
             return i;
         }
     }
@@ -96,13 +96,13 @@ void InsertFirst(ListStatik *l, ElType val){
     int i;
     // ALGORITMA
     if(IsEmpty(*l)){
-        ELMT(*l, 0) = val;
+        LIST_ELMT(*l, 0) = val;
     }
     else{
         for(i = GetLastIdx(*l) + 1; i > 0; i--){
-            ELMT(*l, i) = ELMT(*l, i-1);
+            LIST_ELMT(*l, i) = LIST_ELMT(*l, i-1);
         }
-        ELMT(*l, 0) = val;
+        LIST_ELMT(*l, 0) = val;
         EFF(*l)++;
     }
 }
@@ -115,9 +115,9 @@ void InsertAt(ListStatik *l, ElType val, IdxType idx){
     int i;
     // ALGORITMA
     for(i = GetLastIdx(*l) + 1; i > idx; i--){
-        ELMT(*l, i) = ELMT(*l, i-1);
+        LIST_ELMT(*l, i) = LIST_ELMT(*l, i-1);
     }
-    ELMT(*l, idx) = val;
+    LIST_ELMT(*l, idx) = val;
     EFF(*l)++;
 }
 /* *** Menambahkan elemen terakhir *** */
@@ -128,7 +128,7 @@ void InsertLast(ListStatik *l, ElType val){
 
     // KAMUS LOKAL
     // ALGORITMA
-    ELMT(*l, GetLastIdx(*l)+1) = val;
+    LIST_ELMT(*l, GetLastIdx(*l)+1) = val;
     EFF(*l)++;
 }
 
@@ -144,9 +144,9 @@ void DeleteFirst(ListStatik *l, ElType *val){
     // KAMUS LOKAL
     int i;
     // ALGORITMA
-    *val = ELMT(*l, 0);
+    *val = LIST_ELMT(*l, 0);
     for(i = 0; i < GetLastIdx(*l); i++){
-        ELMT(*l, i) = ELMT(*l, i+1);
+        LIST_ELMT(*l, i) = LIST_ELMT(*l, i+1);
     }
     EFF(*l)--;
 }
@@ -161,9 +161,9 @@ void DeleteAt(ListStatik *l, ElType *val, IdxType idx){
     // KAMUS LOKAL
     int i;
     // ALGORITMA
-    *val = ELMT(*l, idx);
+    *val = LIST_ELMT(*l, idx);
     for(i = idx; i < GetLastIdx(*l); i++){
-        ELMT(*l, i) = ELMT(*l, i+1);
+        LIST_ELMT(*l, i) = LIST_ELMT(*l, i+1);
     }
     EFF(*l)--;
 }
@@ -177,7 +177,7 @@ void DeleteLast(ListStatik *l, ElType *val){
 
     // KAMUS LOKAL
     // ALGORITMA
-    *val = ELMT(*l, GetLastIdx(*l));
+    *val = LIST_ELMT(*l, GetLastIdx(*l));
     EFF(*l)--;
 }
 
@@ -191,7 +191,7 @@ void CopyList(ListStatik lIn, ListStatik *lOut){
     i = 0;
     EFF(*lOut) = EFF(lIn);
     for(i = 0; i <= GetLastIdx(lIn); i++){
-        ELMT(*lOut, i) = ELMT(lIn, i);
+        LIST_ELMT(*lOut, i) = LIST_ELMT(lIn, i);
     }
 }
 
@@ -202,7 +202,7 @@ void DisplayList(ListStatik l){
     // ALGORITMA
     printf("[");
     for(i = 0; i <= GetLastIdx(l); i++){
-        PrintElType(ELMT(l, i));
+        PrintElType(LIST_ELMT(l, i));
         if(i != ListLength(l) - 1){
             printf(", ");
         }

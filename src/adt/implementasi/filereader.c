@@ -10,6 +10,7 @@
 #include "../headers/wordmachine.h"
 #include "../headers/eltype.h"
 #include "../headers/matriks.h"
+#include "../headers/liststatik.h"
 //implementation
 #include "parser.c"
 #include "makanan.c"
@@ -18,6 +19,7 @@
 #include "wordmachine.c"
 #include "eltype.c"
 #include "matriks.c"
+#include "liststatik.c"
 
 boolean EndFileWord;
 Word currentFileWord;
@@ -120,16 +122,19 @@ void ReadTime(Waktu *time)
     NextLine();
 }
 
-void ReadFoodConfig()
+void ReadFoodConfig(ListStatik *l)
 {
     // KAMUS LOKAL
     Makanan food;
+    ElType foodElement;
     Word kata, judul, hari, jam, menit;
-    int N, i, id;
+    int N, i, id, idx;
     Waktu expiredTime, deliveryTime;
     Point actionPoint;
+
     // ALGORITMA
 
+    CreateListStatik(l);
     STARTFILELINE(&kata, FOOD_CONFIG_PATH);
     N = WordToInt(kata);
 
@@ -151,9 +156,17 @@ void ReadFoodConfig()
         CreatePoint(&actionPoint, 0, 0);
 
         CreateMakanan(&food, id, judul, expiredTime, deliveryTime, actionPoint);
-
-        printf("Makanan ke-%d\n", i+1);
-        DisplayMakanan(food);
+        foodElement = NewElType(3, (union Data){.m=food});
+        idx = IndexOf(*l, foodElement);
+        
+        if (idx == IDX_UNDEF && ListLength(*l) < CAPACITY)
+        {
+            InsertLast(l, foodElement);
+        }
+        
+        else {
+            l->contents[idx] = foodElement;
+        }
     }
     
 }
@@ -178,25 +191,26 @@ void ReadMapConfig(Matriks *map)
 
     CreateMatriks(n, m, map);
 
-    for (i = 0; i < n; i++)
+    for (i = 0; (i < n && i < ROW_CAP); i++)
     {
         ReadLine(&kata);
         
         
-        for (j = 0; j < m; j++)
+        for (j = 0; (j < m && j < COL_CAP); j++)
         {
-            ELMT(*map, i, j) = NewElType(2, (union Data){.c=kata.TabWord[j]});
+            MAT_ELMT(*map, i, j) = NewElType(2, (union Data){.c=kata.TabWord[j]});
         }
     }
 }
 
-void ReadAllConfig(Matriks *map)
+void ReadAllConfig(Matriks *map, ListStatik *foods)
 {
     // KAMUS LOKAL
 
     // ALGORITMA
 
     ReadMapConfig(map);
-    ReadFoodConfig();
+    ReadFoodConfig(foods);
     ReadRecipeConfig();
+
 }

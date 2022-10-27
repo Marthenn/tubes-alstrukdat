@@ -5,17 +5,25 @@
 #include "../headers/boolean.h"
 #include "../headers/parser.h"
 #include "../headers/liststatik.h"
+#include "../headers/eltype.h"
+#include "../headers/makanan.h"
+#include "../headers/waktu.h"
+#include "../headers/point.h"
 // implementations
 #include "../implementasi/parser.c"
 #include "../implementasi/wordmachine.c"
-
+#include "../implementasi/liststatik.c"
+#include "../implementasi/eltype.c"
+#include "../implementasi/makanan.c"
+#include "../implementasi/waktu.c"
+#include "../implementasi/point.c"
 /* State Mesin Word */
 
 
 int  main(){
 
     // KAMUS
-	int i, res;
+	int i, res, x, y;
 	Word kalimat, copyResult;
 	ListStatik l;
 
@@ -30,6 +38,8 @@ int  main(){
 		printf("\n");
 
 		l = SplitWord(currentWord, ' ');
+
+		DisplayList(l);
 		
         if (IsInputEqual(START_WORD) == true)
 		{
@@ -117,7 +127,17 @@ int  main(){
 		
 		else if (IsInputPrefixEqual(WAIT_WORD) == true && ListLength(l) == 3)
 		{
+			x = WordToInt(GetVal(l.contents[1]).w);
+			y = WordToInt(GetVal(l.contents[2]).w);
 
+			if (x != NUM_UNDEF && y != NUM_UNDEF)
+			{
+				printf("input command WAIT %d %d\n", x, y);
+			}
+
+			else {
+				printf("Input command tidak valid\n");
+			}
 		}
 
 		else {

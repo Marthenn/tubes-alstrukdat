@@ -1,6 +1,7 @@
 /* File : makanan.c */
 /* Body ADT makanan */
 
+#include <stdio.h>
 #include "../headers/makanan.h"
 #include "../headers/parser.h"
 

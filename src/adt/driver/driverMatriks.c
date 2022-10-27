@@ -13,15 +13,15 @@ int main(){
     ElType e8 = NewElType(0, (union Data){.i = 42});
     ElType e9 = NewElType(0, (union Data){.i = 5});
 
-    ELMT(m1, 0, 0) = e1;
-    ELMT(m1, 0, 1) = e2;
-    ELMT(m1, 0, 2) = e3;
-    ELMT(m1, 1, 0) = e4;
-    ELMT(m1, 1, 1) = e5;
-    ELMT(m1, 1, 2) = e6;
-    ELMT(m1, 2, 0) = e7;
-    ELMT(m1, 2, 1) = e8;
-    ELMT(m1, 2, 2) = e9;
+    MAT_ELMT(m1, 0, 0) = e1;
+    MAT_ELMT(m1, 0, 1) = e2;
+    MAT_ELMT(m1, 0, 2) = e3;
+    MAT_ELMT(m1, 1, 0) = e4;
+    MAT_ELMT(m1, 1, 1) = e5;
+    MAT_ELMT(m1, 1, 2) = e6;
+    MAT_ELMT(m1, 2, 0) = e7;
+    MAT_ELMT(m1, 2, 1) = e8;
+    MAT_ELMT(m1, 2, 2) = e9;
 
     CreateMatriks(3, 3, &m1);
     CreateMatriks(3, 3, &m2);

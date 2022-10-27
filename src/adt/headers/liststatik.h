@@ -20,7 +20,7 @@ typedef struct {
 
 /* ********** SELEKTOR ********** */
 #define EFF(l) (l).idxEff
-#define ELMT(l, i) (l).contents[(i)]
+#define LIST_ELMT(l, i) (l).contents[(i)]
 
 /* ********** KONSTRUKTOR ********** */
 /* Konstruktor : create List kosong  */
@@ -41,7 +41,7 @@ IdxType GetLastIdx(ListStatik l);
 /* Mengirimkan indeks elemen l terakhir */
 
 /* ********** Test Indeks yang valid ********** */
-boolean IsIdxEff(ListStatik l, IdxType i);
+boolean IsListIdxEff(ListStatik l, IdxType i);
 /* Mengirimkan true jika i adalah indeks yang terdefinisi utk List l */
 /* yaitu antara 0..length(l)-1 */
 

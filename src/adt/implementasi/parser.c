@@ -197,6 +197,7 @@ ListStatik SplitWord(Word kata, char separator)
         {
             subkata.TabWord[count] = kata.TabWord[i];
             count++;
+            i++;
         }
 
         if (count > 0)

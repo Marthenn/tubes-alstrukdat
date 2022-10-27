@@ -2,6 +2,8 @@
 #include "../headers/display.h"
 
 int main(){
-    SplashScreen();
+    StartScreen();
+    printf("-----------\n");
+    Help();
     return 0;
 }

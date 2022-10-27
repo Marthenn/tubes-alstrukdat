@@ -26,24 +26,24 @@ typedef struct{
 
 /* ********** DEFINISI PROTOTIPE PRIMITIF ********** */
 /* *** Konstruktor membentuk Matriks *** */
-void createMatriks(int nRows, int nCols, Matriks *m);
+void CreateMatriks(int nRows, int nCols, Matriks *m);
 /* Membentuk sebuah Matriks "kosong" yang siap diisi berukuran nRow x nCol di "ujung kiri" memori */
 /* I.S. nRow dan nCol adalah valid untuk memori matriks yang dibuat */
 /* F.S. Matriks m sesuai dengan definisi di atas terbentuk */
 
 /* *** Selektor: Untuk sebuah matriks m yang terdefinisi: *** */
-IdxType getLastIdxRow(Matriks m);
+IdxType GetLastIdxRow(Matriks m);
 /* Mengirimkan Index baris terbesar m */
-IdxType getLastIdxCol(Matriks m);
+IdxType GetLastIdxCol(Matriks m);
 /* Mengirimkan Index kolom terbesar m */
-boolean isIdxEff(Matriks m, IdxType i, IdxType j);
+boolean IsIdxEff(Matriks m, IdxType i, IdxType j);
 /* Mengirimkan true jika i, j adalah Index efektif bagi m */
 
 /* ********** Assignment  Matriks ********** */
-void copyMatriks(Matriks mIn, Matriks *mOut);
+void CopyMatriks(Matriks mIn, Matriks *mOut);
 /* Melakukan assignment mOut <- mIn */
 
-void displayMatriks(Matriks m);
+void DisplayMatriks(Matriks m);
 /* I.S. m terdefinisi */
 /* F.S. Nilai m(i,j) ditulis ke layar per baris per kolom, masing-masing elemen per baris 
    dipisahkan sebuah spasi. Baris terakhir tidak diakhiri dengan newline */

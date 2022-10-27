@@ -9,6 +9,7 @@ union Data{
     /*type 1*/ float f;
     /*type 2*/ char c;
     /*type 3*/ Makanan m;
+    /*type 4*/ Word w;
 };
 
 typedef struct ElType{

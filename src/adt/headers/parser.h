@@ -6,6 +6,7 @@
 // headers
 #include "boolean.h"
 #include "wordmachine.h"
+#include "liststatik.h"
 
 // command constants
 #define GAP 'a' - 'A'
@@ -24,6 +25,7 @@
 #define WAIT_WORD NewWord("WAIT", 4)
 #define UNDO_WORD NewWord("UNDO", 4)
 #define REDO_WORD NewWord("REDO", 4)
+#define WAIT_WORD NewWord("WAIT", 4)
 #define CATALOG_WORD NewWord("CATALOG", 7)
 #define COOKBOOK_WORD NewWord("COOKBOOK", 8)
 #define EMPTY_WORD NewWord("", 0)
@@ -40,6 +42,9 @@ Word NewWord(char* s, int length);
 boolean IsInputEqual(Word kata);
 // mengembalikan true jika kata sama dengan currentWord (tidak case-sensitive)
 
+boolean IsInputPrefixEqual(Word kata);
+// mengembalikan true jika kata sama dengan prefix currentWord (tidak case-sensitive)
+
 boolean IsWordEqual(Word kata1, Word kata2);
 // mengembalikan true jika kata1 sama dengan kata2 (tidak case-sensitive)
 
@@ -55,9 +60,14 @@ void CopyDefinedWord(Word *kata1, Word kata2);
 // F.S. kata1 memiliki panjang dan karakter-karakter yang sama dengan kata2
 
 void DisplayWord(Word kata);
-// menampilkan word
+// I.S. kata terdefinisi
+// F.S. kata ditampilkan ke layar 
+
 
 void DisplayWordLine(Word kata);
-// menampilkan word dengan new line di akhir
+// I.S. kata terdefinisi 
+// F.S. kata ditampilkan ke layar dengan new line di akhir
 
+ListStatik SplitWord(Word kata, char separator);
+// mengembalikan list berisi subkata yang dipisahkan karakter separator
 #endif

@@ -27,9 +27,9 @@ int main(){
     printf("List : ");
     DisplayList(l1);
 
-    printf("\nLength : %d", listLength(l1));
-    printf("\nIndex of e2 : %d", indexOf(l1, e2));
-    printf("\nIndex of e7 : %d", indexOf(l1, e7));
+    printf("\nLength : %d", ListLength(l1));
+    printf("\nIndex of e2 : %d", IndexOf(l1, e2));
+    printf("\nIndex of e7 : %d", IndexOf(l1, e7));
 
     CopyList(l1, &l2);
     printf("\nCopied List : ");

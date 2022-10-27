@@ -4,7 +4,7 @@
 // headers
 #include "../headers/boolean.h"
 #include "../headers/parser.h"
-
+#include "../headers/liststatik.h"
 // implementations
 #include "../implementasi/parser.c"
 #include "../implementasi/wordmachine.c"
@@ -17,6 +17,7 @@ int  main(){
     // KAMUS
 	int i, res;
 	Word kalimat, copyResult;
+	ListStatik l;
 
     // ALGORITMA
 
@@ -27,6 +28,8 @@ int  main(){
 		printf("input sebenarnya (case-sensitive) : ");
 		DisplayWord(currentWord);
 		printf("\n");
+
+		l = SplitWord(currentWord, ' ');
 		
         if (IsInputEqual(START_WORD) == true)
 		{
@@ -112,6 +115,11 @@ int  main(){
 			printf("input command COOKBOOK\n");
 		}
 		
+		else if (IsInputPrefixEqual(WAIT_WORD) == true && ListLength(l) == 3)
+		{
+
+		}
+
 		else {
 			printf("Input command tidak valid\n");
 		}

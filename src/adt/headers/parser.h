@@ -38,7 +38,7 @@ Word NewWord(char* s, int length);
 // mengembalikan data Word dengan panjang length dan karakter-karakter beserta urutannya sama dengan pada array s
 
 boolean IsInputEqual(Word kata);
-// mengembalikan true jika kata sama dengan currentWordParser (tidak case-sensitive)
+// mengembalikan true jika kata sama dengan currentWord (tidak case-sensitive)
 
 boolean IsWordEqual(Word kata1, Word kata2);
 // mengembalikan true jika kata1 sama dengan kata2 (tidak case-sensitive)

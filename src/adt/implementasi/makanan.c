@@ -42,15 +42,15 @@ void DisplayMakanan(Makanan m)
     DisplayWordLine(m.nama);
 
     printf("Waktu kadaluarsa : ");
-    cetakWaktuLengkap(m.kedaluarsa);
+    CetakWaktuLengkap(m.kedaluarsa);
     printf("\n");
 
     printf("Waktu pengiriman : ");
-    cetakWaktuLengkap(m.pengiriman);
+    CetakWaktuLengkap(m.pengiriman);
     printf("\n");
 
     printf("Lokasi aksi : ");
-    cetakPoint(m.lokasiAksi);
+    CetakPoint(m.lokasiAksi);
     printf("\n");
 
 }

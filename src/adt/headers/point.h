@@ -10,15 +10,15 @@ typedef struct {
 } Point;
 
 /* *** KONSTRUKTOR *** */
-void createPoint(Point *p, int x, int y);
+void CreatePoint(Point *p, int x, int y);
 /* I.S. p sembarang, x dan y terdefinisi */
 /* F.S. terbentuk point p dengan absis x dan ordinat y */
 
 /* *** GETTER & SETTER *** */
-void setAbsis(Point *p, int x);
+void SetAbsis(Point *p, int x);
 /* I.S. p terdefinisi, x nilainya di dalam batas peta */
 /* F.S. Mengubah absis p menjadi x */
-void setOrdinat(Point *p, int y);
+void SetOrdinat(Point *p, int y);
 /* I.S. p terdefinisi, y nilainya di dalam batas peta */
 /* F.S. Mengubah ordinat p menjadi y */
 

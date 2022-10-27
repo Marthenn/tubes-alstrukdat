@@ -101,7 +101,7 @@ void ReadTime(Waktu *time)
     j = WordToInt(jam);
     m = WordToInt(menit);
 
-    createWaktu(time, h, j, m);
+    CreateWaktu(time, h, j, m);
 
     // currentFileChar should be '\n'
     NextLine();
@@ -135,12 +135,12 @@ void ReadFoodConfig()
 
         ReadLine(&kata);
         
-        createPoint(&actionPoint, 0, 0);
+        CreatePoint(&actionPoint, 0, 0);
 
-        createMakanan(&food, id, judul, expiredTime, deliveryTime, actionPoint);
+        CreateMakanan(&food, id, judul, expiredTime, deliveryTime, actionPoint);
 
         printf("Makanan ke-%d\n", i+1);
-        displayMakanan(food);
+        DisplayMakanan(food);
     }
     
 }

@@ -77,7 +77,9 @@ void ReadIntLine(int *num)
     ReadLine(&kata);
     *num = WordToInt(kata);
 }
+
 void ReadTime(Waktu *time)
+
 // I.S. nilai komponen pada time sembarang;
 // F.S. time merupakan representasi waktu dari baris yang sedang dibaca, mesin kata dan mesin karakter menuju line berikutnya.
 {

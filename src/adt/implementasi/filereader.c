@@ -20,10 +20,9 @@ Word currentFileWord;
 
 void STARTFILELINE(Word *kata, char *path)
 /* I.S. : currentFileChar sembarang
-   F.S. : EndFileWord = true, dan currentFileChar = MARK;
-          atau EndFileWord = false, currentWord adalah kata pertama pada baris selanjutnya,
-          currentFileChar karakter pertama pada baris selanjutnya*/
-
+   F.S. : EndFileWord = true, dan proses pembacaan mesin kata mencapai EOF;
+          atau EndFileWord = false, currentFileWord adalah kata pertama pada baris selanjutnya,
+          currentFileChar karakter pertama (bukan blank) setelah kata pertama pada baris selanjutnya*/
 {
     // KAMUS LOKAL
 
@@ -34,6 +33,8 @@ void STARTFILELINE(Word *kata, char *path)
 }
 
 void NextLine()
+// I.S. currentFileChar == '\n'
+// F.S. currentFileChar merupakan karakter pertama setelah kata pertama pada baris selanjutnya, currentFileWord merupakan kata pertama pada baris selanjutnya
 {
     ADV_FILE();
     IgnoreFileBlanks();
@@ -41,10 +42,9 @@ void NextLine()
 }
 
 void ReadLine(Word *kata)
-// I.S. kata belum terdefinisi, mesin kata sedang membaca file, currentFileWord terdefinisi
-// F.S. kata berisi string satu baris pada file yang sedang dibaca, currentFileChar merujuk ke Word pertama pada file selanjutnya (bisa terjadi FILE_EOP == true)
-// proses : currentFileWord disalin ke kata kemudian semua Word selanjutnya yang berada dalam satu baris di konkatenasi di akhir kata
-
+// I.S. kata sembarang, currentFileWord terdefinisi
+// F.S. kata berisi string pada satu baris pada file yang sedang dibaca, currentFileWord merujuk ke Word pertama pada baris selanjutnya atau EOF
+// proses : currentFileWord disalin ke variable. Kemudian, semua Word selanjutnya yang berada dalam satu baris di konkatenasi di akhir kata variable tersebut
 {
     *kata = EMPTY_WORD; 
 
@@ -68,6 +68,9 @@ void ReadLine(Word *kata)
 }
 
 void ReadIntLine(int *num)
+// I.S. nilai num sembarang;
+// F.S. nilai num merupakan representasi integer dari Word yang ada pada line saat ini pada file yang sedang dibaca, mesin kata dan mesin karakter menuju line berikutnya.
+// nilai num == NUM_UNDEF jika kata dalam satu line tidak dapat direpresentasikan sebagai integer
 {
     Word kata;
 
@@ -75,6 +78,8 @@ void ReadIntLine(int *num)
     *num = WordToInt(kata);
 }
 void ReadTime(waktu *time)
+// I.S. nilai komponen pada time sembarang;
+// F.S. time merupakan representasi waktu dari baris yang sedang dibaca, mesin kata dan mesin karakter menuju line berikutnya.
 {
     // KAMUS LOKAL
     int h, j, m;

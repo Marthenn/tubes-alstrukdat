@@ -64,7 +64,7 @@ void START_FILE(char *path)
 
        if (file)
        {
-              printf("Reading file in relative path %s", path);
+              printf("Reading file in relative path %s\n", path);
               ADV_FILE();
        }
        

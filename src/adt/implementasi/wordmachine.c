@@ -189,17 +189,3 @@ void CopyFileWord()
 
 	IgnoreFileBlanks();
 }
-
-void DisplayWord(Word kata)
-// menampilkan word
-{
-    // KAMUS LOKAL
-    int i;
-
-    // ALGORITMA
-
-    for (i = 0; i < kata.Length; i++)
-    {
-        printf("%c", kata.TabWord[i]);
-    }
-}

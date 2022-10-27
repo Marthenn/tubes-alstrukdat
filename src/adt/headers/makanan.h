@@ -17,7 +17,7 @@ typedef struct makanan {
 
 /* *** KONSTRUKTOR *** */
 void createMakanan(makanan *m, int ID, Word Nama, waktu Kedaluarsa, 
-                    point LokasiAksi, waktu Pengiriman);
+                    waktu Pengiriman, point LokasiAksi);
 /* I.S. m sembarang. ID, Nama, Kedaluarsa, LokasiAksi, Pengiriman terdefinisi */
 /* F.S. terbentuk makanan m */
 
@@ -27,5 +27,6 @@ Word getNama(makanan m);
 waktu getKedaluarsa(makanan m);
 point getLokasiAksi(makanan m);
 waktu getPengiriman(makanan m);
+void displayMakanan(makanan m);
 
 #endif

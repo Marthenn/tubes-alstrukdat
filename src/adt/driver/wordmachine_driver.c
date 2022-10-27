@@ -42,6 +42,12 @@ int  main(){
     {
         DisplayWord(currentFileWord);
         printf("\n");
+
+		if (currentFileChar == '\n')
+		{
+			ADV_FILE();
+		}
+		
         ADVFILEWORD();
     }
 	

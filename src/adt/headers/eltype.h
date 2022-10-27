@@ -6,6 +6,7 @@
 union Data{
     /*type 0*/ int i;
     /*type 1*/ float f;
+    /*type 2*/ char c;
 };
 
 typedef struct ElType{

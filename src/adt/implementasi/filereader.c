@@ -8,12 +8,16 @@
 #include "../headers/makanan.h"
 #include "../headers/waktu.h"
 #include "../headers/wordmachine.h"
+#include "../headers/eltype.h"
+#include "../headers/matriks.h"
 //implementation
 #include "parser.c"
 #include "makanan.c"
 #include "point.c"
 #include "waktu.c"
 #include "wordmachine.c"
+#include "eltype.c"
+#include "matriks.c"
 
 boolean EndFileWord;
 Word currentFileWord;
@@ -60,10 +64,11 @@ void ReadLine(Word *kata)
             
         }
 
-        else {
+        else if (FILE_EOP == false) {
             ConcatWord(kata, BLANK_WORD);
-            ADVFILEWORD();
         }
+
+        ADVFILEWORD();
     }
 }
 
@@ -76,6 +81,14 @@ void ReadIntLine(int *num)
 
     ReadLine(&kata);
     *num = WordToInt(kata);
+}
+
+void ReadInt(int *num)
+// I.S. nilai num sembarang
+// F.S. nilai num merupakan representasi integer dari currentFileWord, mesin karakter mengakuisisi kata selanjutnya
+{
+    *num = WordToInt(currentFileWord);
+    ADVFILEWORD();
 }
 
 void ReadTime(Waktu *time)
@@ -151,20 +164,39 @@ void ReadRecipeConfig()
     // ALGORITMA
 }
 
-void ReadMapConfig()
+void ReadMapConfig(Matriks *map)
 {
     // KAMUS LOKAL
-
+    int i, j, n, m;
+    Word kata;
     // ALGORITMA
+
+    STARTFILEWORD(MAP_CONFIG_PATH);
+    ReadInt(&n);
+    ReadInt(&m);
+    NextLine();
+
+    CreateMatriks(n, m, map);
+
+    for (i = 0; i < n; i++)
+    {
+        ReadLine(&kata);
+        
+        
+        for (j = 0; j < m; j++)
+        {
+            ELMT(*map, i, j) = NewElType(2, (union Data){.c=kata.TabWord[j]});
+        }
+    }
 }
 
-void ReadAllConfig()
+void ReadAllConfig(Matriks *map)
 {
     // KAMUS LOKAL
 
     // ALGORITMA
 
-    ReadMapConfig();
+    ReadMapConfig(map);
     ReadFoodConfig();
     ReadRecipeConfig();
 }

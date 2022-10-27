@@ -16,24 +16,24 @@ void StartScreen(){
 
 void Help(){
     printf("Perintah yang Tersedia:\n");
-    printf("1. BUY\n");
-    printf("   Melakukan pemesanan bahan makanan\n");
-    printf("2. DELIVERY\n");
-    printf("   Melihat pemesanan makanan\n");
-    printf("3. MOVE NORTH\n");
-    printf("   Bergerak ke arah utara\n");
-    printf("4. MOVE EAST\n");
-    printf("   Bergerak ke arah timur\n");
-    printf("5. MOVE WEST\n");
-    printf("   Bergerak ke arah barat\n");
-    printf("6. MOVE SOUTH\n");
-    printf("   Bergerak ke arah selatan\n");
-    printf("7. MIX\n");
-    printf("   Mencampurkan dua atau lebih bahan makanan\n");
-    printf("8. CHOP\n");
-    printf("   Memotong suatu bahan makanan\n");
-    printf("9. FRY\n");
-    printf("   Menggoreng satu atau lebih bahan makanan\n");
+    printf("1.  BUY\n");
+    printf("    Melakukan pemesanan bahan makanan\n");
+    printf("2.  DELIVERY\n");
+    printf("    Melihat pemesanan makanan\n");
+    printf("3.  MOVE NORTH\n");
+    printf("    Bergerak ke arah utara\n");
+    printf("4.  MOVE EAST\n");
+    printf("    Bergerak ke arah timur\n");
+    printf("5.  MOVE WEST\n");
+    printf("    Bergerak ke arah barat\n");
+    printf("6.  MOVE SOUTH\n");
+    printf("    Bergerak ke arah selatan\n");
+    printf("7.  MIX\n");
+    printf("    Mencampurkan dua atau lebih bahan makanan\n");
+    printf("8.  CHOP\n");
+    printf("    Memotong suatu bahan makanan\n");
+    printf("9.  FRY\n");
+    printf("    Menggoreng satu atau lebih bahan makanan\n");
     printf("10. BOIL\n");
     printf("    Merebus suatu bahan makanan\n");
     printf("11. WAIT\n");
@@ -48,8 +48,10 @@ void Help(){
     printf("    Melihat daftar bahan makanan yang tersedia\n");
     printf("16. COOKBOOK\n");
     printf("    Melihat daftar resep yang tersedia\n");
-    printf("17. HELP\n");
+    printf("17. INVENTORY\n");
+    printf("    Melihat bahan makanan yang ada di inventory\n");
+    printf("18. HELP\n");
     printf("    Menampilkan semua perintah yang tersedia\n");
-    printf("18. EXIT\n");
+    printf("19. EXIT\n");
     printf("    Keluar dari simulasi\n");
 }

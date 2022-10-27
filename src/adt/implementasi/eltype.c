@@ -34,6 +34,9 @@ boolean Compare(ElType a, ElType b){
             case 1:
                 return a.val.f==b.val.f;
                 break;
+            case 2:
+                return GetIDMakanan(a.val.m)==GetIDMakanan(b.val.m);
+                break;
         }
     }else{
         return false;
@@ -47,6 +50,9 @@ void PrintElType(ElType a){
             break;
         case 1:
             printf("%f",a.val.f);
+            break;
+        case 2:
+            DisplayMakanan(a.val.m);
             break;
         default:
             printf("undefined");

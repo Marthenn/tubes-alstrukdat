@@ -2,10 +2,12 @@
 #define ELTYPE_H
 
 #include "boolean.h"
+#include "makanan.h"
 
 union Data{
     /*type 0*/ int i;
     /*type 1*/ float f;
+    /*type 2*/ Makanan m;
 };
 
 typedef struct ElType{

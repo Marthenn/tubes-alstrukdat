@@ -5,6 +5,6 @@
  * @brief Display a cat meowing splash scren
  * 
  */
-void splashScreen();
+void SplashScreen();
 
 #endif

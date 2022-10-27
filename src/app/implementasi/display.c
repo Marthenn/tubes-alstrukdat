@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "../headers/display.h"
 
-void splashScreen(){
+void SplashScreen(){
     printf("        -------\n");
     printf("       | meow! |\n");
     printf("|\\__/| /--------\n");

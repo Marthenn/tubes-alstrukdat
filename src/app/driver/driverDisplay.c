@@ -2,6 +2,6 @@
 #include "../headers/display.h"
 
 int main(){
-    splashScreen();
+    SplashScreen();
     return 0;
 }

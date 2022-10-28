@@ -151,6 +151,18 @@ void CopyDefinedWord(Word *kata1, Word kata2)
     }
 }
 
+Word GetDefinedWord(Word kata)
+// mengembalikan Word yang merupakan salinan kata
+{   
+    // KAMUS LOKAL
+    Word copiedKata;
+
+    // ALGORITMA
+    CopyDefinedWord(&copiedKata, kata);
+
+    return copiedKata;
+    
+}
 void DisplayWord(Word kata)
 // I.S. kata terdefinisi
 // F.S. kata ditampilkan ke layar 
@@ -179,20 +191,24 @@ ListStatik SplitWord(Word kata, char separator)
 {
     // KAMUS LOKAL
     ListStatik l;
-    Word subkata, copiedKata;
+    Word subkata;
     int i, count, elmtCount;
 
     // ALGORITMA
     i = 0;
 
+    CreateListStatik(&l);
+
     while(i < kata.Length && ListLength(l) < CAPACITY)
     {
+
         while(kata.TabWord[i] == separator && i < kata.Length)
         {
             i++;
         }
 
         count = 0;
+        subkata = EMPTY_WORD;
         while(kata.TabWord[i] != separator && i < kata.Length)
         {
             subkata.TabWord[count] = kata.TabWord[i];
@@ -203,8 +219,7 @@ ListStatik SplitWord(Word kata, char separator)
         if (count > 0)
         {
             subkata.Length = count;
-            CopyDefinedWord(&copiedKata, subkata);
-            InsertFirst(&l,NewElType(4, (union Data){.w=copiedKata}));
+            InsertLast(&l, NewElType(4, (union Data){.w=GetDefinedWord(subkata)}));
         }
     }
 

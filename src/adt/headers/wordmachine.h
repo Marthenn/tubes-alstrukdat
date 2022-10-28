@@ -20,8 +20,6 @@ typedef struct
 } Word;
 
 /* State Mesin Word */
-extern char currentChar, currentFileChar;
-extern boolean EOP, FILE_EOP;
 extern boolean EndWord, EndFileWord;
 extern Word currentWord, currentFileWord;
 

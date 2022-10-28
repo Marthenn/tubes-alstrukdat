@@ -3,6 +3,9 @@
 
 #include "eltype.h"
 #include "boolean.h"
+#include "eltype.h"
+
+#include "../implementasi/eltype.c"
 
 typedef struct treeNode* Address;
 typedef struct treeNode {

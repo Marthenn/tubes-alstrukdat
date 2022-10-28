@@ -3,8 +3,8 @@
 #ifndef __FILEREADER_H__
 #define __FILEREADER_H__
 
-#include "wordmachine.h"
-#include "waktu.h"
+#include "../../adt/headers/wordmachine.h"
+#include "../../adt/headers/waktu.h"
 
 #define FOOD_CONFIG_PATH "../../config/food_config.txt"
 #define RECIPE_CONFIG_PATH "../../config/recipe_config.txt"

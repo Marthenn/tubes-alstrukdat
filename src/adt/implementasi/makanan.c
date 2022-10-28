@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 #include "../headers/makanan.h"
-#include "../headers/parser.h"
+#include "../../app/headers/parser.h"
 
 /* *** KONSTRUKTOR *** */
 void CreateMakanan(Makanan *m, int id, Word nama, Waktu kedaluarsa, 
@@ -14,7 +14,7 @@ void CreateMakanan(Makanan *m, int id, Word nama, Waktu kedaluarsa,
     m->Id = id;
     m->Nama = nama;
     m->Kedaluarsa = kedaluarsa;
-    m->LokasiAksi = lokasiAksi;
+    CreatePoint(&m->LokasiAksi, GetAbsis(lokasiAksi), GetOrdinat(lokasiAksi));
     m->Pengiriman = pengiriman;
 }
 

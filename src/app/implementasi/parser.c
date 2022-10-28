@@ -1,12 +1,14 @@
 // C libraries
 #include <math.h>
-
-// headers
-#include "../headers/boolean.h"
-#include "../headers/wordmachine.h"
-#include "../headers/parser.h"
-
 #include <stdio.h>
+
+/* ADT */
+// headers
+#include "../../adt/headers/boolean.h"
+#include "../../adt//headers/wordmachine.h"
+
+/* APP */
+#include "../headers/parser.h"
 
 Word NewWord(char* s, int length)
 // mengembalikan data Word dengan panjang length dan karakter-karakter beserta urutannya sama dengan pada array s

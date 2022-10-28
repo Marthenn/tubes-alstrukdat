@@ -4,9 +4,9 @@
 #define __PARSER_H__
 
 // headers
-#include "boolean.h"
-#include "wordmachine.h"
-#include "liststatik.h"
+#include "../../adt/headers/boolean.h"
+#include "../../adt/headers/wordmachine.h"
+#include "../../adt/headers/liststatik.h"
 
 // command constants
 #define GAP 'a' - 'A'

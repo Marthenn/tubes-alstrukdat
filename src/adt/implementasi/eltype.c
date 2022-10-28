@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "../headers/eltype.h"
-#include "../headers/parser.h"
+#include "../../app/headers/parser.h"
+#include "../headers/liststatik.h"
 
 ElType NewElType(int type, union Data val){
     ElType e;
@@ -44,6 +45,8 @@ boolean Compare(ElType a, ElType b){
                 break;
             case 4:
                 return IsWordEqual(a.val.w, b.val.w);
+            case 5:
+                return (a.val.t == b.val.t);
         }
     }else{
         return false;
@@ -66,6 +69,9 @@ void PrintElType(ElType a){
             break;
         case 4:
             DisplayWord(a.val.w);
+            break;
+        case 5:
+            PrintTree(a.val.t);
             break;
         default:
             printf("undefined");

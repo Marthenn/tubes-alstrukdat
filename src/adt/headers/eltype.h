@@ -4,6 +4,7 @@
 /* ADT */
 #include "boolean.h"
 #include "makanan.h"
+#include "tree.h"
 
 union Data{
     /*type 0*/ int i;
@@ -11,6 +12,7 @@ union Data{
     /*type 2*/ char c;
     /*type 3*/ Makanan m;
     /*type 4*/ Word w;
+    /*type 5*/ Tree t;
 };
 
 typedef struct ElType{

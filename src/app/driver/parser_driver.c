@@ -1,24 +1,29 @@
 // C libraries
 #include <stdio.h>
 
+/* ADT */
 // headers
-#include "../headers/boolean.h"
-#include "../headers/parser.h"
-#include "../headers/liststatik.h"
-#include "../headers/eltype.h"
-#include "../headers/makanan.h"
-#include "../headers/waktu.h"
-#include "../headers/point.h"
+#include "../../adt/headers/boolean.h"
+#include "../../adt/headers/liststatik.h"
+#include "../../adt/headers/eltype.h"
+#include "../../adt/headers/makanan.h"
+#include "../../adt/headers/waktu.h"
+#include "../../adt/headers/point.h"
 // implementations
-#include "../implementasi/parser.c"
-#include "../implementasi/wordmachine.c"
-#include "../implementasi/liststatik.c"
-#include "../implementasi/eltype.c"
-#include "../implementasi/makanan.c"
-#include "../implementasi/waktu.c"
-#include "../implementasi/point.c"
+#include "../../adt/implementasi/wordmachine.c"
+#include "../../adt/implementasi/liststatik.c"
+#include "../../adt/implementasi/eltype.c"
+#include "../../adt/implementasi/makanan.c"
+#include "../../adt/implementasi/waktu.c"
+#include "../../adt/implementasi/point.c"
+
+/* APP */
 /* State Mesin Word */
 
+// headers
+#include "../headers/parser.h"
+// implementations
+#include "../implementasi/parser.c"
 
 int  main(){
 

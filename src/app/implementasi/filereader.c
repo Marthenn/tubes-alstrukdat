@@ -2,24 +2,32 @@
 
 // C libraries
 #include <stdio.h>
+
+/* ADT */
 // headers
-#include "../headers/filereader.h"
+#include "../../adt/headers/makanan.h"
+#include "../../adt/headers/waktu.h"
+#include "../../adt/headers/wordmachine.h"
+#include "../../adt/headers/eltype.h"
+#include "../../adt/headers/matriks.h"
+#include "../../adt/headers/liststatik.h"
+#include "../../adt/headers/map.h"
+//implementations
+#include "../../adt/implementasi/makanan.c"
+#include "../../adt/implementasi/point.c"
+#include "../../adt/implementasi/waktu.c"
+#include "../../adt/implementasi/wordmachine.c"
+#include "../../adt/implementasi/eltype.c"
+#include "../../adt/implementasi/matriks.c"
+#include "../../adt/implementasi/liststatik.c"
+#include "../../adt/implementasi/map.c"
+
+/* APP */
+//headers
 #include "../headers/parser.h"
-#include "../headers/makanan.h"
-#include "../headers/waktu.h"
-#include "../headers/wordmachine.h"
-#include "../headers/eltype.h"
-#include "../headers/matriks.h"
-#include "../headers/liststatik.h"
-//implementation
+#include "../headers/filereader.h"
+//implementations
 #include "parser.c"
-#include "makanan.c"
-#include "point.c"
-#include "waktu.c"
-#include "wordmachine.c"
-#include "eltype.c"
-#include "matriks.c"
-#include "liststatik.c"
 
 boolean EndFileWord;
 Word currentFileWord;
@@ -122,7 +130,7 @@ void ReadTime(Waktu *time)
     NextLine();
 }
 
-void ReadFoodConfig(ListStatik *l)
+void ReadFoodConfig(ListStatik *l, Map *map)
 {
     // KAMUS LOKAL
     Makanan food;
@@ -152,8 +160,33 @@ void ReadFoodConfig(ListStatik *l)
         ReadTime(&deliveryTime);
 
         ReadLine(&kata);
+
+        CREATE_POINT_UNDEF(actionPoint);
         
-        CreatePoint(&actionPoint, 0, 0);
+        if (IsWordEqual(kata, BUY_WORD))
+        {
+            actionPoint = T(*map);
+        }
+        
+        else if (IsWordEqual(kata, MIX_WORD))
+        {
+            actionPoint = M(*map);
+        }
+
+        else if (IsWordEqual(kata, CHOP_WORD))
+        {
+            actionPoint = C(*map);
+        }
+
+        else if (IsWordEqual(kata, FRY_WORD))
+        {
+            actionPoint = F(*map);
+        }
+
+        else if (IsWordEqual(kata, BOIL_WORD))
+        {
+            actionPoint = B(*map);
+        }
 
         CreateMakanan(&food, id, judul, expiredTime, deliveryTime, actionPoint);
         foodElement = NewElType(3, (union Data){.m=food});
@@ -170,18 +203,24 @@ void ReadFoodConfig(ListStatik *l)
     }
     
 }
-void ReadRecipeConfig()
+void ReadRecipeConfig(ListStatik *recipes)
 {
     // KAMUS LOKAL
+    int i;
 
     // ALGORITMA
+    CreateListStatik(recipes);
+
+
+
 }
 
-void ReadMapConfig(Matriks *map)
+void ReadMapConfig(Map *map)
 {
     // KAMUS LOKAL
     int i, j, n, m;
     Word kata;
+    char cc;
     // ALGORITMA
 
     STARTFILEWORD(MAP_CONFIG_PATH);
@@ -189,7 +228,7 @@ void ReadMapConfig(Matriks *map)
     ReadInt(&m);
     NextLine();
     printf("%d %d\n", n, m);
-    CreateMatriks(n, m, map);
+    CreateMatriks(n, m, &TAB(*map));
 
     for (i = 0; (i < n && i < ROW_CAP); i++)
     {
@@ -198,17 +237,54 @@ void ReadMapConfig(Matriks *map)
         
         for (j = 0; (j < m && j < COL_CAP); j++)
         {
-            MAT_ELMT(*map, i, j) = NewElType(2, (union Data){.c=kata.TabWord[j]});
+            cc = kata.TabWord[j];
+            MAT_ELMT(TAB(*map), i, j) = NewElType(2, (union Data){.c=cc});
+
+            if (cc == 'S')
+            {  
+                CreatePoint(&S(*map), i, j);
+            }
+
+            else if (cc == 'T')
+            {
+                CreatePoint(&T(*map), i, j);
+            }
+
+            else if (cc == 'M')
+            {
+                CreatePoint(&M(*map), i, j);
+            }
+
+            else if (cc == 'C')
+            {
+                CreatePoint(&C(*map), i, j);
+            }
+
+            else if (cc == 'F')
+            {
+                CreatePoint(&F(*map), i, j);
+            }
+
+            else if (cc == 'B')
+            {
+                CreatePoint(&B(*map), i, j);
+            }
+
+            else if (cc == 'X')
+            {
+                CreatePoint(&X(*map), i, j);
+            }
         }
     }
 }
 
-void ReadAllConfig(Matriks *map, ListStatik *foods)
+void ReadAllConfig(Map *map, ListStatik *foods, ListStatik *recipes)
 {
     // KAMUS LOKAL
 
     // ALGORITMA
     ReadMapConfig(map);
-    ReadFoodConfig(foods);
-    ReadRecipeConfig();
+    ReadFoodConfig(foods, map);
+    // ReadRecipeConfig(recipes);
+    
 }

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "../headers/tree.h"
+#include "../headers/eltype.h"
 
 Address NewTreeNode(ElType val){
     Address new = (Address)malloc(sizeof(TreeNode));

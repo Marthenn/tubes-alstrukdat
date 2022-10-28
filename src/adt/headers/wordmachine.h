@@ -8,6 +8,7 @@
 #include "boolean.h"
 #include "charmachine.h"
 
+
 #define NMax 100
 #define BLANK '\n'
 #define FILE_BLANK ' '
@@ -19,6 +20,8 @@ typedef struct
 } Word;
 
 /* State Mesin Word */
+extern char currentChar, currentFileChar;
+extern boolean EOP, FILE_EOP;
 extern boolean EndWord, EndFileWord;
 extern Word currentWord, currentFileWord;
 

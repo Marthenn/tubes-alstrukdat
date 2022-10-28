@@ -8,8 +8,6 @@
 /* ADT */
 #include "../headers/charmachine.h"
 
-char currentChar, currentFileChar;
-boolean EOP, FILE_EOP;
 
 static FILE *pita, *file;
 static int retval;

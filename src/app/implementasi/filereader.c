@@ -16,8 +16,6 @@
 #include "../headers/parser.h"
 #include "../headers/filereader.h"
 
-boolean EndFileWord;
-Word currentFileWord;
 
 void STARTFILELINE(Word *kata, char *path)
 /* I.S. : currentFileChar sembarang

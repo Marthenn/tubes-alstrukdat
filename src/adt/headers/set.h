@@ -1,6 +1,7 @@
 #ifndef SET_H
 #define SET_H
 
+/* ADT */
 #include "boolean.h"
 #include "eltype.h"
 
@@ -22,7 +23,7 @@ void CreateSet(Set *s);
  * @param s 
  * @return boolean 
  */
-boolean IsEmpty(Set s);
+boolean IsSetEmpty(Set s);
 
 /**
  * @brief Check if the set is full
@@ -30,7 +31,7 @@ boolean IsEmpty(Set s);
  * @param s 
  * @return boolean 
  */
-boolean IsFull(Set s);
+boolean IsSetFull(Set s);
 
 /**
  * @brief Get the length of the set
@@ -55,7 +56,7 @@ boolean IsMember(Set s, ElType e);
  * @param s 
  * @param e 
  */
-void Add(Set *s, ElType e);
+void SetAdd(Set *s, ElType e);
 
 /**
  * @brief Remove an element from the set

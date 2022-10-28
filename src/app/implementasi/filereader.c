@@ -177,11 +177,11 @@ void ReadFoodConfig(ListStatik *l, Map *map)
 
         CreateMakanan(&food, id, judul, expiredTime, deliveryTime, actionPoint);
         foodElement = NewElType(3, (union Data){.m=food});
-        idx = IndexOf(*l, foodElement);
+        idx = ListIndexOf(*l, foodElement);
         
         if (idx == IDX_UNDEF && ListLength(*l) < CAPACITY)
         {
-            InsertLast(l, foodElement);
+            ListInsertLast(l, foodElement);
         }
         
         else {

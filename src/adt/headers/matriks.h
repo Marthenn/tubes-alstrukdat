@@ -4,7 +4,10 @@
 #ifndef MATRIKS_H
 #define MATRIKS_H
 
+/* C libraries */
 #include <stdio.h>
+
+/* ADT */
 #include "boolean.h"
 #include "eltype.h"
 

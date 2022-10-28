@@ -8,11 +8,11 @@ void CreateSet(Set *s){
     (*s).length = 0;
 }
 
-boolean IsEmpty(Set s){
+boolean IsSetEmpty(Set s){
     return s.length == 0;
 }
 
-boolean IsFull(Set s){
+boolean IsSetFull(Set s){
     return s.length == 100;
 }
 
@@ -28,8 +28,8 @@ boolean IsMember(Set s, ElType e){
     return found;
 }
 
-void Add(Set *s, ElType e){
-    if(!IsMember(*s, e) && !IsFull(*s)){
+void SetAdd(Set *s, ElType e){
+    if(!IsMember(*s, e) && !IsSetFull(*s)){
         (*s).data[(*s).length] = e;
         (*s).length++;
     }
@@ -53,11 +53,11 @@ void RemoveSet(Set *s, ElType e){
 }
 
 void PrintSet(Set s){
-    Printf("{");
+    printf("{");
     for(int i = 0; i < s.length; i++){
         PrintElType(s.data[i]);
         if(i != s.length-1){
-            Printf(", ");
+            printf(", ");
         }
     }
     printf("}");
@@ -67,20 +67,20 @@ Set UnionSet(Set s1, Set s2){
     Set s;
     CreateSet(&s);
     for(int i = 0; i < s1.length; i++){
-        Add(&s, s1.data[i]);
+        SetAdd(&s, s1.data[i]);
     }
     for(int i = 0; i < s2.length; i++){
-        Add(&s, s2.data[i]);
+        SetAdd(&s, s2.data[i]);
     }
     return s;
 }
 
 Set Intersection(Set s1, Set s2){
     Set s;
-    createSet(&s);
+    CreateSet(&s);
     for(int i = 0; i < s1.length; i++){
         if(IsMember(s2, s1.data[i])){
-            Add(&s, s1.data[i]);
+            SetAdd(&s, s1.data[i]);
         }
     }
     return s;
@@ -88,10 +88,10 @@ Set Intersection(Set s1, Set s2){
 
 Set Difference(Set s1, Set s2){
     Set s;
-    createSet(&s);
+    CreateSet(&s);
     for(int i = 0; i < s1.length; i++){
         if(!IsMember(s2, s1.data[i])){
-            Add(&s, s1.data[i]);
+            SetAdd(&s, s1.data[i]);
         }
     }
     return s;
@@ -112,6 +112,6 @@ boolean IsSubset(Set s1, Set s2){
 void CopySet(Set *s1, Set s2){
     CreateSet(s1);
     for(int i = 0; i < s2.length; i++){
-        Add(s1, s2.data[i]);
+        SetAdd(s1, s2.data[i]);
     }
 }

@@ -5,6 +5,7 @@
 #ifndef waktu_H
 #define waktu_H
 
+/* ADT */
 #include "boolean.h"
 
 typedef int Waktu;

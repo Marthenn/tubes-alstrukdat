@@ -27,7 +27,7 @@ boolean IsEmptyPQ (PrioQueue Q)
 
 boolean IsFullPQ (PrioQueue Q)
 {
-    return !isEmptyPQ(Q) && (Q.Head == 0) && (Q.Tail == Q.Cap-1);
+    return !IsEmptyPQ(Q) && (Q.Head == 0) && (Q.Tail == Q.Cap-1);
 }
 
 int LengthPQ (PrioQueue Q)
@@ -135,7 +135,7 @@ void deleteAtPQ(PrioQueue* Q, ElType* X,int idx)
     int i,oldCap,newCap;
     infotype* tmpTab;
     if (idx == 0){
-        dequeue(Q,X);
+        Dequeue(Q,X);
     } else {
         *X = GetElmtPQ(*Q,idx);
         for (i = idx+1+Q->Head;i <= Q->Tail;i++){

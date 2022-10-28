@@ -17,7 +17,7 @@
 typedef int IdxType;
 
 typedef struct{
-    ElType mem[ROW_CAP][COL_CAP];
+    int mem[ROW_CAP][COL_CAP];
     int rowEff;
     int colEff;
 } Matriks;
@@ -56,5 +56,14 @@ void DisplayMatriks(Matriks m);
 4 5 6
 8 9 10
 */
-
+void DisplayCharMatriks(Matriks m);
+/* I.S. m terdefinisi */
+/* F.S. Nilai m(i,j) ditulis ke layar per baris per kolom sebagai char, masing-masing elemen per baris 
+   dipisahkan sebuah spasi */
+/* Proses: Menulis nilai setiap elemen m ke layar dengan traversal per baris dan per kolom */
+/* Contoh: menulis matriks 3x3
+a b c
+d e f
+g h i
+*/
 #endif

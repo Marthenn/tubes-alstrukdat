@@ -212,7 +212,7 @@ void ReadMapConfig(Map *map)
         {
             cc = kata.TabWord[j];
 
-            MAT_ELMT(TAB(*map), i, j) = NewElType(2, (union Data){.c=cc});
+            MAT_ELMT(TAB(*map), i, j) = cc;
 
             if (cc == 'S' || cc == 's')
             {  

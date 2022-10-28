@@ -11,6 +11,7 @@
 #include "../../adt/headers/matriks.h"
 #include "../../adt/headers/liststatik.h"
 #include "../../adt/headers/map.h"
+#include "../../adt/headers/tree.h"
 
 /* APP */
 #include "../headers/parser.h"
@@ -250,6 +251,40 @@ void ReadMapConfig(Map *map)
     }
 }
 
+void ReadRecipeConfig(ListStatik *recipes)
+{
+    // KAMUS LOKAL
+
+    int idx, n, i, j, id, childrenNum;
+    Tree parent, child;
+    // ALGORITMA
+    CreateListStatik(recipes);
+    STARTFILEWORD(RECIPE_CONFIG_PATH);
+    ReadIntLine(&n);
+
+    for (i = 0; i < n; i++)
+    {
+        ReadInt(&id);
+        ReadInt(&childrenNum);
+
+        //idx = ListIndexOf(*recipes, NewElType(1, (union Data){.i=id}));
+        
+        parent = NewTree(id);
+
+        for (j = 0; j < childrenNum; j++)
+        {
+            ReadInt(&id);
+            AddChild(&parent, id);
+        }
+
+        ListInsertLast(recipes, NewElType(5, (union Data){.t=parent}));
+
+        // should be end of line in the file
+        NextLine();
+    }
+
+}
+
 void ReadAllConfig(Map *map, ListStatik *foods, ListStatik *recipes)
 {
     // KAMUS LOKAL
@@ -257,6 +292,6 @@ void ReadAllConfig(Map *map, ListStatik *foods, ListStatik *recipes)
     // ALGORITMA
     ReadMapConfig(map);
     ReadFoodConfig(foods, map);
-    // ReadRecipeConfig(recipes);
+    ReadRecipeConfig(recipes);
 
 }

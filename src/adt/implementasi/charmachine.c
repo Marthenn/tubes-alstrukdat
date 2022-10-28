@@ -1,11 +1,11 @@
 /* File: charmachine.c */
 /* Implementasi Mesin Karakter */
 
-// C libraries
+/* C libraries */
 #include <stdio.h>
 #include <stdlib.h>
 
-// headers
+/* ADT */
 #include "../headers/charmachine.h"
 
 char currentChar, currentFileChar;

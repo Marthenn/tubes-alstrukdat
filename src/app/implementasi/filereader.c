@@ -4,7 +4,6 @@
 #include <stdio.h>
 
 /* ADT */
-// headers
 #include "../../adt/headers/makanan.h"
 #include "../../adt/headers/waktu.h"
 #include "../../adt/headers/wordmachine.h"
@@ -12,22 +11,10 @@
 #include "../../adt/headers/matriks.h"
 #include "../../adt/headers/liststatik.h"
 #include "../../adt/headers/map.h"
-//implementations
-#include "../../adt/implementasi/makanan.c"
-#include "../../adt/implementasi/point.c"
-#include "../../adt/implementasi/waktu.c"
-#include "../../adt/implementasi/wordmachine.c"
-#include "../../adt/implementasi/eltype.c"
-#include "../../adt/implementasi/matriks.c"
-#include "../../adt/implementasi/liststatik.c"
-#include "../../adt/implementasi/map.c"
 
 /* APP */
-//headers
 #include "../headers/parser.h"
 #include "../headers/filereader.h"
-//implementations
-#include "parser.c"
 
 boolean EndFileWord;
 Word currentFileWord;
@@ -286,5 +273,5 @@ void ReadAllConfig(Map *map, ListStatik *foods, ListStatik *recipes)
     ReadMapConfig(map);
     ReadFoodConfig(foods, map);
     // ReadRecipeConfig(recipes);
-    
+
 }

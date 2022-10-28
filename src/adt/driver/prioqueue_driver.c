@@ -1,7 +1,12 @@
+/* C libraries */
 #include <stdio.h>
+
+/* ADT */
 #include "../headers/prioqueue.h"
 #include "../headers/makanan.h"
-#include "../headers/parser.h"
+
+/* APP */
+#include "../../app/headers/parser.h"
 
 #define strbol(x) (x) ? "True\n" : "False\n"
 

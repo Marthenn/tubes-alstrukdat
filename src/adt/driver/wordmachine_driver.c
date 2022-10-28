@@ -1,12 +1,13 @@
-// C libraries
+/* C libraries*/
 #include <stdio.h>
 
-// headers
+/* ADT */
 #include "../headers/boolean.h"
+#include "../headers/charmachine.h"
+#include "../headers/wordmachine.h"
 
-// implementations
-#include "../implementasi/wordmachine.c"
-#include "../implementasi/parser.c"
+/* APP */
+#include "../../app/headers/parser.h"
 
 /* State Mesin Word */
 

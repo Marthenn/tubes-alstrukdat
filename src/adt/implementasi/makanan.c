@@ -1,8 +1,13 @@
 /* File : makanan.c */
 /* Body ADT makanan */
 
+/* C libraries */
 #include <stdio.h>
+
+/* ADT */
 #include "../headers/makanan.h"
+
+/* APP */
 #include "../../app/headers/parser.h"
 
 /* *** KONSTRUKTOR *** */

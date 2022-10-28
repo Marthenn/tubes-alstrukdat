@@ -1,4 +1,7 @@
+/* C libraries */
 #include <stdio.h>
+
+/* APP */
 #include "../headers/display.h"
 
 void SplashScreen(){

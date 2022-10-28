@@ -3,7 +3,7 @@
 #ifndef __PARSER_H__
 #define __PARSER_H__
 
-// headers
+/* ADT */
 #include "../../adt/headers/boolean.h"
 #include "../../adt/headers/wordmachine.h"
 #include "../../adt/headers/liststatik.h"

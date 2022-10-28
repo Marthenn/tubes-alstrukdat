@@ -1,4 +1,7 @@
+/* C libraries */
 #include <stdio.h>
+
+/* ADT */
 #include "../headers/eltype.h"
 
 int main(){

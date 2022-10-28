@@ -1,13 +1,10 @@
 /* File: wordmachine.c */
 /* Definisi Word Machine: Model Akuisisi Versi I */
 
-// headers
+/* ADT */
 #include "../headers/boolean.h"
 #include "../headers/charmachine.h"
 #include "../headers/wordmachine.h"
-
-// implementations
-#include "../implementasi/charmachine.c"
 
 /* State Mesin Word */
 char currentChar, currentFileChar;

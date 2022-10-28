@@ -2,28 +2,15 @@
 #include <stdio.h>
 
 /* ADT */
-// headers
 #include "../../adt/headers/boolean.h"
 #include "../../adt/headers/liststatik.h"
 #include "../../adt/headers/eltype.h"
 #include "../../adt/headers/makanan.h"
 #include "../../adt/headers/waktu.h"
 #include "../../adt/headers/point.h"
-// implementations
-#include "../../adt/implementasi/wordmachine.c"
-#include "../../adt/implementasi/liststatik.c"
-#include "../../adt/implementasi/eltype.c"
-#include "../../adt/implementasi/makanan.c"
-#include "../../adt/implementasi/waktu.c"
-#include "../../adt/implementasi/point.c"
 
 /* APP */
-/* State Mesin Word */
-
-// headers
 #include "../headers/parser.h"
-// implementations
-#include "../implementasi/parser.c"
 
 int  main(){
 

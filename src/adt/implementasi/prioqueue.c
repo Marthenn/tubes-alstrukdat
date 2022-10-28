@@ -16,11 +16,25 @@ PQElType GetHeadInfo(PrioQueue Q)
     return Q.Tab[Q.Head].Info;
 }
 
-PQElType GetElmtPQ(PrioQueue Q,int idx)
+Waktu GetHeadTime(PrioQueue Q)
+{
+    // Kamus Lokal
+    // Algoritma
+    return Q.Tab[Q.Head].Time;
+}
+
+PQElType GetElmtInfo(PrioQueue Q,int idx)
 {
     // Kamus Lokal
     // Algoritma
     return Q.Tab[Q.Head+idx].Info;
+}
+
+Waktu GetElmtTime(PrioQueue Q,int idx)
+{
+    // Kamus Lokal
+    // Algoritma
+    return Q.Tab[Q.Head+idx].Time;
 }
 
 
@@ -177,7 +191,7 @@ void DeleteAtPQ (PrioQueue* Q, PQElType* X,int idx)
     if (idx == 0){
         Dequeue(Q,X);
     } else {
-        *X = GetElmtPQ(*Q,idx);
+        *X = GetElmtInfo(*Q,idx);
         for (i = idx+1+Q->Head;i <= Q->Tail;i++){
             Q->Tab[i-1] = Q->Tab[i];
         }

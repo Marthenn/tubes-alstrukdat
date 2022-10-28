@@ -27,10 +27,17 @@ typedef struct{
 
 /* **** Getter **** */
 PQElType GetHeadInfo(PrioQueue Q);
-/* Mengembalikan elemen pada Head */
+/* Mengembalikan Info pada Head */
 
-PQElType GetElmtPQ(PrioQueue Q,int idx);
-/* Mengembalikan elemen indeks ke-idx secara logikal pada Q. idx = 0 adalah Head */
+Waktu GetHeadTime(PrioQueue Q);
+/* Mengembalikan Time pada Head */
+
+PQElType GetElmtInfo(PrioQueue Q,int idx);
+/* Mengembalikan Info elemen indeks ke-idx secara logikal pada Q. idx = 0 adalah Head */
+/* idx berada pada rentang [0..length(Q)] */
+
+Waktu GetElmtTime(PrioQueue Q,int idx);
+/* Mengembalikan waktu dari elemen indeks ke-idx secara logikal pada Q. idx = 0 adalah Head */
 /* idx berada pada rentang [0..length(Q)] */
 
 /* ********* Prototype ********* */

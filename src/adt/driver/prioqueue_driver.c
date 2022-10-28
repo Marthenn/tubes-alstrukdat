@@ -33,7 +33,9 @@ int main(){
     DisplayPQ(Q);
     printf("****** Cek Getter ******\n");
     printf("Head : %d\n",GetHeadInfo(Q));
-    printf("Elemen indeks ke-2 : %d\n",GetElmtPQ(Q,2));
+    printf("Time : "); CetakWaktuLengkap(GetHeadTime(Q)); printf("\n");
+    printf("Elemen indeks ke-2 : %d\n",GetElmtInfo(Q,2));
+    printf("Time : "); CetakWaktuLengkap(GetElmtTime(Q,2)); printf("\n");
     printf("****** Cek Length ******\n");
     printf("Length : %d\n",LengthPQ(Q));
     printf("****** Cek IndexOf ******\n");

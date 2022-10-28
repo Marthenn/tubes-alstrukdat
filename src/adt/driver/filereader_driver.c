@@ -21,8 +21,8 @@ int  main(){
     // ALGORITMA
 	ReadAllConfig(&map, &foods);
 
-	//DisplayMatriks(map);
-	// DisplayList(foods);
+	DisplayMatriks(map);
+	DisplayList(foods);
 
 	return 0;
 }

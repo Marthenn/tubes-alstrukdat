@@ -39,7 +39,9 @@ int  main(){
 
 		l = SplitWord(currentWord, ' ');
 
+		printf("List of word yang dipisahkan spasi : ");
 		DisplayList(l);
+		printf("\n");
 		
         if (IsInputEqual(START_WORD) == true)
 		{

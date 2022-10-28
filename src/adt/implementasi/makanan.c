@@ -19,7 +19,7 @@ void CreateMakanan(Makanan *m, int id, Word nama, Waktu kedaluarsa,
     m->Id = id;
     m->Nama = nama;
     m->Kedaluarsa = kedaluarsa;
-    CreatePoint(&m->LokasiAksi, GetAbsis(lokasiAksi), GetOrdinat(lokasiAksi));
+    CreatePoint(&(m->LokasiAksi), GetAbsis(lokasiAksi), GetOrdinat(lokasiAksi));
     m->Pengiriman = pengiriman;
 }
 

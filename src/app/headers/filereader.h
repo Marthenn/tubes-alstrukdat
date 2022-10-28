@@ -7,9 +7,9 @@
 #include "../../adt/headers/wordmachine.h"
 #include "../../adt/headers/waktu.h"
 
-#define FOOD_CONFIG_PATH "../../config/food_config.txt"
-#define RECIPE_CONFIG_PATH "../../config/recipe_config.txt"
-#define MAP_CONFIG_PATH "../../config/map_config.txt"
+#define FOOD_CONFIG_PATH "src/config/food_config.txt"
+#define RECIPE_CONFIG_PATH "src/config/recipe_config.txt"
+#define MAP_CONFIG_PATH "src/config/map_config.txt"
 
 void STARTFILELINE(Word *kata, char *path);
 /* I.S. : currentFileChar sembarang

@@ -9,7 +9,7 @@
 #include "../../adt/headers/liststatik.h"
 
 // command constants
-#define GAP 'a' - 'A'
+#define GAP ('a' - 'A')
 #define START_WORD NewWord("START", 5)
 #define EXIT_WORD NewWord("EXIT", 4)
 #define BUY_WORD NewWord("BUY", 3)

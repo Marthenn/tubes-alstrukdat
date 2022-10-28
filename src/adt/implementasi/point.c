@@ -13,6 +13,7 @@ void CreatePoint(Point *p, int x, int y)
 /* F.S. terbentuk point p dengan absis x dan ordinat y */
 {   /* KAMUS LOKAL */
     /* ALGORITMA */
+    
     p->x = x;
     p->y = y;
 }

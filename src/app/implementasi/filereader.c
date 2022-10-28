@@ -147,7 +147,6 @@ void ReadFoodConfig(ListStatik *l, Map *map)
         ReadTime(&deliveryTime);
 
         ReadLine(&kata);
-
         CREATE_POINT_UNDEF(actionPoint);
         
         if (IsWordEqual(kata, BUY_WORD))
@@ -190,17 +189,6 @@ void ReadFoodConfig(ListStatik *l, Map *map)
     }
     
 }
-void ReadRecipeConfig(ListStatik *recipes)
-{
-    // KAMUS LOKAL
-    int i;
-
-    // ALGORITMA
-    CreateListStatik(recipes);
-
-
-
-}
 
 void ReadMapConfig(Map *map)
 {
@@ -214,50 +202,49 @@ void ReadMapConfig(Map *map)
     ReadInt(&n);
     ReadInt(&m);
     NextLine();
-    printf("%d %d\n", n, m);
     CreateMatriks(n, m, &TAB(*map));
 
     for (i = 0; (i < n && i < ROW_CAP); i++)
     {
         ReadLine(&kata);
         
-        
         for (j = 0; (j < m && j < COL_CAP); j++)
         {
             cc = kata.TabWord[j];
+
             MAT_ELMT(TAB(*map), i, j) = NewElType(2, (union Data){.c=cc});
 
-            if (cc == 'S')
+            if (cc == 'S' || cc == 's')
             {  
                 CreatePoint(&S(*map), i, j);
             }
 
-            else if (cc == 'T')
+            else if (cc == 'T' || cc == 't')
             {
                 CreatePoint(&T(*map), i, j);
             }
 
-            else if (cc == 'M')
+            else if (cc == 'M' || cc == 'm')
             {
                 CreatePoint(&M(*map), i, j);
             }
 
-            else if (cc == 'C')
+            else if (cc == 'C' || cc == 'c')
             {
                 CreatePoint(&C(*map), i, j);
             }
 
-            else if (cc == 'F')
+            else if (cc == 'F' || cc == 'f')
             {
                 CreatePoint(&F(*map), i, j);
             }
 
-            else if (cc == 'B')
+            else if (cc == 'B' || cc == 'b')
             {
                 CreatePoint(&B(*map), i, j);
             }
 
-            else if (cc == 'X')
+            else if (cc == 'X' || cc == 'x')
             {
                 CreatePoint(&X(*map), i, j);
             }

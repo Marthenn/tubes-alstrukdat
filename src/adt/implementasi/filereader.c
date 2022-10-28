@@ -188,7 +188,7 @@ void ReadMapConfig(Matriks *map)
     ReadInt(&n);
     ReadInt(&m);
     NextLine();
-
+    printf("%d %d\n", n, m);
     CreateMatriks(n, m, map);
 
     for (i = 0; (i < n && i < ROW_CAP); i++)
@@ -208,9 +208,7 @@ void ReadAllConfig(Matriks *map, ListStatik *foods)
     // KAMUS LOKAL
 
     // ALGORITMA
-
     ReadMapConfig(map);
     ReadFoodConfig(foods);
     ReadRecipeConfig();
-
 }

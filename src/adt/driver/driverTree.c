@@ -1,6 +1,26 @@
 #include <stdio.h>
 #include "../headers/tree.h"
 
+#include <stdio.h>
+#include "../headers/matriks.h"
+#include "../headers/makanan.h"
+#include "../headers/parser.h"
+#include "../headers/eltype.h"
+#include "../headers/waktu.h"
+#include "../headers/point.h"
+#include "../headers/wordmachine.h"
+#include "../headers/charmachine.h"
+#include "../headers/liststatik.h"
+#include "../implementasi/eltype.c"
+#include "../implementasi/matriks.c"
+#include "../implementasi/makanan.c"
+#include "../implementasi/parser.c"
+#include "../implementasi/waktu.c"
+#include "../implementasi/point.c"
+#include "../implementasi/liststatik.c"
+#include "../implementasi/wordmachine.c"
+#include "../implementasi/tree.c"
+
 int main(){
     printf("--------\n");
     Tree t = NewTree (NewElType(0, (union Data){.i=1}));

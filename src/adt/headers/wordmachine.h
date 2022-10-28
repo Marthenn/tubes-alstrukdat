@@ -8,7 +8,7 @@
 #include "boolean.h"
 #include "charmachine.h"
 
-#define NMax 20
+#define NMax 100
 #define BLANK '\n'
 #define FILE_BLANK ' '
 

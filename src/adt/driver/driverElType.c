@@ -20,13 +20,13 @@ int main(){
     printf("a:b = ");printf("%d\n",Compare(a,b));
     printf("--------\n");
     printf("Test ElType float\n");
-    a = NewElType(0, (union Data){.i=1.5});
-    b = NewElType(0, (union Data){.i=2.5});
+    a = NewElType(1, (union Data){.f=1.5});
+    b = NewElType(1, (union Data){.f=2.5});
     printf("a: ");PrintElType(a);printf("\n");
     printf("b: ");PrintElType(b);printf("\n");
     printf("a:b = ");printf("%d\n",Compare(a,b));
     printf("Change the Value of a and copying it to b\n");
-    SetVal(&a, 1, (union Data){.i=3.5});
+    SetVal(&a, 1, (union Data){.f=3.5});
     CopyElType(&b,a);
     printf("a: ");PrintElType(a);printf("\n");
     printf("b: ");PrintElType(b);printf("\n");

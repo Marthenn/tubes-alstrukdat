@@ -17,25 +17,27 @@ void _assert(boolean x, char ID[])
 
 int main() {
     Waktu t, t2, t0;
-    createWaktu(&t, 5, 2, 10);
-    _assert(getHari(t) == 5, "HARI");
-    _assert(getJam(t) == 2, "JAM");
-    _assert(getMenit(t) == 10, "MENIT");
+    CreateWaktu(&t, 5, 2, 10);
+    _assert(GetHari(t) == 5, "HARI");
+    _assert(GetJam(t) == 2, "JAM");
+    _assert(GetMenit(t) == 10, "MENIT");
 
-    createWaktu(&t2, 6, 2, 11);
-    _assert(selisihWaktu(t, t2) == 1441, "SELISIH");
+    CreateWaktu(&t2, 6, 2, 11);
+    _assert(SelisihWaktu(t, t2) == 1441, "SELISIH");
 
-    tambahWaktu(&t, 0, 23, 0);
-    _assert(getHari(t) == 6, "TAMBAH_HARI");
-    _assert(getJam(t) == 1, "TAMBAH_JAM");
-    _assert(!isWaktuGreaterEqual(t,t2), "COMPARE");
+    TambahWaktu(&t, 0, 23, 0);
+    _assert(GetHari(t) == 6, "TAMBAH_HARI");
+    _assert(GetJam(t) == 1, "TAMBAH_JAM");
+    _assert(!IsWaktuGreaterEqual(t,t2), "COMPARE");
 
-    cetakWaktuJJMM(t); puts("");
-    cetakWaktuLengkap(t); puts("");
+    CetakWaktuJJMM(t); puts("");
+    CetakWaktuLengkap(t); puts("");
 
-    createWaktu(&t0, 0, 0, 0);
-    cetakWaktuJJMM(t0); puts("");
-    cetakWaktuLengkap(t0); puts("");
+    CreateWaktu(&t0, 0, 0, 0);
+    CetakWaktuJJMM(t0); puts("");
+    CetakWaktuLengkap(t0); puts("");
+
+    puts("Seluruh tes berhasil dijalankan. Waktu di atas seharusnya menunjukkan: \n01.10, 6 hari 1 jam 10 menit, 00.00, 0");
 
     return 0;
 }

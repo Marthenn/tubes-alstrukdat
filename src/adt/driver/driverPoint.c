@@ -40,7 +40,8 @@ int main() {
     _assert(GetOrdinat(p) == 150, "SETORDINAT");
 
     /* OUTPUT */
-    CetakPoint(p);
+    CetakPoint(p); puts("");
+    printf("Seluruh tes berhasil dijalankan. Point di atas seharusnya bernilai (200, 150)\n");
 
     return 0;
 }

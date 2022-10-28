@@ -2,7 +2,6 @@
 #define TREE_H
 
 /* ADT */
-#include "eltype.h"
 #include "boolean.h"
 
 typedef struct treeNode* Address;

@@ -21,8 +21,16 @@ int  main(){
     // ALGORITMA
 	ReadAllConfig(&map, &foods, &recipes);
 
+	printf("====MAP====\n");
 	DisplayCharMatriks(TAB(map));
+
+	printf("====FOODS LIST====\n");
 	DisplayList(foods);
+	printf("\n");
+
+	printf("====RECIPES LIST====\n");
+	DisplayList(recipes);
+	printf("\n");
 
 	return 0;
 }

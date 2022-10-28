@@ -5,7 +5,7 @@
 /* ADT */
 #include "../headers/tree.h"
 
-Address NewTreeNode(ElType val){
+Address NewTreeNode(int val){
     Address new = (Address)malloc(sizeof(TreeNode));
     if(new!=NULL){
         new->info = val;
@@ -15,7 +15,7 @@ Address NewTreeNode(ElType val){
     return new;
 }
 
-Tree NewTree (ElType root){
+Tree NewTree (int root){
     Tree p = NewTreeNode(root);
     if(p!=NULL){
         p->firstChild = NULL;
@@ -24,7 +24,7 @@ Tree NewTree (ElType root){
     return p;
 }
 
-void AddChild(Tree *p, ElType val){
+void AddChild(Tree *p, int val){
     Address new = NewTreeNode(val);
     if(new!=NULL){
         if((*p)->firstChild==NULL){
@@ -53,13 +53,13 @@ void AddChildNode(Tree *p, Address node){
     }
 }
 
-boolean IsChild(Tree p, ElType val){
+boolean IsChild(Tree p, int val){
     if(p->firstChild==NULL){
         return false;
     }else{
         Address temp = p->firstChild;
         while(temp!=NULL){
-            if(Compare(temp->info,val)){
+            if(temp->info == val){
                 return true;
             }
             temp = temp->nextSibling;
@@ -68,8 +68,8 @@ boolean IsChild(Tree p, ElType val){
     }
 }
 
-boolean IsPartOf(Tree p, ElType val){
-    if(Compare(p->info,val)){
+boolean IsPartOf(Tree p, int val){
+    if(p->info == val){
         return true;
     }else{
         if(p->firstChild==NULL){
@@ -103,7 +103,7 @@ int NumberChildren(Tree p){
 
 void PrintTree(Tree p){
     printf("( ");
-    PrintElType(p->info);printf(" ");
+    printf("%d ", p->info);
     if(p->firstChild!=NULL){
         Address temp = p->firstChild;
         while(temp!=NULL){

@@ -8,11 +8,10 @@
 /* ADT */
 #include "boolean.h"
 #include "makanan.h"
+#include "eltype.h"
 
 #define Nil -1
 #define DEF_SIZE 20
-typedef int Index;
-typedef Makanan ElType;
 
 typedef struct {
     Waktu Time;
@@ -21,9 +20,7 @@ typedef struct {
 
 typedef struct{
     infotype * Tab;
-    Index Head;
-    Index Tail;
-    int Cap;
+    int Head,Tail,Cap;
 } PrioQueue;
 
 /* **** Getter **** */

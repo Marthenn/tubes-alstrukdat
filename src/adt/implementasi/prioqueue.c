@@ -9,34 +9,60 @@
 #include "../headers/prioqueue.h"
 
 
-ElType GetHeadInfo(PrioQueue Q)
+PQElType GetHeadInfo(PrioQueue Q)
 {
+    // Kamus Lokal
+    // Algoritma
     return Q.Tab[Q.Head].Info;
 }
 
-ElType GetElmtPQ(PrioQueue Q,int idx)
+Waktu GetHeadTime(PrioQueue Q)
 {
+    // Kamus Lokal
+    // Algoritma
+    return Q.Tab[Q.Head].Time;
+}
+
+PQElType GetElmtInfo(PrioQueue Q,int idx)
+{
+    // Kamus Lokal
+    // Algoritma
     return Q.Tab[Q.Head+idx].Info;
+}
+
+Waktu GetElmtTime(PrioQueue Q,int idx)
+{
+    // Kamus Lokal
+    // Algoritma
+    return Q.Tab[Q.Head+idx].Time;
 }
 
 
 boolean IsEmptyPQ (PrioQueue Q)
 {
+    // Kamus Lokal
+    // Algoritma
     return Q.Head == Nil && Q.Tail == Nil;
 }
 
 boolean IsFullPQ (PrioQueue Q)
 {
+    // Kamus Lokal
+    // Algoritma
     return !IsEmptyPQ(Q) && (Q.Head == 0) && (Q.Tail == Q.Cap-1);
 }
 
 int LengthPQ (PrioQueue Q)
 {
+    // Kamus Lokal
+    // Algoritma
     return Q.Tail - Q.Head+1;
 }
 
 void CreateEmptyPQ(PrioQueue* Q)
 {
+    // Kamus Lokal
+    // Algoritma
     Q->Tab = (infotype*) malloc(DEF_SIZE*sizeof(infotype));
     Q->Head = Nil;
     Q->Tail = Nil;
@@ -51,12 +77,15 @@ void CreateEmptyPQ(PrioQueue* Q)
 
 void DeallocatePQ(PrioQueue * Q)
 {
+    // Kamus Lokal
+    // Algoritma
     free(Q->Tab);
     Q->Cap = 0;
 }
 
 void ReallocatePQ(PrioQueue * Q, int newCap)
 {
+    // Kamus Lokal
     infotype* tmp;
     int i;
     // Algoritma
@@ -77,10 +106,31 @@ void ReallocatePQ(PrioQueue * Q, int newCap)
     }
 }
 
-void Enqueue (PrioQueue * Q, ElType X, Waktu time)
+int IndexOfPQ(PrioQueue Q, PQElType X)
 {
+    // Kamus Lokal
+    int i, idx;
+    boolean found;
+    // Algoritma
+    found = false;
+    if (!IsEmptyPQ(Q)){
+        idx = Q.Head;
+        while (idx <= Q.Tail && !found){
+            if (Q.Tab[idx].Info == X){
+                found = true;
+            } else idx++;
+        }
+    }
+    if (found) return idx;
+    else return IDX_UNDEF;
+}
+
+void Enqueue (PrioQueue * Q, PQElType X, Waktu time)
+{
+    // Kamus Lokal
     int i,oldCap,newCap,idx;
     infotype newInfo;
+    // Algoritma
     newInfo.Info = X;
     newInfo.Time = time;
     if (IsEmptyPQ(*Q)){
@@ -112,10 +162,12 @@ void Enqueue (PrioQueue * Q, ElType X, Waktu time)
     }
     Q->Tab[idx] = newInfo;
 }
-void Dequeue (PrioQueue * Q, ElType* X)
+void Dequeue (PrioQueue * Q, PQElType* X)
 {
+    // Kamus Lokal
     int i,oldCap,newCap;
     infotype* tmpTab;
+    // Algoritma
     *X = GetHeadInfo(*Q);
     if (LengthPQ(*Q) == 1){
         Q->Head = Nil;
@@ -130,14 +182,16 @@ void Dequeue (PrioQueue * Q, ElType* X)
     }
 }
 
-void DeleteAtPQ(PrioQueue* Q, ElType* X,int idx)
+void DeleteAtPQ (PrioQueue* Q, PQElType* X,int idx)
 {
+    // Kamus Lokal
     int i,oldCap,newCap;
     infotype* tmpTab;
+    // Algoritma
     if (idx == 0){
         Dequeue(Q,X);
     } else {
-        *X = GetElmtPQ(*Q,idx);
+        *X = GetElmtInfo(*Q,idx);
         for (i = idx+1+Q->Head;i <= Q->Tail;i++){
             Q->Tab[i-1] = Q->Tab[i];
         }
@@ -150,14 +204,24 @@ void DeleteAtPQ(PrioQueue* Q, ElType* X,int idx)
     }
 }
 
+void DisplayInfoTypePQ(infotype p){
+    // Kamus Lokal
+    // Algoritma
+    printf("< %d, ",p.Info);
+    CetakWaktuLengkap(p.Time);
+    printf(">");
+}
+
 void DisplayPQ (PrioQueue Q)
 {
+    // Kamus Lokal
     int i;
+    // Algoritma
     printf("--------------\n");
     if (!IsEmptyPQ(Q)){
         for (i = Q.Head;i <= Q.Tail;i++){
-            PrintElType(Q.Tab[i].Info);
-            printf(" ("); CetakWaktuLengkap(Q.Tab[i].Time); printf(")\n");
+            DisplayInfoTypePQ(Q.Tab[i]);
+            printf("\n");
         }
     }
     printf("--------------\n");

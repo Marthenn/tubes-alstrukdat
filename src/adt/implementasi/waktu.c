@@ -1,7 +1,10 @@
 /* File : waktu.c */
 /* Body ADT waktu */
 
+/* C libraries */
 #include <stdio.h>
+
+/* ADT */
 #include "../headers/waktu.h"
 
 /* *** KONSTRUKTOR *** */

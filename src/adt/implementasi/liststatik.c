@@ -1,7 +1,10 @@
 /* File : liststatik.c */
 /* Implementasi List Statik */
 
+/* C libraries */
 #include <stdio.h>
+
+/* ADT */
 #include "../headers/liststatik.h"
 
 /* ********** KONSTRUKTOR ********** */

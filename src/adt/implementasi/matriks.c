@@ -1,7 +1,10 @@
 /* File : Matriks.c*/
 /* Implementasi ADT Matriks */
 
+/* C libraries */
 #include <stdio.h>
+
+/* ADT */
 #include "../headers/matriks.h"
 
 /* *** Konstruktor membentuk Matriks *** */

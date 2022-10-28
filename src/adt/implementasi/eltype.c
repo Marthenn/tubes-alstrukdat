@@ -1,7 +1,12 @@
+/* C libraries */
 #include <stdio.h>
+
+/* ADT */
 #include "../headers/eltype.h"
-#include "../../app/headers/parser.h"
 #include "../headers/liststatik.h"
+
+/* APP */
+#include "../../app/headers/parser.h"
 
 ElType NewElType(int type, union Data val){
     ElType e;

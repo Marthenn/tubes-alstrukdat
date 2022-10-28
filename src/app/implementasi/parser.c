@@ -1,9 +1,8 @@
-// C libraries
+/* C libraries */
 #include <math.h>
 #include <stdio.h>
 
 /* ADT */
-// headers
 #include "../../adt/headers/boolean.h"
 #include "../../adt//headers/wordmachine.h"
 

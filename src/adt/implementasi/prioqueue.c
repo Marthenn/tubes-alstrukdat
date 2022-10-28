@@ -1,8 +1,11 @@
 /* File: prioqueue.c */
 /* Implementasi ADT Priority Queue*/
 
+/* C libraries */
 #include <stdio.h>
 #include <stdlib.h>
+
+/* ADT */
 #include "../headers/prioqueue.h"
 
 

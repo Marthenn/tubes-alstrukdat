@@ -3,6 +3,7 @@
 #ifndef __FILEREADER_H__
 #define __FILEREADER_H__
 
+// ADT 
 #include "../../adt/headers/wordmachine.h"
 #include "../../adt/headers/waktu.h"
 

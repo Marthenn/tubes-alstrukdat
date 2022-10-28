@@ -1,7 +1,10 @@
 /* File : driverWaktu.c */
 /* Driver untuk ADT waktu */
 
+/* C libraries */
 #include <stdio.h>
+
+/* ADT */
 #include "../headers/waktu.h"
 #include "../headers/boolean.h"
 

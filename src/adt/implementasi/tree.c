@@ -1,5 +1,8 @@
+/* C libraries */
 #include <stdio.h>
 #include <stdlib.h>
+
+/* ADT */
 #include "../headers/tree.h"
 #include "../headers/eltype.h"
 

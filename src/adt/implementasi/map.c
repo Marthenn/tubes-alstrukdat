@@ -1,4 +1,7 @@
+/* C libraries */
 #include <stdio.h>
+
+/* ADT */
 #include "../headers/boolean.h"
 #include "../headers/eltype.h"
 #include "../headers/Matriks.h"

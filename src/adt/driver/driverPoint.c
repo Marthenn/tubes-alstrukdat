@@ -1,7 +1,10 @@
 /* File : driverPoint.c */
 /* Driver untuk ADT Point */
 
+/* C libraries */
 #include <stdio.h>
+
+/* ADT */
 #include "../headers/point.h"
 #include "../headers/boolean.h"
 

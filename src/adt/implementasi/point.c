@@ -1,7 +1,10 @@
 /* File : point.c */
 /* Body ADT point */
 
+/* C libraries */
 #include <stdio.h>
+
+/* ADT */
 #include "../headers/point.h"
 
 /* *** KONSTRUKTOR *** */

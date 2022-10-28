@@ -1,4 +1,7 @@
+/* C libraries */
 #include <stdio.h>
+
+/* APP */
 #include "../headers/commands.h"
 #include "../headers/display.h"
 

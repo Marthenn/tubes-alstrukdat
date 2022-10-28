@@ -1,4 +1,7 @@
+/* C libraries */
 #include <stdio.h>
+
+/* ADT */
 #include "../headers/liststatik.h"
 
 int main(){

@@ -57,9 +57,9 @@ void CopyMatriks(Matriks mIn, Matriks *mOut){
 }
 
 /* ********** TULIS ********** */
-void DisplayMatriks(Matriks m){
+void DisplayIntMatriks(Matriks m){
 /* I.S. m terdefinisi */
-/* F.S. Nilai m(i,j) ditulis ke layar per baris per kolom, masing-masing elemen per baris 
+/* F.S. Nilai m(i,j) ditulis ke layar per baris per kolom sebagai int, masing-masing elemen per baris 
    dipisahkan sebuah spasi */
 /* Proses: Menulis nilai setiap elemen m ke layar dengan traversal per baris dan per kolom */
 /* Contoh: menulis matriks 3x3
@@ -73,8 +73,39 @@ void DisplayMatriks(Matriks m){
     // ALGORITMA
     for(i = 0; i <= GetLastIdxRow(m); i++){
         for(j = 0; j <= GetLastIdxCol(m); j++){
-            PrintElType(MAT_ELMT(m, i, j));
-            printf(" ");
+            printf("%d", MAT_ELMT(m, i, j));
+            
+            if (j < GetLastIdxCol(m))
+            {
+                printf(" ");
+            }
+        }
+        printf("\n");
+    }
+}
+
+void DisplayCharMatriks(Matriks m){
+/* I.S. m terdefinisi */
+/* F.S. Nilai m(i,j) ditulis ke layar per baris per kolom sebagai char, masing-masing elemen per baris 
+   dipisahkan sebuah spasi */
+/* Proses: Menulis nilai setiap elemen m ke layar dengan traversal per baris dan per kolom */
+/* Contoh: menulis matriks 3x3
+a b c
+d e f
+g h i
+*/
+
+    // KAMUS LOKAL
+    int i, j;
+    // ALGORITMA
+    for(i = 0; i <= GetLastIdxRow(m); i++){
+        for(j = 0; j <= GetLastIdxCol(m); j++){
+            printf("%c", MAT_ELMT(m, i, j));
+            
+            if (j < GetLastIdxCol(m))
+            {
+                printf(" ");
+            }
         }
         printf("\n");
     }

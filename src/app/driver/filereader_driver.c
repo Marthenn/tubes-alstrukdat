@@ -1,7 +1,6 @@
 // C libraries
 
 /* ADT */
-#include "../../adt/headers/boolean.h"
 #include "../../adt/headers/map.h"
 #include "../../adt/headers/liststatik.h"
 
@@ -22,7 +21,7 @@ int  main(){
     // ALGORITMA
 	ReadAllConfig(&map, &foods, &recipes);
 
-	// DisplayMatriks(map);
+	DisplayCharMatriks(TAB(map));
 	DisplayList(foods);
 
 	return 0;

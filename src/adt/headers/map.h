@@ -8,7 +8,6 @@
 typedef struct{
     Matriks tab;
     Point S, T, M, C, F, B, X;
-    int colEff;
 } Map;
 
 /* *** Selektor *** */

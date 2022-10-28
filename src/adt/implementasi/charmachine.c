@@ -8,7 +8,6 @@
 /* ADT */
 #include "../headers/charmachine.h"
 
-
 static FILE *pita, *file;
 static int retval;
 

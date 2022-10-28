@@ -28,6 +28,18 @@ Word NewWord(char* s, int length)
     return kata;
 }
 
+char GetUpperCase(char a)
+// mengembalikan karakter huruf besar dari a jika a merupakan alpabet huruf kecil, atau mengembalikan kembali a jika a bukan alpabet huruf kecil
+{
+    if (a >= 'a' && a <= 'z')
+    {
+        return (a - GAP);
+    }
+
+    return a;
+
+}
+
 boolean IsInputEqual(Word kata)
 // mengembalikan true jika kata sama dengan currentWord (tidak case-sensitive)
 {
@@ -39,6 +51,7 @@ boolean IsInputPrefixEqual(Word kata)
 {
     // KAMUS LOKAL
     int i;
+    char a, b;
 
     // ALGORITMA
     if (kata.Length > currentWord.Length)
@@ -48,7 +61,9 @@ boolean IsInputPrefixEqual(Word kata)
 
     for (i = 0; i < kata.Length; i++)
     {
-        if ((kata.TabWord[i] != currentWord.TabWord[i]) && (kata.TabWord[i] + GAP != currentWord.TabWord[i]))
+        a = GetUpperCase(kata.TabWord[i]);
+        b = GetUpperCase(currentWord.TabWord[i]);
+        if (a != b)
         {
             return false;
         }
@@ -64,6 +79,7 @@ boolean IsWordEqual(Word kata1, Word kata2)
 {
     // KAMUS LOKAL
     int i;
+    char a, b;
 
     // ALGORITMA
     if (kata1.Length != kata2.Length)
@@ -73,7 +89,11 @@ boolean IsWordEqual(Word kata1, Word kata2)
 
     for (i = 0; i < kata1.Length; i++)
     {
-        if ((kata1.TabWord[i] != kata2.TabWord[i]) && (kata1.TabWord[i] + GAP != kata2.TabWord[i]))
+
+        a = GetUpperCase(kata1.TabWord[i]);
+        b = GetUpperCase(kata2.TabWord[i]);
+
+        if (a != b)
         {
             return false;
         }

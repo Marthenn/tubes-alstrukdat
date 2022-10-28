@@ -16,25 +16,16 @@
 
 int main(){
     Matriks m1, m2;
-    ElType e1 = NewElType(0, (union Data){.i = 2});
-    ElType e2 = NewElType(0, (union Data){.i = 5});
-    ElType e3 = NewElType(0, (union Data){.i = 10});
-    ElType e4 = NewElType(0, (union Data){.i = -2});
-    ElType e5 = NewElType(0, (union Data){.i = 100});
-    ElType e6 = NewElType(0, (union Data){.i = 7});
-    ElType e7 = NewElType(0, (union Data){.i = 69});
-    ElType e8 = NewElType(0, (union Data){.i = 42});
-    ElType e9 = NewElType(0, (union Data){.i = 5});
 
-    MAT_ELMT(m1, 0, 0) = e1;
-    MAT_ELMT(m1, 0, 1) = e2;
-    MAT_ELMT(m1, 0, 2) = e3;
-    MAT_ELMT(m1, 1, 0) = e4;
-    MAT_ELMT(m1, 1, 1) = e5;
-    MAT_ELMT(m1, 1, 2) = e6;
-    MAT_ELMT(m1, 2, 0) = e7;
-    MAT_ELMT(m1, 2, 1) = e8;
-    MAT_ELMT(m1, 2, 2) = e9;
+    MAT_ELMT(m1, 0, 0) = 2;
+    MAT_ELMT(m1, 0, 1) = 5;
+    MAT_ELMT(m1, 0, 2) = 10;
+    MAT_ELMT(m1, 1, 0) = -2;
+    MAT_ELMT(m1, 1, 1) = 100;
+    MAT_ELMT(m1, 1, 2) = 7;
+    MAT_ELMT(m1, 2, 0) = 69;
+    MAT_ELMT(m1, 2, 1) = 42;
+    MAT_ELMT(m1, 2, 2) = 5;
 
     CreateMatriks(3, 3, &m1);
     CreateMatriks(3, 3, &m2);

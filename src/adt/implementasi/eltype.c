@@ -50,8 +50,8 @@ boolean Compare(ElType a, ElType b){
                 break;
             case 4:
                 return IsWordEqual(a.val.w, b.val.w);
-            case 5:
-                return (a.val.t == b.val.t);
+            // case 5:
+            //     return (a.val.t == b.val.t);
         }
     }else{
         return false;
@@ -75,9 +75,9 @@ void PrintElType(ElType a){
         case 4:
             DisplayWord(a.val.w);
             break;
-        case 5:
-            PrintTree(a.val.t);
-            break;
+        // case 5:
+        //     PrintTree(a.val.t);
+        //     break;
         default:
             printf("undefined");
             break;

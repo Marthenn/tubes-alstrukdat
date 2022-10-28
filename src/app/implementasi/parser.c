@@ -220,7 +220,7 @@ ListStatik SplitWord(Word kata, char separator)
         if (count > 0)
         {
             subkata.Length = count;
-            InsertLast(&l, NewElType(4, (union Data){.w=GetDefinedWord(subkata)}));
+            ListInsertLast(&l, NewElType(4, (union Data){.w=GetDefinedWord(subkata)}));
         }
     }
 

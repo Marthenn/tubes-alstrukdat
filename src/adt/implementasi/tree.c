@@ -4,7 +4,6 @@
 
 /* ADT */
 #include "../headers/tree.h"
-#include "../headers/eltype.h"
 
 Address NewTreeNode(ElType val){
     Address new = (Address)malloc(sizeof(TreeNode));

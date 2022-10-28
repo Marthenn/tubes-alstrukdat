@@ -4,6 +4,7 @@
 #ifndef MAKANAN_H
 #define MAKANAN_H
 
+/* ADT */
 #include "wordmachine.h"
 #include "waktu.h"
 #include "point.h"

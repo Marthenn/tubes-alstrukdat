@@ -1,6 +1,7 @@
 #ifndef MAP_H
 #define MAP_H
 
+/* ADT */
 #include "eltype.h"
 #include "Matriks.h"
 

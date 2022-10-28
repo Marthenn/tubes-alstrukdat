@@ -5,6 +5,7 @@
 #ifndef prioqueue_H
 #define prioqueue_H
 
+/* ADT */
 #include "boolean.h"
 #include "makanan.h"
 

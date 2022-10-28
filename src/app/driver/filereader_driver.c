@@ -3,6 +3,7 @@
 /* ADT */
 #include "../../adt/headers/boolean.h"
 #include "../../adt/headers/map.h"
+#include "../../adt/headers/liststatik.h"
 
 /* APP */
 #include "../headers/filereader.h"

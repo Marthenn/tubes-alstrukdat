@@ -130,7 +130,7 @@ void Dequeue (PrioQueue * Q, ElType* X)
     }
 }
 
-void deleteAtPQ(PrioQueue* Q, ElType* X,int idx)
+void DeleteAtPQ(PrioQueue* Q, ElType* X,int idx)
 {
     int i,oldCap,newCap;
     infotype* tmpTab;
@@ -153,13 +153,12 @@ void deleteAtPQ(PrioQueue* Q, ElType* X,int idx)
 void DisplayPQ (PrioQueue Q)
 {
     int i;
-    printf("┏━━━━━━━━\n");
+    printf("--------------\n");
     if (!IsEmptyPQ(Q)){
         for (i = Q.Head;i <= Q.Tail;i++){
-            ElType food = Q.Tab[i].Info;
-            DisplayMakanan(food);
-            printf("\n");
+            PrintElType(Q.Tab[i].Info);
+            printf(" ("); CetakWaktuLengkap(Q.Tab[i].Time); printf(")\n");
         }
     }
-    printf("┗━━━━━━━━\n");
+    printf("--------------\n");
 }

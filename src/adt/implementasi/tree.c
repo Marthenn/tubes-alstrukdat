@@ -36,6 +36,20 @@ void AddChild(Tree *p, ElType val){
     }
 }
 
+void AddChildNode(Tree *p, Address node){
+    if(node!=NULL && !IsChild(*p, node->info)){
+        if((*p)->firstChild==NULL){
+            (*p)->firstChild = node;
+        }else{
+            Address temp = (*p)->firstChild;
+            while(temp->nextSibling!=NULL){
+                temp = temp->nextSibling;
+            }
+            temp->nextSibling = node;
+        }
+    }
+}
+
 boolean IsChild(Tree p, ElType val){
     if(p->firstChild==NULL){
         return false;

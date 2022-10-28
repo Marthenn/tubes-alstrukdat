@@ -18,7 +18,7 @@ typedef Address Tree;
  * 
  * @param val 
  */
-Address newTreeNode(ElType val);
+Address NewTreeNode(ElType val);
 
 /**
  * @brief Create a tree object with known root value
@@ -26,7 +26,7 @@ Address newTreeNode(ElType val);
  * @param Root 
  * @return Tree 
  */
-Tree newTree (ElType root);
+Tree NewTree (ElType root);
 
 /**
  * @brief add a children to a tree
@@ -35,7 +35,15 @@ Tree newTree (ElType root);
  * @param val 
  * @return tree 
  */
-void addChild(Tree *p, ElType val);
+void AddChild(Tree *p, ElType val);
+
+/**
+ * @brief add a node as a child to a tree
+ * 
+ * @param p 
+ * @param node 
+ */
+void AddChildNode(Tree *p, Address node);
 
 /**
  * @brief check if val is a children of p
@@ -44,7 +52,7 @@ void addChild(Tree *p, ElType val);
  * @param val 
  * @return boolean 
  */
-boolean isChild(Tree p, ElType val);
+boolean IsChild(Tree p, ElType val);
 
 /**
  * @brief check if val is part of the tree
@@ -53,7 +61,7 @@ boolean isChild(Tree p, ElType val);
  * @param val 
  * @return boolean 
  */
-boolean isPartOf(Tree p, ElType val);
+boolean IsPartOf(Tree p, ElType val);
 
 /**
  * @brief return the number of children of a tree
@@ -61,13 +69,13 @@ boolean isPartOf(Tree p, ElType val);
  * @param p 
  * @return int 
  */
-int numberChildren(Tree p);
+int NumberChildren(Tree p);
 
 /**
  * @brief print a tree and all of its children represented by brackets e.g. (1(2(4)(5))(3))
  * 
  * @param p 
  */
-void printTree(Tree p);
+void PrintTree(Tree p);
 
 #endif

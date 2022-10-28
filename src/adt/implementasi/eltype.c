@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "../headers/eltype.h"
+#include "../headers/parser.h"
 
 ElType NewElType(int type, union Data val){
     ElType e;

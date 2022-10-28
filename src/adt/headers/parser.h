@@ -25,9 +25,9 @@
 #define WAIT_WORD NewWord("WAIT", 4)
 #define UNDO_WORD NewWord("UNDO", 4)
 #define REDO_WORD NewWord("REDO", 4)
-#define WAIT_WORD NewWord("WAIT", 4)
 #define CATALOG_WORD NewWord("CATALOG", 7)
 #define COOKBOOK_WORD NewWord("COOKBOOK", 8)
+#define INVENTORY_WORD NewWord("INVENTORY",9)
 #define EMPTY_WORD NewWord("", 0)
 #define BLANK_WORD NewWord(" ", 1)
 

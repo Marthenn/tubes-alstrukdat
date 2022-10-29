@@ -39,6 +39,14 @@ int main() {
     _assert(GetAbsis(p) == 200, "SETABSIS");
     _assert(GetOrdinat(p) == 150, "SETORDINAT");
 
+    /* ADJACENT */
+    Point p1,p2,p3;
+    CreatePoint(&p1, 0, 0);
+    CreatePoint(&p2, 1, 0);
+    CreatePoint(&p3, 2, 0);
+    _assert(IsAdjacent(p1, p2), "ADJACENT1");
+    _assert(!IsAdjacent(p1, p3), "ADJACENT2");
+
     /* OUTPUT */
     CetakPoint(p); puts("");
     printf("Seluruh tes berhasil dijalankan. Point di atas seharusnya bernilai (200, 150)\n");

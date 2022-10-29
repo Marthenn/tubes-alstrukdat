@@ -12,7 +12,7 @@ void SplashScreen(){
 }
 
 void StartScreen(){
-    SplashScreen();
+    SplashScreen();printf("\n");
     printf("1. START\n");
     printf("2. EXIT\n");
 }

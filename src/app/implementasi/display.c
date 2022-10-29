@@ -56,3 +56,15 @@ void Help(){
     printf("18. EXIT\n");
     printf("    Keluar dari simulasi\n");
 }
+
+void EnterCommand(){
+    printf("Masukkan perintah: ");
+    STARTWORD();
+}
+
+void BuyMenu(ListStatik buys){
+    printf("======================\n");
+    printf("=        BUY         =\n");
+    printf("======================\n");
+    printf("List Bahan Makanan:\n");
+}

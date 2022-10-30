@@ -35,7 +35,7 @@ Tree NewTree (int root);
  * @param val 
  * @return tree 
  */
-void AddChild(Tree *p, int val);
+void AddChild(Tree *p, int val, Address *newNode);
 
 /**
  * @brief add a node as a child to a tree

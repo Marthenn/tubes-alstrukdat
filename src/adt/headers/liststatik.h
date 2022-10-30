@@ -9,13 +9,13 @@
 #include "boolean.h"
 #include "eltype.h"
 
-#define CAPACITY 100
-#define IDX_UNDEF -1
+#define LISTSTATIK_CAP 100
+#define LISTSTATIK_IDX_UNDEF -1
 
 typedef int IdxType;
 
 typedef struct {
-    ElType contents[CAPACITY];
+    ElType contents[LISTSTATIK_CAP];
     int idxEff;
 } ListStatik;
 

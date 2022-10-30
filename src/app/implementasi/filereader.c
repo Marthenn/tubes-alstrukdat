@@ -4,13 +4,8 @@
 #include <stdio.h>
 
 /* ADT */
-#include "../../adt/headers/makanan.h"
-#include "../../adt/headers/waktu.h"
-#include "../../adt/headers/wordmachine.h"
 #include "../../adt/headers/eltype.h"
 #include "../../adt/headers/matriks.h"
-#include "../../adt/headers/liststatik.h"
-#include "../../adt/headers/map.h"
 #include "../../adt/headers/tree.h"
 
 /* APP */
@@ -177,13 +172,13 @@ void ReadFoodConfig(ListStatik *l, Map *map)
         foodElement = NewElType(3, (union Data){.m=food});
         idx = ListIndexOf(*l, foodElement);
         
-        if (idx == IDX_UNDEF && ListLength(*l) < CAPACITY)
+        if (idx == LISTSTATIK_IDX_UNDEF && ListLength(*l) < LISTSTATIK_CAP)
         {
             ListInsertLast(l, foodElement);
         }
         
         else {
-            l->contents[idx] = foodElement;
+            LIST_ELMT(*l, idx) = foodElement;
         }
     }
     
@@ -255,8 +250,10 @@ void ReadRecipeConfig(ListStatik *recipes)
 {
     // KAMUS LOKAL
 
-    int idx, n, i, j, id, childrenNum;
+    int parentIdx, childIdx, n, i, j, id, childrenNum;
     Tree parent, child;
+    Address newNode;
+
     // ALGORITMA
     CreateListStatik(recipes);
     STARTFILEWORD(RECIPE_CONFIG_PATH);
@@ -267,18 +264,42 @@ void ReadRecipeConfig(ListStatik *recipes)
         ReadInt(&id);
         ReadInt(&childrenNum);
 
-        //idx = ListIndexOf(*recipes, NewElType(1, (union Data){.i=id}));
-        
-        parent = NewTree(id);
+        parentIdx = ListIndexOf(*recipes, NewElType(1, (union Data){.i=id}));
+
+        if (parentIdx == LISTSTATIK_IDX_UNDEF)
+        {
+            parent = NewTree(id);
+        }
+
+        else
+        {
+            parent = GetVal(LIST_ELMT(*recipes, parentIdx)).t;
+
+        }
 
         for (j = 0; j < childrenNum; j++)
         {
             ReadInt(&id);
-            AddChild(&parent, id);
+
+            childIdx = ListIndexOf(*recipes, NewElType(1, (union Data){.i=id}));
+
+            if (childIdx == LISTSTATIK_IDX_UNDEF)
+            {
+                AddChild(&parent, id, &newNode);
+                ListInsertLast(recipes, NewElType(5, (union Data){.t=newNode}));
+            }
+
+            else {
+                AddChildNode(&parent, GetVal(LIST_ELMT(*recipes, childIdx)).t);
+            }
         }
 
-        ListInsertLast(recipes, NewElType(5, (union Data){.t=parent}));
-
+        // insert new recipe tree if parent is not found
+        if (parentIdx == LISTSTATIK_IDX_UNDEF)
+        {
+            ListInsertLast(recipes, NewElType(5, (union Data){.t=parent}));
+        }   
+        
         // should be end of line in the file
         NextLine();
     }

@@ -1,11 +1,14 @@
 #ifndef COMMANDS_H
 #define COMMANDS_H
 
+/* ADT */
+#include "../../adt/headers/liststatik.h"
+#include "../../adt/headers/map.h"
+#include "../../adt/headers/simulator.h"
+
+/* APP */
 #include "filereader.h"
 #include "parser.h"
-#include "../../adt/headers/map.h"
-#include "../../adt/headers/liststatik.h"
-#include "../../adt/headers/simulator.h"
 
 /**
  * @brief Load the config files to simulator

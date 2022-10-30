@@ -6,6 +6,7 @@
 #include "../headers/eltype.h"
 #include "../headers/Matriks.h"
 #include "../headers/map.h"
+#include "../../app/headers/parser.h"
 
 /* *** Selektor *** */
 
@@ -20,4 +21,20 @@ void CreateMap(Map *map, int row, int col)
     CREATE_POINT_UNDEF(C(*map));
     CREATE_POINT_UNDEF(F(*map));
     CREATE_POINT_UNDEF(B(*map));
+}
+
+void MoveSimulator(Map *map, Point p)
+// I.S. map terdefinisi, command valid (yaitu antara 4 command MOVE)
+// F.S. posisi simulator di update
+{
+    // KAMUS LOKAL
+    char temp;
+
+    // ALGORITMA
+
+    temp = MAT_ELMT(TAB(*map), GetAbsis(p), GetOrdinat(p));
+    MAT_ELMT(TAB(*map), GetAbsis(p), GetOrdinat(p)) = 'S';
+    MAT_ELMT(TAB(*map), GetAbsis(S(*map)), GetOrdinat(S(*map))) = temp;
+
+    S(*map) = p;
 }

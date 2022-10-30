@@ -3,6 +3,7 @@
 
 /* ADT */
 #include "boolean.h"
+#include "listdin.h"
 
 typedef struct treeNode* Address;
 typedef struct treeNode {
@@ -77,5 +78,22 @@ int NumberChildren(Tree p);
  * @param p 
  */
 void PrintTree(Tree p);
+
+/**
+ * @brief Get the Sub Tree object with root val, return NULL if not found
+ * 
+ * @param p 
+ * @param val 
+ * @return Tree 
+ */
+Tree GetSubTree(Tree p, int val);
+
+/**
+ * @brief Get the children of the tree
+ * 
+ * @param p 
+ * @return Set 
+ */
+ListDin GetChildren(Tree p);
 
 #endif

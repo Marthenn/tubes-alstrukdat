@@ -11,7 +11,7 @@
 static FILE *pita, *file;
 static int retval;
 
-void START()
+void START_INPUT()
 {
        /* Mesin siap dioperasikan. Pita disiapkan untuk dibaca.
           Karakter pertama yang ada pada pita posisinya adalah pada jendela.

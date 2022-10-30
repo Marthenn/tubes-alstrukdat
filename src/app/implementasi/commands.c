@@ -3,6 +3,7 @@
 #include <stdlib.h>
 /* APP */
 #include "../headers/commands.h"
+#include "../headers/display.h"
 
 void Start(Map* map, ListStatik* foods,  ListStatik* recipes, Simulator* simulator){
     ReadAllConfig(map, foods, recipes);

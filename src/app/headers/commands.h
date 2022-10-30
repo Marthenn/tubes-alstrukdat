@@ -14,7 +14,7 @@
  * @param foods 
  * @param recipes 
  */
-void Start(Map* map, ListStatik* foods,  ListStatik* recipes, Word* name);
+void Start(Map* map, ListStatik* foods,  ListStatik* recipes, Simulator* simulator);
 
 /**
  * @brief Exit the simulator
@@ -26,7 +26,7 @@ void Exit();
  * @brief Go into the buy submenu if possible
  * 
  */
-void Buy(Simulator* simulator, ListStatik foods, ListStatik recipes);
+void Buy(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map);
 
 /**
  * @brief Go into the mix submenu if possible

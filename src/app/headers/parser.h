@@ -39,6 +39,9 @@
 Word NewWord(char* s, int length);
 // mengembalikan data Word dengan panjang length dan karakter-karakter beserta urutannya sama dengan pada array s
 
+char GetUpperCase(char a);
+// mengembalikan karakter huruf besar dari a jika a merupakan alpabet huruf kecil, atau mengembalikan kembali a jika a bukan alpabet huruf kecil
+
 boolean IsInputEqual(Word kata);
 // mengembalikan true jika kata sama dengan currentWord (tidak case-sensitive)
 

@@ -64,5 +64,5 @@ boolean IsAdjacent(Point p1, Point p2);
  * @param p2 
  * @return
  */
-boolean IsEqual(Point p1, Point p2);
+boolean IsEqualPoint(Point p1, Point p2);
 #endif

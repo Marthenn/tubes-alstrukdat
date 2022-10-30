@@ -50,8 +50,8 @@ int main() {
     /* EQUAL */
     Point p4;
     CreatePoint(&p4, 0, 0);
-    _assert(IsEqual(p1, p4), "EQUAL1");
-    _assert(!IsEqual(p1, p2), "EQUAL2");
+    _assert(IsEqualPoint(p1, p4), "EQUAL1");
+    _assert(!IsEqualPoint(p1, p2), "EQUAL2");
 
     /* OUTPUT */
     CetakPoint(p); puts("");

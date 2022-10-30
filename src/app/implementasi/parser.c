@@ -220,7 +220,7 @@ ListStatik SplitWord(Word kata, char separator)
 
     CreateListStatik(&l);
 
-    while(i < kata.Length && ListLength(l) < CAPACITY)
+    while(i < kata.Length && ListLength(l) < LISTSTATIK_CAP)
     {
 
         while(kata.TabWord[i] == separator && i < kata.Length)

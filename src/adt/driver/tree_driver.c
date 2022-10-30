@@ -16,19 +16,21 @@
 #include "../../app/headers/parser.h"
 
 int main(){
+    Address p;
+
     printf("--------\n");
     Tree t = NewTree (1);
     PrintTree(t);printf("\n");
     printf("children t: %d\n",NumberChildren(t));
     printf("--------\n");
-    AddChild(&t, 2);
-    AddChild(&t, 3);
-    AddChild(&t, 4);
+    AddChild(&t, 2, &p);
+    AddChild(&t, 3, &p);
+    AddChild(&t, 4, &p);
     PrintTree(t);printf("\n");
     printf("children t: %d\n",NumberChildren(t));
     printf("--------\n");
-    AddChild(&(t->firstChild), 5);
-    AddChild(&(t->firstChild), 6);
+    AddChild(&(t->firstChild), 5, &p);
+    AddChild(&(t->firstChild), 6, &p);
     PrintTree(t);printf("\n");
     printf("children t: %d\n",NumberChildren(t));
     printf("children t->firstChild: %d\n",NumberChildren(t->firstChild));

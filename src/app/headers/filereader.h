@@ -3,13 +3,16 @@
 #ifndef __FILEREADER_H__
 #define __FILEREADER_H__
 
-// ADT 
-#include "../../adt/headers/wordmachine.h"
+// ADT
 #include "../../adt/headers/waktu.h"
+#include "../../adt/headers/map.h"
+#include "../../adt/headers/liststatik.h"
+#include "../../adt/headers/makanan.h"
+#include "../../adt/headers/wordmachine.h"
 
-#define FOOD_CONFIG_PATH "config/food_config.txt"
-#define RECIPE_CONFIG_PATH "config/recipe_config.txt"
-#define MAP_CONFIG_PATH "config/map_config.txt"
+#define FOOD_CONFIG_PATH "src/config/food_config.txt"
+#define RECIPE_CONFIG_PATH "src/config/recipe_config.txt"
+#define MAP_CONFIG_PATH "src/config/map_config.txt"
 
 void STARTFILELINE(Word *kata, char *path);
 /* I.S. : currentFileChar sembarang
@@ -40,10 +43,10 @@ void ReadTime(Waktu *time);
 // I.S. nilai komponen pada time sembarang;
 // F.S. time merupakan representasi waktu dari baris yang sedang dibaca, mesin kata dan mesin karakter menuju line berikutnya.
 
-void ReadFoodConfig();
+void ReadFoodConfig(ListStatik *l, Map *map);
 // I.S. 
-void ReadRecipeConfig();
-void ReadMapConfig();
-void ReadAllConfig();
+void ReadRecipeConfig(ListStatik *recipes);
+void ReadMapConfig(Map *map);
+void ReadAllConfig(Map *map, ListStatik *foods, ListStatik *recipes);
 
 #endif

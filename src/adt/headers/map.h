@@ -30,5 +30,8 @@ void CreateMap(Map *map, int row, int col);
 // I.S. map tidak terdefinisi
 // F.S. map berisi tabel matriks ukuran row x col dengan isi belum terdefinisi serta masing-masing lokasi simulator, telepon, dan lainnya tidak terdefinisi
 
+void MoveSimulator(Map *map, Point p);
+// I.S. map terdefinisi, command valid (yaitu antara 4 command MOVE)
+// F.S. posisi simulator di update
 
 #endif

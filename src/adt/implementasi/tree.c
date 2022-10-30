@@ -24,9 +24,12 @@ Tree NewTree (int root){
     return p;
 }
 
-void AddChild(Tree *p, int val){
+void AddChild(Tree *p, int val, Address *newNode){
     Address new = NewTreeNode(val);
     if(new!=NULL){
+
+        *newNode = new;
+        
         if((*p)->firstChild==NULL){
             (*p)->firstChild = new;
         }else{

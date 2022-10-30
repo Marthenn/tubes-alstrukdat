@@ -57,7 +57,7 @@ boolean IsListEmpty(ListStatik l){
     
     // KAMUS LOKAL
     // ALGORITMA
-    return GetLastListIdx(l) == IDX_UNDEF;
+    return GetLastListIdx(l) == LISTSTATIK_IDX_UNDEF;
 }
 /* *** Test List penuh *** */
 boolean IsListFull(ListStatik l){
@@ -65,7 +65,7 @@ boolean IsListFull(ListStatik l){
 
     // KAMUS LOKAL
     // ALGORITMA
-    return ListLength(l) == CAPACITY;
+    return ListLength(l) == LISTSTATIK_CAP;
 }
 
 /* ********** SEARCHING ********** */
@@ -84,7 +84,7 @@ int ListIndexOf(ListStatik l, ElType val){
             return i;
         }
     }
-    return IDX_UNDEF;
+    return LISTSTATIK_IDX_UNDEF;
 }
 
 /* ********** MENAMBAH ELEMEN ********** */

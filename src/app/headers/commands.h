@@ -3,6 +3,7 @@
 
 /* ADT */
 #include "../../adt/headers/liststatik.h"
+#include "../../adt/headers/listdineltype.h"
 #include "../../adt/headers/map.h"
 #include "../../adt/headers/simulator.h"
 
@@ -17,7 +18,7 @@
  * @param foods 
  * @param recipes 
  */
-void Start(Map* map, ListStatik* foods,  ListStatik* recipes, Simulator* simulator);
+void Start(Simulator* simulator, ListStatik* foods, ListStatik* recipes, Map* map, ListDinElType* BuyFoods, ListDinElType* MixFoods, ListDinElType* ChopFoods, ListDinElType* FryFoods, ListDinElType* BoilFoods);
 
 /**
  * @brief Exit the simulator
@@ -29,7 +30,7 @@ void Exit();
  * @brief Go into the buy submenu if possible
  * 
  */
-void Buy(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map);
+void Buy(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType BuyFoods);
 
 /**
  * @brief Go into the mix submenu if possible

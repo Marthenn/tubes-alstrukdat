@@ -62,7 +62,7 @@ void EnterCommand(){
     STARTWORD();
 }
 
-void BuyMenu(ListStatik buys){
+void BuyMenu(ListStatik foods, ListStatik recipes){
     printf("======================\n");
     printf("=        BUY         =\n");
     printf("======================\n");

@@ -35,7 +35,7 @@ void STARTWORD()
 	// KAMUS LOKAL
 	// ALGORITMA
 	
-	START();
+	START_INPUT();
 	IgnoreBlanks();
 	
 	if (currentChar == MARK)

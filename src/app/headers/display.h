@@ -1,6 +1,8 @@
 #ifndef DISPLAY_H
 #define DISPLAY_H
 
+#include "parser.h"
+
 /**
  * @brief Display a cat meowing splash scren
  * 
@@ -18,5 +20,18 @@ void StartScreen();
  * 
  */
 void Help();
+
+/**
+ * @brief Demand the user to input a command
+ * 
+ */
+void EnterCommand();
+
+/**
+ * @brief Display the buy menu
+ * 
+ * @param map 
+ */
+void BuyMenu(ListStatik foods, ListStatik recipes);
 
 #endif

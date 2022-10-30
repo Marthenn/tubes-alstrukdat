@@ -4,6 +4,8 @@
 #ifndef point_H
 #define point_H
 
+#include "boolean.h"
+
 typedef struct {
     int x; //absis
     int y; //ordinat
@@ -44,4 +46,14 @@ void MovePointEast(Point *p);
 void CetakPoint(Point p);
 /* I.S. p terdefinisi */
 /* F.S. mencetak (p.x, p.y) ke layar. Tidak mencetak karakter lain di awal maupun akhir*/
+
+/**
+ * @brief Check if p1 is adjacents to p2
+ * 
+ * @param p1 
+ * @param p2 
+ * @return true 
+ * @return false 
+ */
+boolean IsAdjacent(Point p1, Point p2);
 #endif

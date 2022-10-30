@@ -12,7 +12,7 @@ void SplashScreen(){
 }
 
 void StartScreen(){
-    SplashScreen();
+    SplashScreen();printf("\n");
     printf("1. START\n");
     printf("2. EXIT\n");
 }
@@ -55,4 +55,16 @@ void Help(){
     printf("    Menampilkan semua perintah yang tersedia\n");
     printf("18. EXIT\n");
     printf("    Keluar dari simulasi\n");
+}
+
+void EnterCommand(){
+    printf("Masukkan perintah: ");
+    STARTWORD();
+}
+
+void BuyMenu(ListStatik buys){
+    printf("======================\n");
+    printf("=        BUY         =\n");
+    printf("======================\n");
+    printf("List Bahan Makanan:\n");
 }

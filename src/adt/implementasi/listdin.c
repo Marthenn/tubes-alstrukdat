@@ -18,7 +18,7 @@ void CreateListDin(ListDin *l, int capacity)
     // ALGORITMA
     
     cap = MIN_LISTDIN_CAP > capacity? MIN_LISTDIN_CAP : capacity;
-    LISTDIN_BUFFER(*l) = (ListDinElType *) malloc(cap * sizeof(ListDinElType));
+    LISTDIN_BUFFER(*l) = (int*) malloc(cap * sizeof(int));
     LISTDIN_CAP(*l) = cap;
     LISTDIN_NEFF(*l) = 0;
 }
@@ -190,7 +190,7 @@ boolean IsListDinEqual(ListDin l1, ListDin l2)
 
 /* ********** SEARCHING ********** */
 /* ***  Perhatian : list boleh kosong!! *** */
-IdxType ListDinIndexOf(ListDin l, ListDinElType val)
+IdxType ListDinIndexOf(ListDin l, int val)
 /* Search apakah ada elemen List l yang bernilai val */
 /* Jika ada, menghasilkan indeks i terkecil, dengan elemen ke-i = val */
 /* Jika tidak ada, mengirimkan LISTDIN_IDX_UNDEF */
@@ -243,12 +243,12 @@ void CopyListDin(ListDin lIn, ListDin *lOut)
 	}
 }
 
-int CountListDinVal(ListDin l, ListDinElType val)
+int CountListDinVal(ListDin l, int val)
 /* Menghasilkan berapa banyak kemunculan val di l */
 /* Jika l kosong menghasilkan 0 */
 {
 	// KAMUS LOKAL
-    ListDinElType total = 0;
+    int total = 0;
     int i;
     
     // ALGORITMA
@@ -274,7 +274,7 @@ void SortListDin(ListDin *l, boolean asc)
     // KAMUS LOKAL
     
     int i, j;
-    ListDinElType temp;
+    int temp;
     // ALGORITMA
     
     for (i = GetListDinFirstIdx(*l) + 1; i < ListDinLength(*l); i++)
@@ -299,7 +299,7 @@ void SortListDin(ListDin *l, boolean asc)
 
 /* ********** MENAMBAH ELEMEN ********** */
 /* *** Menambahkan elemen terakhir *** */
-void InsertFirstListDin(ListDin *l, ListDinElType val)
+void InsertFirstListDin(ListDin *l, int val)
 /* Proses: Menambahkan val sebagai elemen pertama List dinamis */
 /* I.S. List l boleh kosong, jika penuh maka kapasitas ditambah */
 /* F.S. val adalah elemen pertama l yang baru, kapasitas dapat bertambah */
@@ -311,7 +311,7 @@ void InsertFirstListDin(ListDin *l, ListDinElType val)
     InsertAtListDin(l, val, 0);
 }
 
-void InsertAtListDin(ListDin *l, ListDinElType val, IdxType idx)
+void InsertAtListDin(ListDin *l, int val, IdxType idx)
 /* Proses: Menambahkan val sebagai elemen pada index idx List */
 /* I.S. List l tidak kosong, jika penuh maka kapasitas ditambah, idx merupakan index yang valid di l */
 /* F.S. val adalah elemen yang disisipkan pada index idx l, kapasitas dapat bertambah */
@@ -337,7 +337,7 @@ void InsertAtListDin(ListDin *l, ListDinElType val, IdxType idx)
 }
 
 /* *** Menambahkan elemen terakhir *** */
-void InsertLastListDin(ListDin *l, ListDinElType val)
+void InsertLastListDin(ListDin *l, int val)
 /* Proses: Menambahkan val sebagai elemen terakhir list */
 /* I.S. List l boleh kosong, jika penuh maka kapasitas ditambah */
 /* F.S. val adalah elemen terakhir l yang baru, kapasitas dapat bertambah */
@@ -356,7 +356,7 @@ void InsertLastListDin(ListDin *l, ListDinElType val)
 
 /* ********** MENGHAPUS ELEMEN ********** */
 /* *** Menghapus elemen pertama *** */
-void DeleteFirstListDin(ListDin *l, ListDinElType *val)
+void DeleteFirstListDin(ListDin *l, int *val)
 /* Proses : Menghapus elemen pertama List */
 /* I.S. List tidak kosong */
 /* F.S. val adalah nilai elemen pertama l sebelum penghapusan, */
@@ -370,7 +370,7 @@ void DeleteFirstListDin(ListDin *l, ListDinElType *val)
     DeleteAtListDin(l, val, 0);
 }
 
-void DeleteAtListDin(ListDin *l, ListDinElType *val, IdxType idx)
+void DeleteAtListDin(ListDin *l, int *val, IdxType idx)
 /* Proses : Menghapus elemen pada index idx List */
 /* I.S. List tidak kosong, idx adalah index yang valid di l */
 /* F.S. val adalah nilai elemen pada index idx l sebelum penghapusan, */
@@ -402,7 +402,7 @@ void DeleteAtListDin(ListDin *l, ListDinElType *val, IdxType idx)
 }
 
 /* ********** MENGHAPUS ELEMEN ********** */
-void DeleteLastListDin(ListDin *l, ListDinElType *val)
+void DeleteLastListDin(ListDin *l, int *val)
 /* Proses : Menghapus elemen terakhir list */
 /* I.S. List tidak kosong */
 /* F.S. val adalah nilai elemen terakhir l sebelum penghapusan, */
@@ -426,7 +426,7 @@ void ExpandListDin(ListDin *l)
     // ALGORITMA
     
     newCap = LISTDIN_CAP(*l) * 3 / 2;
-    LISTDIN_BUFFER(*l) = realloc(LISTDIN_BUFFER(*l), newCap * sizeof(ListDinElType));
+    LISTDIN_BUFFER(*l) = realloc(LISTDIN_BUFFER(*l), newCap * sizeof(int));
     LISTDIN_CAP(*l) = newCap;
    
 }
@@ -441,7 +441,7 @@ void ShrinkListDin(ListDin *l)
     // ALGORITMA
     
     newCap = (MIN_LISTDIN_CAP > LISTDIN_CAP(*l) / 2)? MIN_LISTDIN_CAP : LISTDIN_CAP(*l) / 2;
-    LISTDIN_BUFFER(*l) = realloc(LISTDIN_BUFFER(*l), newCap * sizeof(ListDinElType));
+    LISTDIN_BUFFER(*l) = realloc(LISTDIN_BUFFER(*l), newCap * sizeof(int));
     LISTDIN_CAP(*l) = newCap;
 }
 
@@ -457,6 +457,6 @@ void CompressListDin(ListDin *l)
     // ALGORITMA
     
     newCap = (MIN_LISTDIN_CAP > LISTDIN_NEFF(*l))? MIN_LISTDIN_CAP : LISTDIN_NEFF(*l);
-    LISTDIN_BUFFER(*l) = realloc(LISTDIN_BUFFER(*l), newCap * sizeof(ListDinElType));
+    LISTDIN_BUFFER(*l) = realloc(LISTDIN_BUFFER(*l), newCap * sizeof(int));
     LISTDIN_CAP(*l) = newCap;
 }

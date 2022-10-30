@@ -88,3 +88,7 @@ void CetakPoint(Point p)
 boolean IsAdjacent(Point p1, Point p2){
     return((p1.x == p2.x && (p1.y == p2.y+1 || p1.y == p2.y-1)) || (p1.y == p2.y && (p1.x == p2.x+1 || p1.x == p2.x-1)));
 }
+
+boolean IsEqualPoint(Point p1, Point p2){
+    return(p1.x == p2.x && p1.y == p2.y);
+}

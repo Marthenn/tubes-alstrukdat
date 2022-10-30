@@ -56,4 +56,13 @@ void CetakPoint(Point p);
  * @return false 
  */
 boolean IsAdjacent(Point p1, Point p2);
+
+/**
+ * @brief Check if p1 is equal to p2
+ * 
+ * @param p1 
+ * @param p2 
+ * @return
+ */
+boolean IsEqual(Point p1, Point p2);
 #endif

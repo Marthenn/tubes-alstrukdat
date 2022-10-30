@@ -47,6 +47,12 @@ int main() {
     _assert(IsAdjacent(p1, p2), "ADJACENT1");
     _assert(!IsAdjacent(p1, p3), "ADJACENT2");
 
+    /* EQUAL */
+    Point p4;
+    CreatePoint(&p4, 0, 0);
+    _assert(IsEqual(p1, p4), "EQUAL1");
+    _assert(!IsEqual(p1, p2), "EQUAL2");
+
     /* OUTPUT */
     CetakPoint(p); puts("");
     printf("Seluruh tes berhasil dijalankan. Point di atas seharusnya bernilai (200, 150)\n");

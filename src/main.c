@@ -136,7 +136,7 @@ int main(){
 			
 			else if (IsInputEqual(COOKBOOK_WORD) == true)
 			{
-				CookBook(foods, recipes, map);
+				CookBook(foods, recipes, mixFoods, chopFoods, fryFoods, boilFoods);
 			}
 			
 			else if (IsInputPrefixEqual(WAIT_WORD) == true && ListDinElTypeLength(wordList) == 3)

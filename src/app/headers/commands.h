@@ -28,7 +28,7 @@
  * @param undoRecord Stack of action that is done
  * @param redoRecord Stack of action that is undone
  */
-void Start(Simulator* simulator, ListStatik* foods, ListStatik* recipes, Map* map, ListDinElType* buyFoods, ListDinElType* mixFoods, ListDinElType* chopFoods, ListDinElType* fryFoods, ListDinElType* boilFoods, Stack undoRecord, Stack redoRecord);
+void Start(Simulator* simulator, ListStatik* foods, ListStatik* recipes, Map* map, ListDinElType* buyFoods, ListDinElType* mixFoods, ListDinElType* chopFoods, ListDinElType* fryFoods, ListDinElType* boilFoods, Stack *undoRecord, Stack *redoRecord);
 
 /**
  * @brief Exit the simulator
@@ -49,7 +49,7 @@ void Exit();
  * @param redoRecord Stack of action that is undone
  * 
  */
-void Buy(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType buyFoods, PrioQueue *delivery, Stack undoRecord, Stack redoRecord);
+void Buy(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType buyFoods, PrioQueue *delivery, Stack *undoRecord, Stack *redoRecord);
 
 /**
  * @brief Go into the mix submenu if possible
@@ -63,7 +63,7 @@ void Buy(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
  * @param redoRecord Stack of action that is undone
  * 
  */
-void Mix(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType mixFoods, Stack undoRecord, Stack redoRecord);
+void Mix(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType mixFoods, Stack *undoRecord, Stack *redoRecord);
 
 /**
  * @brief Go into the chop submenu if possible
@@ -77,7 +77,7 @@ void Mix(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
  * @param redoRecord Stack of action that is undone
  * 
  */
-void Chop(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType chopFoods, Stack undoRecord, Stack redoRecord);
+void Chop(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType chopFoods, Stack *undoRecord, Stack *redoRecord);
 
 /**
  * @brief Go into the fry submenu if possible
@@ -91,7 +91,7 @@ void Chop(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
  * @param redoRecord Stack of action that is undone
  * 
  */
-void Fry(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType fryFoods, Stack undoRecord, Stack redoRecord);
+void Fry(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType fryFoods, Stack *undoRecord, Stack *redoRecord);
 
 /**
  * @brief Go into the boil submenu if possible
@@ -105,7 +105,7 @@ void Fry(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
  * @param redoRecord Stack of action that is undone
  * 
  */
-void Boil(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType boilFoods, Stack undoRecord, Stack redoRecord);
+void Boil(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType boilFoods, Stack *undoRecord, Stack *redoRecord);
 
 /**
  * @brief Go back to previous state
@@ -123,5 +123,5 @@ void Boil(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
  * @param redoRecord Stack of action that is undone
  * 
  */
-void Undo (Simulator* simulator, ListStatik* foods, ListStatik* recipes, Map* map, ListDinElType* buyFoods, ListDinElType* mixFoods, ListDinElType* chopFoods, ListDinElType* fryFoods, ListDinElType* boilFoods, Stack undoRecord, Stack redoRecord);
+void Undo (Simulator* simulator, ListStatik* foods, ListStatik* recipes, Map* map, ListDinElType* buyFoods, ListDinElType* mixFoods, ListDinElType* chopFoods, ListDinElType* fryFoods, ListDinElType* boilFoods, Stack *undoRecord, Stack *redoRecord);
 #endif

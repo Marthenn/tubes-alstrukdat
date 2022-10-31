@@ -19,9 +19,16 @@ Makanan GetMakananFromId(ListStatik foods, int id){
     return m;
 }
 
-void Start(Simulator* simulator, ListStatik* foods, ListStatik* recipes, Map* map, ListDinElType* buyFoods, ListDinElType* mixFoods, ListDinElType* chopFoods, ListDinElType* fryFoods, ListDinElType* boilFoods, Stack undoRecord, Stack redoRecord){
+void Start(Simulator* simulator, ListStatik* foods, ListStatik* recipes, Map* map, ListDinElType* buyFoods, ListDinElType* mixFoods, ListDinElType* chopFoods, ListDinElType* fryFoods, ListDinElType* boilFoods, Stack *undoRecord, Stack *redoRecord){
     ReadAllConfig(map, foods, recipes);
     int i;
+
+    CreateListDinElType(buyFoods, 0);
+    CreateListDinElType(mixFoods, 0);
+    CreateListDinElType(chopFoods, 0);
+    CreateListDinElType(fryFoods, 0);
+    CreateListDinElType(boilFoods, 0);
+
     for(i=0;i<ListLength(*foods);i++){
         if(IsEqualPoint(T(*map), GetLokasiAksi(GetVal((*foods).contents[i]).m))){
             InsertLastListDinElType(buyFoods, (*foods).contents[i]);
@@ -29,6 +36,7 @@ void Start(Simulator* simulator, ListStatik* foods, ListStatik* recipes, Map* ma
         } else if (IsEqualPoint(M(*map), GetLokasiAksi(GetVal((*foods).contents[i]).m))){
 
             InsertLastListDinElType(mixFoods, (*foods).contents[i]);
+
         } else if (IsEqualPoint(C(*map), GetLokasiAksi(GetVal((*foods).contents[i]).m))){
 
             InsertLastListDinElType(chopFoods, (*foods).contents[i]);
@@ -36,11 +44,22 @@ void Start(Simulator* simulator, ListStatik* foods, ListStatik* recipes, Map* ma
         } else if (IsEqualPoint(F(*map), GetLokasiAksi(GetVal((*foods).contents[i]).m))){
 
             InsertLastListDinElType(fryFoods, (*foods).contents[i]);
+            
         } else if (IsEqualPoint(B(*map), GetLokasiAksi(GetVal((*foods).contents[i]).m))){
 
             InsertLastListDinElType(boilFoods, (*foods).contents[i]);
         }
     }
+
+    CompressListDinElType(buyFoods);
+    CompressListDinElType(mixFoods);
+    CompressListDinElType(chopFoods);
+    CompressListDinElType(fryFoods);
+    CompressListDinElType(boilFoods);
+
+    CreateEmptyStack(undoRecord);
+    CreateEmptyStack(redoRecord);
+
     printf("Masukkan nama Anda: ");STARTWORD();(*simulator).NamaPengguna = currentWord;
     printf("Selamat datang ");DisplayWord((*simulator).NamaPengguna);printf("!\n");
 }
@@ -50,7 +69,7 @@ void Exit(){
     exit(0);
 }
 
-void Buy(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType BuyFoods, PrioQueue *delivery, Stack undoRecord, Stack redoRecord){
+void Buy(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType BuyFoods, PrioQueue *delivery, Stack *undoRecord, Stack *redoRecord){
     if(!(IsAdjacent((*simulator).Lokasi,T(map)))){
         DisplayWord((*simulator).NamaPengguna);
         printf(" tidak berada di area telepon!\n");
@@ -72,7 +91,7 @@ void Buy(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
     }
 }
 
-void Mix(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType mixFoods, Stack undoRecord, Stack redoRecord){
+void Mix(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType mixFoods, Stack *undoRecord, Stack *redoRecord){
     if(!(IsAdjacent((*simulator).Lokasi,M(map)))){
         DisplayWord((*simulator).NamaPengguna);
         printf(" tidak berada di area mixing!\n");
@@ -133,7 +152,7 @@ void Mix(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
     }
 }
 
-void Chop(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType chopFoods, Stack undoRecord, Stack redoRecord){
+void Chop(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType chopFoods, Stack *undoRecord, Stack *redoRecord){
     if(!(IsAdjacent((*simulator).Lokasi,C(map)))){
         DisplayWord((*simulator).NamaPengguna);
         printf(" tidak berada di area pemotongan!\n");
@@ -194,7 +213,7 @@ void Chop(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
     }
 }
 
-void Fry(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType fryFoods, Stack undoRecord, Stack redoRecord){
+void Fry(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType fryFoods, Stack *undoRecord, Stack *redoRecord){
     if(!(IsAdjacent((*simulator).Lokasi,F(map)))){
         DisplayWord((*simulator).NamaPengguna);
         printf(" tidak berada di area penggorengan!\n");
@@ -255,7 +274,7 @@ void Fry(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
     }
 }
 
-void Boil(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType boilFoods, Stack undoRecord, Stack redoRecord){
+void Boil(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType boilFoods, Stack *undoRecord, Stack *redoRecord){
     if(!(IsAdjacent((*simulator).Lokasi,B(map)))){
         DisplayWord((*simulator).NamaPengguna);
         printf(" tidak berada di area perebusan!\n");
@@ -316,7 +335,7 @@ void Boil(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
     }
 }
 
-void Undo (Simulator* simulator, ListStatik* foods, ListStatik* recipes, Map* map, ListDinElType* buyFoods, ListDinElType* mixFoods, ListDinElType* chopFoods, ListDinElType* fryFoods, ListDinElType* boilFoods, Stack undoRecord, Stack redoRecord)
+void Undo (Simulator* simulator, ListStatik* foods, ListStatik* recipes, Map* map, ListDinElType* buyFoods, ListDinElType* mixFoods, ListDinElType* chopFoods, ListDinElType* fryFoods, ListDinElType* boilFoods, Stack *undoRecord, Stack *redoRecord)
 {
     
 }

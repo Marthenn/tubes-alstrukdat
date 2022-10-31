@@ -80,6 +80,7 @@ void InsertFirstListDinElType(ListDinElType *L, ElType e){
 }
 
 void InsertLastListDinElType(ListDinElType *L, ElType e){
+
     if (IsListDinElTypeFull(*L))
     {
         ExpandListDinElType(L);
@@ -93,11 +94,33 @@ void InsertLastListDinElType(ListDinElType *L, ElType e){
 void DeleteFirstListDinElType(ListDinElType *L, ElType *e)
 {
 
+    int i;
+
+    *e = L->buffer[0];
+    
+    for (i = 0; i < ListDinElTypeLength(*L) - 1; i++)
+    {
+        L->buffer[i] = L->buffer[i+1];
+    }
+
+    L->nEff--;
+
+    if (ListDinElTypeLength(*L) <= L->capacity / 4)
+    {
+        ShrinkListDinElType(L);
+    }
 }
 
 void DeleteLastListDinElType(ListDinElType *L, ElType *e)
 {
 
+    L->nEff--;
+    *e = L->buffer[ListDinElTypeLength(*L)];
+
+    if (ListDinElTypeLength(*L) <= L->capacity / 4)
+    {
+        ShrinkListDinElType(L);
+    }
 }
 
 void ExpandListDinElType(ListDinElType *L){

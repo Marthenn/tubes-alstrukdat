@@ -21,7 +21,6 @@ typedef struct{
 #define C(map) (map).C
 #define F(map) (map).F
 #define B(map) (map).B
-#define X(map) (map).X
 #define CREATE_POINT_UNDEF(point) CreatePoint(&(point), -1, -1)
 #define WALL_MAP_CHAR 'X'
 #define SPACE_MAP_CHAR '#'

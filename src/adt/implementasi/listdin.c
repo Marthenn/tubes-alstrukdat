@@ -23,7 +23,7 @@ void CreateListDin(ListDin *l, int capacity)
     LISTDIN_NEFF(*l) = 0;
 }
 
-void DealocateListDin(ListDin *l)
+void DeallocateListDin(ListDin *l)
 /* I.S. l terdefinisi; */
 /* F.S. (l) dikembalikan ke system, LISTDIN_CAP(l)=0; LISTDIN_NEFF(l)=0 */
 {

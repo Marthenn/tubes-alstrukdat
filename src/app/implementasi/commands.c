@@ -4,6 +4,7 @@
 /* APP */
 #include "../headers/commands.h"
 
+//LOCAL FUNCTION, TIDAK DAPAT DIPANGGIL DI LUAR COMMMANDS.C
 Makanan GetMakananFromId(ListStatik foods, int id){
     int i;
     for(i=0;i<foods.idxEff;i++){
@@ -13,6 +14,7 @@ Makanan GetMakananFromId(ListStatik foods, int id){
     }
     Makanan m;Point p;
     CreatePoint(&p,0,0);
+    // MARK SEBAGAI TIDAK ADA DENGAN ID -999
     CreateMakanan(&m, -999, NewWord("Not Found", 9), 0, 0, p);
     return m;
 }
@@ -57,7 +59,6 @@ void Exit(){
     exit(0);
 }
 
-// FIX: Buy gak ada prerequiste kebutuhan, hapus
 void Buy(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType BuyFoods, PrioQueue *delivery){
     if(!(IsAdjacent((*simulator).Lokasi,T(map)))){
         DisplayWord((*simulator).NamaPengguna);

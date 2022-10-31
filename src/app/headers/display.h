@@ -2,7 +2,17 @@
 #define DISPLAY_H
 
 #include "parser.h"
+#include "../../adt/headers/makanan.h"
 #include "../../adt/headers/listdineltype.h"
+
+/**
+ * @brief Get the Makanan From Id identifier
+ * 
+ * @param foods List of foods available
+ * @param id The id identifier
+ * @return Makanan object from foods list
+ */
+Makanan GetMakananFromId(ListStatik foods, int id);
 
 /**
  * @brief Display a cat meowing splash scren
@@ -62,5 +72,17 @@ void FryMenu(ListDinElType FryFoods);
  * @param BoilFoods List of all the foods that can be get from boiling
  */
 void BoilMenu(ListDinElType BoilFoods);
+
+/**
+ * @brief Display the cookbook menu
+ * 
+ * @param foods List of foods available
+ * @param recipes list of all the recipes available
+ * @param mixFoods list of all the foods that can be get from mixing
+ * @param chopFoods list of all the foods that can be get from chopping
+ * @param fryFoods list of all the foods that can be get from frying
+ * @param boilFoods list of all the foods that can be get from boiling
+ */
+void CookBook(ListStatik foods, ListStatik recipes, ListDinElType mixFoods, ListDinElType chopFoods, ListDinElType fryFoods, ListDinElType boilFoods);
 
 #endif

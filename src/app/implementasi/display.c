@@ -4,6 +4,20 @@
 /* APP */
 #include "../headers/display.h"
 
+Makanan GetMakananFromId(ListStatik foods, int id){
+    int i;
+    for(i=0;i<foods.idxEff;i++){
+        if(GetVal(LIST_ELMT(foods,i)).m.Id==id){
+            return GetVal(LIST_ELMT(foods,i)).m;
+        }
+    }
+    Makanan m;Point p;
+    CreatePoint(&p,0,0);
+    // MARK SEBAGAI TIDAK ADA DENGAN ID -999
+    CreateMakanan(&m, -999, NewWord("Not Found", 9), 0, 0, p);
+    return m;
+}
+
 void SplashScreen(){
     printf("    (\\\n");
     printf("     \\ \\\n");
@@ -131,4 +145,110 @@ void BoilMenu(ListDinElType BoilFoods){
         printf("   %d. ",i);DisplayWordLine(GetVal(BoilFoods.buffer[i]).m.Nama);
     }
     printf("\nKirim 0 untuk exit.\n\n");
+}
+
+void CookBook(ListStatik foods, ListStatik recipes, ListDinElType mixFoods, ListDinElType chopFoods, ListDinElType fryFoods, ListDinElType boilFoods){
+    int i,j; ListDin need;
+    printf("======================\n");
+    printf("=      COOKBOOK      =\n");
+    printf("======================\n");
+    printf("FORMAT\n");
+    printf("   x. Nama makanan\n");
+    printf("   --> [Bahan Makanan yang dibutuhkan]\n");
+    printf("======= MIXING =======\n");
+    if(IsListDinElTypeEmpty(mixFoods)){
+        printf("Tidak ada resep yang membutuhkan mixing\n");
+    }
+    for(i=0;i<ListDinElTypeLength(mixFoods);i++){
+        printf("%d. ",i+1);
+        DisplayWordLine(GetVal(mixFoods.buffer[i]).m.Nama);
+        CreateListDin(&need,3);
+        j=0;
+        while(IsListDinEmpty(need)){
+            if(IsPartOf(GetVal(recipes.contents[j]).t,GetVal(mixFoods.buffer[i]).m.Id)){
+                need = GetChildren(GetSubTree(GetVal(recipes.contents[j]).t,GetVal(mixFoods.buffer[i]).m.Id));
+            }
+            j++;
+        }
+        printf("--> ");
+        for(j=0;j<ListDinLength(need);j++){
+            DisplayWord(GetMakananFromId(foods, need.buffer[j]).Nama);
+            if(j<ListDinLength(need)-1){
+                printf(", ");
+            }
+        }
+        printf("\n");
+    }
+    printf("====== CHOPPING ======\n");
+    if(IsListDinElTypeEmpty(chopFoods)){
+        printf("Tidak ada resep yang membutuhkan chopping\n");
+    }
+    for(i=0;i<ListDinElTypeLength(chopFoods);i++){
+        printf("%d. ",i+1);
+        DisplayWordLine(GetVal(chopFoods.buffer[i]).m.Nama);
+        CreateListDin(&need,3);
+        j=0;
+        while(IsListDinEmpty(need)){
+            if(IsPartOf(GetVal(recipes.contents[j]).t,GetVal(chopFoods.buffer[i]).m.Id)){
+                need = GetChildren(GetSubTree(GetVal(recipes.contents[j]).t,GetVal(chopFoods.buffer[i]).m.Id));
+            }
+            j++;
+        }
+        printf("--> ");
+        for(j=0;j<ListDinLength(need);j++){
+            DisplayWord(GetMakananFromId(foods, need.buffer[j]).Nama);
+            if(j<ListDinLength(need)-1){
+                printf(", ");
+            }
+        }
+        printf("\n");
+    }
+    printf("======= FRYING =======\n");
+    if(IsListDinElTypeEmpty(fryFoods)){
+        printf("Tidak ada resep yang membutuhkan frying\n");
+    }
+    for(i=0;i<ListDinElTypeLength(fryFoods);i++){
+        printf("%d. ",i+1);
+        DisplayWordLine(GetVal(fryFoods.buffer[i]).m.Nama);
+        CreateListDin(&need,3);
+        j=0;
+        while(IsListDinEmpty(need)){
+            if(IsPartOf(GetVal(recipes.contents[j]).t,GetVal(fryFoods.buffer[i]).m.Id)){
+                need = GetChildren(GetSubTree(GetVal(recipes.contents[j]).t,GetVal(fryFoods.buffer[i]).m.Id));
+            }
+            j++;
+        }
+        printf("--> ");
+        for(j=0;j<ListDinLength(need);j++){
+            DisplayWord(GetMakananFromId(foods, need.buffer[j]).Nama);
+            if(j<ListDinLength(need)-1){
+                printf(", ");
+            }
+        }
+        printf("\n");
+    }
+    printf("====== BOILING =======\n");
+    if(IsListDinElTypeEmpty(boilFoods)){
+        printf("Tidak ada resep yang membutuhkan boiling\n");
+    }
+    for(i=0;i<ListDinElTypeLength(boilFoods);i++){
+        printf("%d. ",i+1);
+        DisplayWordLine(GetVal(boilFoods.buffer[i]).m.Nama);
+        CreateListDin(&need,3);
+        j=0;
+        while(IsListDinEmpty(need)){
+            if(IsPartOf(GetVal(recipes.contents[j]).t,GetVal(boilFoods.buffer[i]).m.Id)){
+                need = GetChildren(GetSubTree(GetVal(recipes.contents[j]).t,GetVal(boilFoods.buffer[i]).m.Id));
+            }
+            j++;
+        }
+        printf("--> ");
+        for(j=0;j<ListDinLength(need);j++){
+            DisplayWord(GetMakananFromId(foods, need.buffer[j]).Nama);
+            if(j<ListDinLength(need)-1){
+                printf(", ");
+            }
+        }
+        printf("\n");
+    }
 }

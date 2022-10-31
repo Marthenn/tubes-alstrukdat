@@ -2,15 +2,12 @@
 #define COMMANDS_H
 
 /* ADT */
-#include "../../adt/headers/liststatik.h"
-#include "../../adt/headers/listdineltype.h"
 #include "../../adt/headers/map.h"
 #include "../../adt/headers/simulator.h"
 #include "../../adt/headers/stack.h"
 
 /* APP */
 #include "filereader.h"
-#include "parser.h"
 #include "display.h"
 
 /**

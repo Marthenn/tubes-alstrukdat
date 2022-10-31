@@ -19,35 +19,26 @@ Makanan GetMakananFromId(ListStatik foods, int id){
     return m;
 }
 
-void Start(Simulator* simulator, ListStatik* foods, ListStatik* recipes, Map* map, ListDinElType* BuyFoods, ListDinElType* MixFoods, ListDinElType* ChopFoods, ListDinElType* FryFoods, ListDinElType* BoilFoods){
+void Start(Simulator* simulator, ListStatik* foods, ListStatik* recipes, Map* map, ListDinElType* buyFoods, ListDinElType* mixFoods, ListDinElType* chopFoods, ListDinElType* fryFoods, ListDinElType* boilFoods, Stack undoRecord, Stack redoRecord){
     ReadAllConfig(map, foods, recipes);
     int i;
     for(i=0;i<ListLength(*foods);i++){
         if(IsEqualPoint(T(*map), GetLokasiAksi(GetVal((*foods).contents[i]).m))){
-            if(IsListDinElTypeFull(*BuyFoods)){
-                ExpandListDinElType(BuyFoods);
-            }
-            InsertLastListDinElType(BuyFoods, (*foods).contents[i]);
+            InsertLastListDinElType(buyFoods, (*foods).contents[i]);
+
         } else if (IsEqualPoint(M(*map), GetLokasiAksi(GetVal((*foods).contents[i]).m))){
-            if(IsListDinElTypeFull(*MixFoods)){
-                ExpandListDinElType(MixFoods);
-            }
-            InsertLastListDinElType(MixFoods, (*foods).contents[i]);
+
+            InsertLastListDinElType(mixFoods, (*foods).contents[i]);
         } else if (IsEqualPoint(C(*map), GetLokasiAksi(GetVal((*foods).contents[i]).m))){
-            if(IsListDinElTypeFull(*ChopFoods)){
-                ExpandListDinElType(ChopFoods);
-            }
-            InsertLastListDinElType(ChopFoods, (*foods).contents[i]);
+
+            InsertLastListDinElType(chopFoods, (*foods).contents[i]);
+
         } else if (IsEqualPoint(F(*map), GetLokasiAksi(GetVal((*foods).contents[i]).m))){
-            if(IsListDinElTypeFull(*FryFoods)){
-                ExpandListDinElType(FryFoods);
-            }
-            InsertLastListDinElType(FryFoods, (*foods).contents[i]);
+
+            InsertLastListDinElType(fryFoods, (*foods).contents[i]);
         } else if (IsEqualPoint(B(*map), GetLokasiAksi(GetVal((*foods).contents[i]).m))){
-            if(IsListDinElTypeFull(*BoilFoods)){
-                ExpandListDinElType(BoilFoods);
-            }
-            InsertLastListDinElType(BoilFoods, (*foods).contents[i]);
+
+            InsertLastListDinElType(boilFoods, (*foods).contents[i]);
         }
     }
     printf("Masukkan nama Anda: ");STARTWORD();(*simulator).NamaPengguna = currentWord;
@@ -59,7 +50,7 @@ void Exit(){
     exit(0);
 }
 
-void Buy(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType BuyFoods, PrioQueue *delivery){
+void Buy(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType BuyFoods, PrioQueue *delivery, Stack undoRecord, Stack redoRecord){
     if(!(IsAdjacent((*simulator).Lokasi,T(map)))){
         DisplayWord((*simulator).NamaPengguna);
         printf(" tidak berada di area telepon!\n");
@@ -81,22 +72,22 @@ void Buy(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
     }
 }
 
-void Mix(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType MixFoods){
+void Mix(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType mixFoods, Stack undoRecord, Stack redoRecord){
     if(!(IsAdjacent((*simulator).Lokasi,M(map)))){
         DisplayWord((*simulator).NamaPengguna);
         printf(" tidak berada di area mixing!\n");
     } else {
-        MixMenu(MixFoods);
+        MixMenu(mixFoods);
         int x; boolean success = false;
         while(!success){
             printf("Enter Command: ");scanf("%d",&x);
             x--;
             if(x==-1){
                 success = true;
-            } else if (x>ListDinElTypeLength(MixFoods)){
+            } else if (x>ListDinElTypeLength(mixFoods)){
                 printf("Out of range!\n");
             } else {
-                Makanan dibuat = GetMakananFromId(foods, GetVal(MixFoods.buffer[x]).m.Id);
+                Makanan dibuat = GetMakananFromId(foods, GetVal(mixFoods.buffer[x]).m.Id);
                 ListDin need; CreateListDin(&need,10);
                 while(IsListDinEmpty(need)){
                     need = GetChildren(GetVal(LIST_ELMT(recipes,x)).t);
@@ -142,22 +133,22 @@ void Mix(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
     }
 }
 
-void Chop(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType ChopFoods){
+void Chop(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType chopFoods, Stack undoRecord, Stack redoRecord){
     if(!(IsAdjacent((*simulator).Lokasi,C(map)))){
         DisplayWord((*simulator).NamaPengguna);
         printf(" tidak berada di area pemotongan!\n");
     } else {
-        ChopMenu(ChopFoods);
+        ChopMenu(chopFoods);
         int x; boolean success = false;
         while(!success){
             printf("Enter Command: ");scanf("%d",&x);
             x--;
             if(x==-1){
                 success = true;
-            } else if (x>ListDinElTypeLength(ChopFoods)){
+            } else if (x>ListDinElTypeLength(chopFoods)){
                 printf("Out of range!\n");
             } else {
-                Makanan dibuat = GetMakananFromId(foods, GetVal(ChopFoods.buffer[x]).m.Id);
+                Makanan dibuat = GetMakananFromId(foods, GetVal(chopFoods.buffer[x]).m.Id);
                 ListDin need; CreateListDin(&need,10);
                 while(IsListDinEmpty(need)){
                     need = GetChildren(GetVal(LIST_ELMT(recipes,x)).t);
@@ -203,22 +194,22 @@ void Chop(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
     }
 }
 
-void Fry(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType FryFoods){
+void Fry(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType fryFoods, Stack undoRecord, Stack redoRecord){
     if(!(IsAdjacent((*simulator).Lokasi,F(map)))){
         DisplayWord((*simulator).NamaPengguna);
         printf(" tidak berada di area penggorengan!\n");
     } else {
-        FryMenu(FryFoods);
+        FryMenu(fryFoods);
         int x; boolean success = false;
         while(!success){
             printf("Enter Command: ");scanf("%d",&x);
             x--;
             if(x==-1){
                 success = true;
-            } else if (x>ListDinElTypeLength(FryFoods)){
+            } else if (x>ListDinElTypeLength(fryFoods)){
                 printf("Out of range!\n");
             } else {
-                Makanan dibuat = GetMakananFromId(foods, GetVal(FryFoods.buffer[x]).m.Id);
+                Makanan dibuat = GetMakananFromId(foods, GetVal(fryFoods.buffer[x]).m.Id);
                 ListDin need; CreateListDin(&need,10);
                 while(IsListDinEmpty(need)){
                     need = GetChildren(GetVal(LIST_ELMT(recipes,x)).t);
@@ -264,22 +255,22 @@ void Fry(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
     }
 }
 
-void Boil(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType BoilFoods){
+void Boil(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType boilFoods, Stack undoRecord, Stack redoRecord){
     if(!(IsAdjacent((*simulator).Lokasi,B(map)))){
         DisplayWord((*simulator).NamaPengguna);
         printf(" tidak berada di area perebusan!\n");
     } else {
-        BoilMenu(BoilFoods);
+        BoilMenu(boilFoods);
         int x; boolean success = false;
         while(!success){
             printf("Enter Command: ");scanf("%d",&x);
             x--;
             if(x==-1){
                 success = true;
-            } else if (x>ListDinElTypeLength(BoilFoods)){
+            } else if (x>ListDinElTypeLength(boilFoods)){
                 printf("Out of range!\n");
             } else {
-                Makanan dibuat = GetMakananFromId(foods, GetVal(BoilFoods.buffer[x]).m.Id);
+                Makanan dibuat = GetMakananFromId(foods, GetVal(boilFoods.buffer[x]).m.Id);
                 ListDin need; CreateListDin(&need,10);
                 while(IsListDinEmpty(need)){
                     need = GetChildren(GetVal(LIST_ELMT(recipes,x)).t);
@@ -323,4 +314,9 @@ void Boil(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
             }
         }
     }
+}
+
+void Undo (Simulator* simulator, ListStatik* foods, ListStatik* recipes, Map* map, ListDinElType* buyFoods, ListDinElType* mixFoods, ListDinElType* chopFoods, ListDinElType* fryFoods, ListDinElType* boilFoods, Stack undoRecord, Stack redoRecord)
+{
+    
 }

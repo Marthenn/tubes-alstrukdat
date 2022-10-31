@@ -16,7 +16,7 @@ int main(){
     ElType e10 = NewElType(0, (union Data){.i = 10});
 
     printf("===== CREATE EMPTY LIST =====\n");
-    CreateListDinElType(&l, 10);
+    CreateListDinElType(&l, 0);
     PrintListDinElType(l);printf("\n");
     printf("Length: %d\n",ListDinElTypeLength(l));
     printf("Empty: %d\n", IsListDinElTypeEmpty(l));
@@ -40,8 +40,8 @@ int main(){
     printf("Full: %d\n", IsListDinElTypeFull(l));
     printf("\n");
 
-    printf("====== SHRINK ELEMENTS ======\n");
-    ShrinkListDinElType(&l);
+    printf("====== COMPRESS LIST DIN ======\n");
+    CompressListDinElType(&l);
     PrintListDinElType(l);printf("\n");
     printf("Length: %d\n",ListDinElTypeLength(l));
     printf("Empty: %d\n", IsListDinElTypeEmpty(l));

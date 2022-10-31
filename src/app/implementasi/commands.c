@@ -4,27 +4,6 @@
 /* APP */
 #include "../headers/commands.h"
 
-//LOCAL FUNCTION, TIDAK DAPAT DIPANGGIL DI LUAR COMMMANDS.C
-Makanan GetMakananFromId(ListStatik foods, int id){
-
-    Makanan m;
-    Point p;
-
-    int idx = ListIndexOf(foods, NewElType(0, (union Data){.i=id}));
-
-    if (idx != LISTSTATIK_IDX_UNDEF)
-    {
-        return GetVal(LIST_ELMT(foods,idx)).m;
-    }
-
-    else {
-        CreatePoint(&p,0,0);
-        // MARK SEBAGAI TIDAK ADA DENGAN ID -999
-        CreateMakanan(&m, -999, NewWord("Not Found", 9), 0, 0, EMPTY_WORD, p);
-        return m;
-    }
-}
-
 void Start(Simulator* simulator, ListStatik* foods, ListStatik* recipes, Map* map, ListDinElType* buyFoods, ListDinElType* mixFoods, ListDinElType* chopFoods, ListDinElType* fryFoods, ListDinElType* boilFoods, Stack *undoRecord, Stack *redoRecord){
     ReadAllConfig(map, foods, recipes);
     int i;

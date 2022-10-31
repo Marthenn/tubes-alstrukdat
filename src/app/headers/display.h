@@ -13,7 +13,7 @@
  * @param id The id identifier
  * @return Makanan object from foods list
  */
-Makanan GetMakananFromId2(ListStatik foods, int id);
+Makanan GetMakananFromId(ListStatik foods, int id);
 
 /**
  * @brief Display splash scren

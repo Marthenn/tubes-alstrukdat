@@ -4,7 +4,7 @@
 /* APP */
 #include "../headers/display.h"
 
-Makanan GetMakananFromId2(ListStatik foods, int id){
+Makanan GetMakananFromId(ListStatik foods, int id){
 
     Makanan m;
     Point p;
@@ -178,7 +178,7 @@ void CookBook(ListStatik foods, ListStatik recipes, ListDinElType mixFoods, List
         }
         printf("--> ");
         for(j=0;j<ListDinLength(need);j++){
-            DisplayWord(GetMakananFromId2(foods, need.buffer[j]).Nama);
+            DisplayWord(GetMakananFromId(foods, need.buffer[j]).Nama);
             if(j<ListDinLength(need)-1){
                 printf(", ");
             }
@@ -202,7 +202,7 @@ void CookBook(ListStatik foods, ListStatik recipes, ListDinElType mixFoods, List
         }
         printf("--> ");
         for(j=0;j<ListDinLength(need);j++){
-            DisplayWord(GetMakananFromId2(foods, need.buffer[j]).Nama);
+            DisplayWord(GetMakananFromId(foods, need.buffer[j]).Nama);
             if(j<ListDinLength(need)-1){
                 printf(", ");
             }
@@ -226,7 +226,7 @@ void CookBook(ListStatik foods, ListStatik recipes, ListDinElType mixFoods, List
         }
         printf("--> ");
         for(j=0;j<ListDinLength(need);j++){
-            DisplayWord(GetMakananFromId2(foods, need.buffer[j]).Nama);
+            DisplayWord(GetMakananFromId(foods, need.buffer[j]).Nama);
             if(j<ListDinLength(need)-1){
                 printf(", ");
             }
@@ -250,7 +250,7 @@ void CookBook(ListStatik foods, ListStatik recipes, ListDinElType mixFoods, List
         }
         printf("--> ");
         for(j=0;j<ListDinLength(need);j++){
-            DisplayWord(GetMakananFromId2(foods, need.buffer[j]).Nama);
+            DisplayWord(GetMakananFromId(foods, need.buffer[j]).Nama);
             if(j<ListDinLength(need)-1){
                 printf(", ");
             }

@@ -3,21 +3,12 @@
 
 /* ADT */
 #include "../headers/tree.h"
-#include "../headers/matriks.h"
-#include "../headers/makanan.h"
-#include "../headers/eltype.h"
-#include "../headers/waktu.h"
-#include "../headers/point.h"
-#include "../headers/wordmachine.h"
-#include "../headers/charmachine.h"
-#include "../headers/liststatik.h"
 
 /* APP */
 #include "../../app/headers/parser.h"
 
 int main(){
     Address p;
-
     printf("--------\n");
     Tree t = NewTree (1);
     PrintTree(t);printf("\n");
@@ -48,10 +39,18 @@ int main(){
     printf("5: %d\n",IsPartOf(t, 5));
     printf("7: %d\n",IsPartOf(t, 7));
     printf("--------\n");
-    Address p = NewTreeNode(10);
+    p = NewTreeNode(10);
     AddChildNode(&t, p);
     PrintTree(t);printf("\n");
     printf("children t: %d\n",NumberChildren(t));
     printf("--------\n");
+    printf("GET SUBTREE\n");
+    Tree subtree = GetSubTree(t, 2);
+    PrintTree(subtree);printf("\n");
+    printf("children subtree: %d\n",NumberChildren(subtree));
+    printf("--------\n");
+    printf("GET CHILDREN\n");
+    ListDin l = GetChildren(t);
+    PrintListDin(l);printf("\n");
     return 0;
 }

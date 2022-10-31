@@ -116,3 +116,40 @@ void PrintTree(Tree p){
     }
     printf(")");
 }
+
+Tree GetSubTree(Tree p, int val){
+    if(p->info == val){
+        return p;
+    }else{
+        if(p->firstChild==NULL){
+            return NULL;
+        }else{
+            Address temp = p->firstChild;
+            while(temp!=NULL){
+                Tree sub = GetSubTree(temp,val);
+                if(sub!=NULL){
+                    return sub;
+                }
+                temp = temp->nextSibling;
+            }
+            return NULL;
+        }
+    }
+}
+
+ListDin GetChildren(Tree p){
+    ListDin l;
+    CreateListDin(&l, 10);
+    if(p->firstChild!=NULL){
+        Address temp = p->firstChild;
+        while(temp!=NULL){
+            if(IsListDinFull(l)){
+                ExpandListDin(&l);
+            }
+            InsertLastListDin(&l, temp->info);
+            temp = temp->nextSibling;
+        }
+    }
+    CompressListDin(&l);
+    return l;
+}

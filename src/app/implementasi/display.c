@@ -58,13 +58,66 @@ void Help(){
 }
 
 void EnterCommand(){
-    printf("Masukkan perintah: ");
+    printf("Enter Command: ");
     STARTWORD();
 }
 
-void BuyMenu(ListStatik foods, ListStatik recipes){
+void BuyMenu(ListDinElType BuyFoods){
     printf("======================\n");
     printf("=        BUY         =\n");
     printf("======================\n");
     printf("List Bahan Makanan:\n");
+    int i;
+    for(i=1;i<=BuyFoods.nEff;i++){
+        printf("   %d. ",i);DisplayWordLine(GetVal(BuyFoods.buffer[i]).m.Nama);
+    }
+    printf("\nKirim 0 untuk exit.\n\n");
+}
+
+void MixMenu(ListDinElType MixFoods){
+    printf("======================\n");
+    printf("=        MIX         =\n");
+    printf("======================\n");
+    printf("List Bahan Makanan:\n");
+    int i;
+    for(i=1;i<=MixFoods.nEff;i++){
+        printf("   %d. ",i);DisplayWordLine(GetVal(MixFoods.buffer[i]).m.Nama);
+    }
+    printf("\nKirim 0 untuk exit.\n\n");
+}
+
+void ChopMenu(ListDinElType ChopFoods){
+    printf("======================\n");
+    printf("=        CHOP        =\n");
+    printf("======================\n");
+    printf("List Bahan Makanan:\n");
+    int i;
+    for(i=1;i<=ChopFoods.nEff;i++){
+        printf("   %d. ",i);DisplayWordLine(GetVal(ChopFoods.buffer[i]).m.Nama);
+    }
+    printf("\nKirim 0 untuk exit.\n\n");
+}
+
+void FryMenu(ListDinElType FryFoods){
+    printf("======================\n");
+    printf("=        FRY         =\n");
+    printf("======================\n");
+    printf("List Bahan Makanan:\n");
+    int i;
+    for(i=1;i<=FryFoods.nEff;i++){
+        printf("   %d. ",i);DisplayWordLine(GetVal(FryFoods.buffer[i]).m.Nama);
+    }
+    printf("\nKirim 0 untuk exit.\n\n");
+}
+
+void BoilMenu(ListDinElType BoilFoods){
+    printf("======================\n");
+    printf("=        BOIL        =\n");
+    printf("======================\n");
+    printf("List Bahan Makanan:\n");
+    int i;
+    for(i=1;i<=BoilFoods.nEff;i++){
+        printf("   %d. ",i);DisplayWordLine(GetVal(BoilFoods.buffer[i]).m.Nama);
+    }
+    printf("\nKirim 0 untuk exit.\n\n");
 }

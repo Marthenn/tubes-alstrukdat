@@ -18,11 +18,10 @@
 #define MIN_LISTDIN_CAP 2
 
 /* Definisi elemen dan koleksi objek */
-typedef int ListDinElType; /* type elemen list */
 typedef int IdxType;
 typedef struct
 {
-    ListDinElType *buffer; /* memori tempat penyimpan elemen (container) */
+    int *buffer; /* memori tempat penyimpan elemen (container) */
     int nEff;       /* >=0, banyaknya elemen efektif */
     int capacity;   /* ukuran elemen */
 } ListDin;
@@ -104,7 +103,7 @@ boolean IsListDinEqual(ListDin l1, ListDin l2);
 
 /* ********** SEARCHING ********** */
 /* ***  Perhatian : list boleh kosong!! *** */
-IdxType ListDinIndexOf(ListDin l, ListDinElType val);
+IdxType ListDinIndexOf(ListDin l, int val);
 /* Search apakah ada elemen List l yang bernilai val */
 /* Jika ada, menghasilkan indeks i terkecil, dengan elemen ke-i = val */
 /* Jika tidak ada, mengirimkan IDX_UNDEF */
@@ -118,7 +117,7 @@ void CopyListDin(ListDin lIn, ListDin *lOut);
 /* F.S. lOut berisi salinan dari lIn (identik, nEff dan capacity sama) */
 /* Proses : Menyalin isi lIn ke lOut */ 
 
-int CountListDinVal(ListDin l, ListDinElType val);
+int CountListDinVal(ListDin l, int val);
 /* Menghasilkan berapa banyak kemunculan val di l */
 /* Jika l kosong menghasilkan 0 */
 
@@ -135,19 +134,19 @@ void SortListDin(ListDin *l, boolean asc);
 
 /* ********** MENAMBAH ELEMEN ********** */
 /* *** Menambahkan elemen terakhir *** */
-void InsertFirstListDin(ListDin *l, ListDinElType val);
+void InsertFirstListDin(ListDin *l, int val);
 /* Proses: Menambahkan val sebagai elemen pertama List dinamis */
 /* I.S. List l boleh kosong, jika penuh maka kapasitas ditambah */
 /* F.S. val adalah elemen pertama l yang baru, kapasitas dapat bertambah */
 /* *** Menambahkan elemen pada index tertentu *** */
 
-void InsertAtListDin(ListDin *l, ListDinElType val, IdxType idx);
+void InsertAtListDin(ListDin *l, int val, IdxType idx);
 /* Proses: Menambahkan val sebagai elemen pada index idx List */
 /* I.S. List l tidak kosong, jika penuh maka kapasitas ditambah, idx merupakan index yang valid di l */
 /* F.S. val adalah elemen yang disisipkan pada index idx l, kapasitas dapat bertambah */
 
 /* *** Menambahkan elemen terakhir *** */
-void InsertLastListDin(ListDin *l, ListDinElType val);
+void InsertLastListDin(ListDin *l, int val);
 /* Proses: Menambahkan val sebagai elemen terakhir list */
 /* I.S. List l boleh kosong, jika penuh maka kapasitas ditambah */
 /* F.S. val adalah elemen terakhir l yang baru, kapasitas dapat bertambah */
@@ -155,7 +154,7 @@ void InsertLastListDin(ListDin *l, ListDinElType val);
 
 /* ********** MENGHAPUS ELEMEN ********** */
 /* *** Menghapus elemen pertama *** */
-void DeleteFirstListDin(ListDin *l, ListDinElType *val);
+void DeleteFirstListDin(ListDin *l, int *val);
 /* Proses : Menghapus elemen pertama List */
 /* I.S. List tidak kosong */
 /* F.S. val adalah nilai elemen pertama l sebelum penghapusan, */
@@ -163,7 +162,7 @@ void DeleteFirstListDin(ListDin *l, ListDinElType *val);
 /*      List l mungkin menjadi kosong, kapasitas dapat dikurangi */
 /* *** Menghapus elemen pada index tertentu *** */
 
-void DeleteAtListDin(ListDin *l, ListDinElType *val, IdxType idx);
+void DeleteAtListDin(ListDin *l, int *val, IdxType idx);
 /* Proses : Menghapus elemen pada index idx List */
 /* I.S. List tidak kosong, idx adalah index yang valid di l */
 /* F.S. val adalah nilai elemen pada index idx l sebelum penghapusan, */
@@ -172,7 +171,7 @@ void DeleteAtListDin(ListDin *l, ListDinElType *val, IdxType idx);
 /* *** Menghapus elemen terakhir *** */
 
 /* ********** MENGHAPUS ELEMEN ********** */
-void DeleteLastListDin(ListDin *l, ListDinElType *val);
+void DeleteLastListDin(ListDin *l, int *val);
 /* Proses : Menghapus elemen terakhir list */
 /* I.S. List tidak kosong */
 /* F.S. val adalah nilai elemen terakhir l sebelum penghapusan, */

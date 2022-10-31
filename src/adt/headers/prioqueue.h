@@ -78,7 +78,7 @@ int IndexOfPQ(PrioQueue Q, PQElType X);
 /* Mengembalikan IDX_UNDEF jika tidak ada */
 
 /* *** Primitif Add/Delete *** */
-void Enqueue (PrioQueue * Q, PQElType X, int time);
+void Enqueue (PrioQueue * Q, PQElType X, Waktu time);
 /* Menambahkan X pada Q dengan aturan priority queue, terurut membesar berdasarkan time */
 /* I.S. Q terdefinisi dan mungkin kosong */
 /* F.S. X disisipkan pada posisi yang tepat sesuai dengan prioritas,

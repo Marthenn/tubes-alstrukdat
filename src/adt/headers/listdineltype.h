@@ -13,112 +13,90 @@ typedef struct{
 /**
  * @brief Create a ListDinElType object with known capacity
  * 
- * @param L 
- * @param capacity 
+ * @param L The list to be initialized
+ * @param capacity The capacity of the list
  */
 void CreateListDinElType(ListDinElType *L, int capacity);
 
 /**
  * @brief Deallocate a ListDinElType
  * 
- * @param L 
+ * @param L The ListDinElType to be deallocated
  */
 void DeallocateListDinElType(ListDinElType *L);
 
 /**
- * @brief Return the length of the ListDinElType
- * 
- * @param L 
- * @return int 
+ * @param L the ListDinElType to be checked
+ * @return the length of the list
  */
 int ListDinElTypeLength(ListDinElType L);
 
 /**
- * @brief Check if the ListDinElType is empty
- * 
- * @param L 
- * @return boolean 
+ * @param L the list to be checked
+ * @return is L empty 
  */
 boolean IsListDinElTypeEmpty(ListDinElType L);
 
 /**
- * @brief Check if the ListDinElType is full
- * 
- * @param L 
- * @return boolean 
+ * @param L the list to be checked
+ * @return is L full
  */
 boolean IsListDinElTypeFull(ListDinElType L);
 
 /**
- * @brief Cehck if index is valid
+ * @brief Check if index is valid
  * 
- * @param L 
- * @param index 
- * @return boolean 
+ * @param L The list to be checked
+ * @param index the index to be checked
+ * @return is index a valid index
  */
 boolean IsListDinElTypeIdxValid(ListDinElType L, int index);
 
 /**
  * @brief Check if index is in range of the ListDinElType with element
  * 
- * @param L 
- * @param index 
- * @return boolean 
+ * @param L the list to be checked
+ * @param index the index to be checked
+ * @return Is index a valid index with element
  */
 boolean IsListDinElTypeIdxEff(ListDinElType L, int index);
 
 /**
  * @brief Print the ListDinElType
  * 
- * @param L 
+ * @param L The list to be printed
  */
 void PrintListDinElType(ListDinElType L);
 
 /**
- * @brief Get the index of e, return -1 if not found
- * 
- * @param L 
- * @param index 
- * @return
+ * @param L the list to be checked
+ * @param e the element in which the index will be searched
+ * @return the index of e, -1 if not found
  */
 int ListDinElTypeIdxOf(ListDinElType L, ElType e);
 
 /**
  * @brief Insert e to the ListDinElType at first index
- * 
- * @param L 
- * @param e 
  */
 void InsertFirstListDinElType(ListDinElType *L, ElType e);
 
 /**
  * @brief Insert e to the ListDinElType at last index
- * 
- * @param L 
- * @param e 
  */
 void InsertLastListDinElType(ListDinElType *L, ElType e);
 
 /**
  * @brief Expand the capacity of the ListDinElType by 1.5
- * 
- * @param L 
- * @param index 
- * @param e 
  */
 void ExpandListDinElType(ListDinElType *L);
 
 /**
  * @brief Shrink the capacity of the ListDinElType by 0.5
- * 
- * @param L 
  */
 void ShrinkListDinElType(ListDinElType *L);
 
 /**
  * @brief Compress ListDinElType to the minimum capacity (capacity = nEff)
- * 
- * @param L 
  */
 void CompresListDinElType(ListDinElType *L);
 

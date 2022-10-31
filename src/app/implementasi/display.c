@@ -5,14 +5,25 @@
 #include "../headers/display.h"
 
 void SplashScreen(){
-    printf("        -------\n");
-    printf("       | meow! |\n");
-    printf("|\\__/| /--------\n");
-    printf("(_^-^)\n");
+    printf("    (\\\n");
+    printf("     \\ \\\n");
+    printf(" __    \\/ ___,.-------..__        __\n");
+    printf("//\\\\ _,-'\\\\               `'--._ //\\\\\n");
+    printf("\\\\ ;'      \\\\                   `: //\n");
+    printf(" `(          \\\\                   )'\n");
+    printf("   :.          \\\\,----,         ,;\n");
+    printf("    `.`--.___   (    /  ___.--','\n");
+    printf("      `.     ``-----'-''     ,'\n");
+    printf("         -.               ,-\n");
+    printf("            `-._______.-'\n");
+    printf("\n");
+    printf("Welcome to Wengrow!\n");
+    printf("A simple program to simulate a kitchen\n");
+    printf("======================================\n");
 }
 
 void StartScreen(){
-    SplashScreen();printf("\n");
+    SplashScreen();
     printf("1. START\n");
     printf("2. EXIT\n");
 }

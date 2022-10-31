@@ -29,6 +29,9 @@ boolean IsMember(Set s, ElType e){
 }
 
 void SetAdd(Set *s, ElType e){
+    if(IsSetFull(*s)){
+        printf("Set penuh!\n");
+    }
     if(!IsMember(*s, e) && !IsSetFull(*s)){
         (*s).data[(*s).length] = e;
         (*s).length++;

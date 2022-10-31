@@ -25,7 +25,7 @@ typedef struct{
     int Head,Tail,Cap;
 } PrioQueue;
 
-/* **** Getter **** */
+/* **** Getter & Setter **** */
 PQElType GetHeadInfo(PrioQueue Q);
 /* Mengembalikan Info pada Head */
 
@@ -38,6 +38,11 @@ PQElType GetElmtInfo(PrioQueue Q,int idx);
 
 Waktu GetElmtTime(PrioQueue Q,int idx);
 /* Mengembalikan waktu dari elemen indeks ke-idx secara logikal pada Q. idx = 0 adalah Head */
+/* idx berada pada rentang [0..length(Q)] */
+
+void SetElmtTime(PrioQueue *Q, int idx, Waktu newTime);
+/* Mengganti nilai waktu dari elemen indeks ke-idx secara logikal pada Q dan
+/* memposisikan ulang elemen tersebut. idx = 0 adahal Head */
 /* idx berada pada rentang [0..length(Q)] */
 
 /* ********* Prototype ********* */

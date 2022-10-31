@@ -33,6 +33,7 @@ int main(){
     printf("\n");
     printf("====PROCESS FOODS====\n");
     // proses makanan di sini (cek semuanya)
+    /* ini tanya asisten apakah boleh tes di sini */CookBook(foods, recipes, mixFoods, chopFoods, fryFoods, boilFoods);
     Exit();
     printf("This should not be printed\n");
 }

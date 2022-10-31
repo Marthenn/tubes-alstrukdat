@@ -46,7 +46,7 @@ void Exit();
  * @param redoRecord Stack of action that is undone
  * 
  */
-void Buy(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType buyFoods, PrioQueue *delivery, Stack *undoRecord, Stack *redoRecord);
+void Buy(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType buyFoods, PrioQueue *delivery, Stack *undoRecord);
 
 /**
  * @brief Go into the mix submenu if possible
@@ -57,10 +57,9 @@ void Buy(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
  * @param map The map of the simulator
  * @param mixFoods List of foods that can be get from mixing
  * @param undoRecord Stack of action that is done
- * @param redoRecord Stack of action that is undone
  * 
  */
-void Mix(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType mixFoods, Stack *undoRecord, Stack *redoRecord);
+void Mix(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType mixFoods, Stack *undoRecord);
 
 /**
  * @brief Go into the chop submenu if possible
@@ -71,10 +70,9 @@ void Mix(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
  * @param map The map of the simulator
  * @param chopFoods List of foods that can be get from chopping
  * @param undoRecord Stack of action that is done
- * @param redoRecord Stack of action that is undone
  * 
  */
-void Chop(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType chopFoods, Stack *undoRecord, Stack *redoRecord);
+void Chop(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType chopFoods, Stack *undoRecord);
 
 /**
  * @brief Go into the fry submenu if possible
@@ -85,10 +83,9 @@ void Chop(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
  * @param map The map of the simulator
  * @param fryFoods List of foods that can be get from frying
  * @param undoRecord Stack of action that is done
- * @param redoRecord Stack of action that is undone
  * 
  */
-void Fry(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType fryFoods, Stack *undoRecord, Stack *redoRecord);
+void Fry(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType fryFoods, Stack *undoRecord);
 
 /**
  * @brief Go into the boil submenu if possible
@@ -99,13 +96,40 @@ void Fry(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
  * @param map The map of the simulator
  * @param boilFoods List of foods that can be get from boiling
  * @param undoRecord Stack of action that is done
- * @param redoRecord Stack of action that is undone
  * 
  */
-void Boil(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType boilFoods, Stack *undoRecord, Stack *redoRecord);
+void Boil(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType boilFoods, Stack *undoRecord);
 
 /**
- * @brief Go back to previous state
+ * @brief move simulator
+ * 
+ * @param simulator Current simulator
+ * @param map The map of the simulator
+ * @param undoRecord Stack of action that is done
+ * @param moveCode Code for whether moving east, west, north, or south
+ * 
+ */
+
+void Move(Simulator *simulator, Map *map, Stack *undoRecord, int moveCode);
+
+/**
+ * @brief Go into the boil submenu if possible
+ * 
+ * @param foods List of foods available
+ */
+void Catalog(ListStatik foods);
+
+/**
+ * @brief Lists available foods in program
+ * 
+ * @param foods List of foods available
+ * @param recipes List of recipes available
+ * @param map The map of the simulator
+ * 
+ */
+void CookBook(ListStatik foods, ListStatik recipes, Map map);
+/**
+ * @brief Lists recipes in program
  * 
  * @param simulator Simulator to be loaded
  * @param foods List of foods available
@@ -121,4 +145,6 @@ void Boil(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
  * 
  */
 void Undo (Simulator* simulator, ListStatik* foods, ListStatik* recipes, Map* map, ListDinElType* buyFoods, ListDinElType* mixFoods, ListDinElType* chopFoods, ListDinElType* fryFoods, ListDinElType* boilFoods, Stack *undoRecord, Stack *redoRecord);
+
+Word GetAction(Makanan m, Map map);
 #endif

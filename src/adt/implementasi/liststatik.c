@@ -80,7 +80,7 @@ int ListIndexOf(ListStatik l, ElType val){
     // ALGORITMA
     i = 0;
     for(i = 0; i <= GetLastListIdx(l); i++){
-        if(Compare(LIST_ELMT(l, i), val)){
+        if(Compare(LIST_ELMT(l, i), val) == true){
             return i;
         }
     }

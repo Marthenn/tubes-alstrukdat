@@ -38,3 +38,45 @@ void MoveSimulator(Map *map, Point p)
 
     S(*map) = p;
 }
+
+void DisplayMap(Map map)
+{
+    // KAMUS LOKAL
+    int i, j;
+    // ALGORITMA
+    for(i = -1; i <= GetLastIdxRow(TAB(map)) + 1; i++){
+
+        for(j = -1; j <= GetLastIdxCol(TAB(map)) + 1; j++){
+
+            if (i >= 0 && i <= GetLastIdxRow(TAB(map)))
+            {
+                if (j >= 0 && j <= GetLastIdxCol(TAB(map)))
+                {
+                    if (MAT_ELMT(TAB(map), i, j) != '#')
+                    {
+                        printf("%c", MAT_ELMT(TAB(map), i, j));
+                    }
+                    
+                    else
+                    {
+                        printf(" ");
+                    }
+                }
+
+                else {
+                    printf("*");
+                }
+            }
+
+            else {
+                printf("*");
+            }
+
+            if (j < GetLastIdxCol(TAB(map)) + 1)
+            {
+                printf(" ");
+            }
+        }
+        printf("\n");
+    }
+}

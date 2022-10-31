@@ -6,7 +6,7 @@
 /* ADT */
 #include "../../adt/headers/boolean.h"
 #include "../../adt/headers/wordmachine.h"
-#include "../../adt/headers/liststatik.h"
+#include "../../adt/headers/listdineltype.h"
 
 // command constants
 #define GAP ('a' - 'A')
@@ -71,6 +71,6 @@ void DisplayWordLine(Word kata);
 // I.S. kata terdefinisi 
 // F.S. kata ditampilkan ke layar dengan new line di akhir
 
-ListStatik SplitWord(Word kata, char separator);
+ListDinElType SplitWord(Word kata, char separator);
 // mengembalikan list berisi subkata yang dipisahkan karakter separator
 #endif

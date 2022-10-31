@@ -84,7 +84,7 @@ void Help(){
 
 void EnterCommand(){
     printf("Enter Command: ");
-    STARTWORD();
+    ADVWORD();
 }
 
 void BuyMenu(ListDinElType BuyFoods){

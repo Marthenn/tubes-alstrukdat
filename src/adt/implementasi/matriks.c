@@ -100,8 +100,9 @@ g h i
     // ALGORITMA
     for(i = 0; i <= GetLastIdxRow(m); i++){
         for(j = 0; j <= GetLastIdxCol(m); j++){
-            printf("%c", MAT_ELMT(m, i, j));
-            
+
+                printf("%c", MAT_ELMT(m, i, j));
+
             if (j < GetLastIdxCol(m))
             {
                 printf(" ");

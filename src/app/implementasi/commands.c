@@ -4,6 +4,27 @@
 /* APP */
 #include "../headers/commands.h"
 
+//LOCAL FUNCTION, TIDAK DAPAT DIPANGGIL DI LUAR COMMMANDS.C
+Makanan GetMakananFromId(ListStatik foods, int id){
+
+    Makanan m;
+    Point p;
+
+    int idx = ListIndexOf(foods, NewElType(0, (union Data){.i=id}));
+
+    if (idx != LISTSTATIK_IDX_UNDEF)
+    {
+        return GetVal(LIST_ELMT(foods,idx)).m;
+    }
+
+    else {
+        CreatePoint(&p,0,0);
+        // MARK SEBAGAI TIDAK ADA DENGAN ID -999
+        CreateMakanan(&m, -999, NewWord("Not Found", 9), 0, 0, EMPTY_WORD, p);
+        return m;
+    }
+}
+
 void Start(Simulator* simulator, ListStatik* foods, ListStatik* recipes, Map* map, ListDinElType* buyFoods, ListDinElType* mixFoods, ListDinElType* chopFoods, ListDinElType* fryFoods, ListDinElType* boilFoods, Stack *undoRecord, Stack *redoRecord){
     ReadAllConfig(map, foods, recipes);
     int i;
@@ -45,8 +66,15 @@ void Start(Simulator* simulator, ListStatik* foods, ListStatik* recipes, Map* ma
     CreateEmptyStack(undoRecord);
     CreateEmptyStack(redoRecord);
 
-    printf("Masukkan nama Anda: ");STARTWORD();(*simulator).NamaPengguna = currentWord;
-    printf("Selamat datang ");DisplayWord((*simulator).NamaPengguna);printf("!\n");
+    printf("Masukkan nama Anda: ");
+    ADVWORD();
+    // CopyDefinedWord(&(*simulator).NamaPengguna, currentWord);
+    (*simulator).NamaPengguna = currentWord;
+
+    printf("Selamat datang ");
+    DisplayWordLine(GetNamaPengguna(simulator));
+
+    CreateEmptySimulator(simulator, GetNamaPengguna(simulator));
 }
 
 void Exit(){
@@ -54,7 +82,7 @@ void Exit(){
     exit(0);
 }
 
-void Buy(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType BuyFoods, PrioQueue *delivery, Stack *undoRecord, Stack *redoRecord){
+void Buy(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType BuyFoods, PrioQueue *delivery, Stack *undoRecord){
     if(!(IsAdjacent((*simulator).Lokasi,T(map)))){
         DisplayWord((*simulator).NamaPengguna);
         printf(" tidak berada di area telepon!\n");
@@ -76,7 +104,7 @@ void Buy(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
     }
 }
 
-void Mix(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType mixFoods, Stack *undoRecord, Stack *redoRecord){
+void Mix(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType mixFoods, Stack *undoRecord){
     if(!(IsAdjacent((*simulator).Lokasi,M(map)))){
         DisplayWord((*simulator).NamaPengguna);
         printf(" tidak berada di area mixing!\n");
@@ -137,7 +165,7 @@ void Mix(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
     }
 }
 
-void Chop(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType chopFoods, Stack *undoRecord, Stack *redoRecord){
+void Chop(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType chopFoods, Stack *undoRecord){
     if(!(IsAdjacent((*simulator).Lokasi,C(map)))){
         DisplayWord((*simulator).NamaPengguna);
         printf(" tidak berada di area pemotongan!\n");
@@ -198,7 +226,7 @@ void Chop(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
     }
 }
 
-void Fry(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType fryFoods, Stack *undoRecord, Stack *redoRecord){
+void Fry(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType fryFoods, Stack *undoRecord){
     if(!(IsAdjacent((*simulator).Lokasi,F(map)))){
         DisplayWord((*simulator).NamaPengguna);
         printf(" tidak berada di area penggorengan!\n");
@@ -259,7 +287,7 @@ void Fry(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
     }
 }
 
-void Boil(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType boilFoods, Stack *undoRecord, Stack *redoRecord){
+void Boil(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType boilFoods, Stack *undoRecord){
     if(!(IsAdjacent((*simulator).Lokasi,B(map)))){
         DisplayWord((*simulator).NamaPengguna);
         printf(" tidak berada di area perebusan!\n");
@@ -320,7 +348,147 @@ void Boil(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
     }
 }
 
+void Move(Simulator *simulator, Map *map, Stack *undoRecord, int moveCode)
+// 0 : east, 1 : west, 2 : north, 3 : south
+{
+    Point currentLocation = GetLokasi(simulator);
+    Point newPoint = currentLocation;
+
+    // command move tidak valid
+    if (moveCode == 0 && ((GetOrdinat(currentLocation) + 1 > GetLastIdxCol(TAB(*map))) 
+            || (MAT_ELMT(TAB(*map), GetAbsis(currentLocation), GetOrdinat(currentLocation) + 1) != '#'))
+
+        || (moveCode == 1 && ((GetOrdinat(currentLocation) - 1 < 0) 
+            || MAT_ELMT(TAB(*map), GetAbsis(currentLocation), GetOrdinat(currentLocation) - 1) != '#'))
+
+        || (moveCode == 2 && ((GetAbsis(currentLocation) - 1 < 0) 
+            || MAT_ELMT(TAB(*map), GetAbsis(currentLocation) - 1, GetOrdinat(currentLocation)) != '#'))
+
+        || (moveCode == 3 && ((GetAbsis(currentLocation) + 1 > GetLastIdxRow(TAB(*map))) 
+            || MAT_ELMT(TAB(*map), GetAbsis(currentLocation) + 1, GetOrdinat(currentLocation)) != '#')))
+
+    {
+        printf("Input move tidak valid karena lokasi tidak dapat ditempati!\n");
+    }
+
+    else {
+        if (moveCode == 0)
+        {
+            MovePointEast(&newPoint);
+        }
+
+        else if (moveCode == 1)
+        {
+            MovePointWest(&newPoint);
+        }
+
+        else if (moveCode == 2)
+        {
+            MovePointNorth(&newPoint);
+        }
+
+        else if (moveCode == 3)
+        {
+            MovePointSouth(&newPoint);
+        }
+
+        SetLokasi(simulator, newPoint);
+        MoveSimulator(map, newPoint);
+    }
+}
+
+void Catalog(ListStatik foods)
+{
+    int i;
+    printf("======LIST BAHAN DAN MAKANAN======\n");
+    
+    for (i = 0; i < ListLength(foods); i++)
+    {
+        printf("[%d] ", i + 1);
+        DisplayMakanan(GetVal(LIST_ELMT(foods, i)).m);
+        printf("\n");
+    }
+    printf("\n");
+}
+
+void CookBook(ListStatik foods, ListStatik recipes, Map map)
+{
+    int i, idx, currentFoodId, count;
+    Address p;
+    Makanan currentFood;
+
+    printf("======LIST RESEP======\n");
+    
+    count = 0;
+
+    for (i = 0; i < ListLength(recipes); i++)
+    {
+        currentFoodId = GetVal(LIST_ELMT(recipes, i)).t->info;
+        p = GetVal(LIST_ELMT(recipes, i)).t->firstChild;
+        
+        if (p)
+        {
+            idx = ListIndexOf(foods, NewElType(0, (union Data){.i=currentFoodId}));
+            currentFood = GetVal(LIST_ELMT(foods, idx)).m;
+            
+            printf("[%d] ", count + 1);
+            DisplayWord(GetNama(currentFood));
+            printf("\n");
+            DisplayWord(GetAction(currentFood, map));
+            printf(" - ");
+            count++;
+        }
+
+        while(p)
+        {
+            idx = ListIndexOf(foods, NewElType(0, (union Data){.i=p->info}));
+
+            DisplayWord(GetNama((GetVal(LIST_ELMT(foods, idx)).m)));
+
+            p = p->nextSibling;
+
+            if (p)
+            {
+                printf(" - ");
+            }
+        }
+
+        printf("\n");
+    }
+}
 void Undo (Simulator* simulator, ListStatik* foods, ListStatik* recipes, Map* map, ListDinElType* buyFoods, ListDinElType* mixFoods, ListDinElType* chopFoods, ListDinElType* fryFoods, ListDinElType* boilFoods, Stack *undoRecord, Stack *redoRecord)
 {
     
+}
+
+Word GetAction(Makanan m, Map map)
+{
+    Point actionLocation = GetLokasiAksi(m);
+
+    if(IsEqualPoint(T(map), actionLocation))
+    {
+        return BUY_WORD;
+    } 
+    
+    else if (IsEqualPoint(M(map), actionLocation))
+    {
+        return MIX_WORD;
+    } 
+    
+    else if (IsEqualPoint(C(map), actionLocation))
+    {
+        return CHOP_WORD;
+    } 
+    
+    else if (IsEqualPoint(F(map), actionLocation))
+    {
+        return FRY_WORD;
+    } 
+    
+    else if (IsEqualPoint(B(map), actionLocation))
+    {
+        return BOIL_WORD;
+    }
+
+    return EMPTY_WORD;
 }

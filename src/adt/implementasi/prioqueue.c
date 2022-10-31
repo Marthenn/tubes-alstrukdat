@@ -67,7 +67,7 @@ boolean IsEmptyPQ (PrioQueue Q)
 {
     // Kamus Lokal
     // Algoritma
-    return Q.Head == Nil && Q.Tail == Nil;
+    return Q.Head == PQ_NIL && Q.Tail == PQ_NIL;
 }
 
 boolean IsFullPQ (PrioQueue Q)
@@ -88,11 +88,11 @@ void CreateEmptyPQ(PrioQueue* Q)
 {
     // Kamus Lokal
     // Algoritma
-    Q->Tab = (infotype*) malloc(DEF_SIZE*sizeof(infotype));
-    Q->Head = Nil;
-    Q->Tail = Nil;
+    Q->Tab = (infotype*) malloc(PQ_DEF_SIZE*sizeof(infotype));
+    Q->Head =  PQ_NIL;
+    Q->Tail =  PQ_NIL;
     if (Q->Tab != NULL){
-        Q->Cap = DEF_SIZE;
+        Q->Cap = PQ_DEF_SIZE;
     } else {
         printf("Gagal alokasi!");
         Q->Cap = 0;
@@ -147,7 +147,7 @@ int IndexOfPQ(PrioQueue Q, PQElType X)
         }
     }
     if (found) return idx;
-    else return IDX_UNDEF;
+    else return PQ_IDX_UNDEF;
 }
 
 void Enqueue (PrioQueue * Q, PQElType X, Waktu time)
@@ -195,13 +195,13 @@ void Dequeue (PrioQueue * Q, PQElType* X)
     // Algoritma
     *X = GetHeadInfo(*Q);
     if (LengthPQ(*Q) == 1){
-        Q->Head = Nil;
-        Q->Tail = Nil;
+        Q->Head =  PQ_NIL;
+        Q->Tail =  PQ_NIL;
     } else {
         Q->Head++;
-        if (Q->Cap != DEF_SIZE && LengthPQ(*Q) <= Q->Cap/4){
+        if (Q->Cap !=  PQ_DEF_SIZE && LengthPQ(*Q) <= Q->Cap/4){
             oldCap = Q->Cap;
-            newCap = (Q->Cap/2 > DEF_SIZE ? Q->Cap/2 : DEF_SIZE);
+            newCap = (Q->Cap/2 >  PQ_DEF_SIZE ? Q->Cap/2 :  PQ_DEF_SIZE);
             ReallocatePQ(Q,newCap);
         }
     }
@@ -221,9 +221,9 @@ void DeleteAtPQ (PrioQueue* Q, PQElType* X,int idx)
             Q->Tab[i-1] = Q->Tab[i];
         }
         Q->Tail--;
-        if (Q->Cap != DEF_SIZE && LengthPQ(*Q) <= Q->Cap/4){
+        if (Q->Cap !=  PQ_DEF_SIZE && LengthPQ(*Q) <= Q->Cap/4){
             oldCap = Q->Cap;
-            newCap = (Q->Cap/2 > DEF_SIZE ? Q->Cap/2 : DEF_SIZE);
+            newCap = (Q->Cap/2 >  PQ_DEF_SIZE ? Q->Cap/2 :  PQ_DEF_SIZE);
            ReallocatePQ(Q,newCap);
         }
     }

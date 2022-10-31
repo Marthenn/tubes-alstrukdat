@@ -17,7 +17,7 @@ int  main(){
     // KAMUS
 	int i, res, x, y;
 	Word kalimat, copyResult;
-	ListStatik l;
+	ListDinElType l;
 
     // ALGORITMA
 
@@ -32,7 +32,7 @@ int  main(){
 		l = SplitWord(currentWord, ' ');
 
 		printf("List of word yang dipisahkan spasi : ");
-		DisplayList(l);
+		PrintListDinElType(l);
 		printf("\n");
 		
         if (IsInputEqual(START_WORD) == true)
@@ -118,11 +118,16 @@ int  main(){
 		{
 			printf("input command COOKBOOK\n");
 		}
-		
-		else if (IsInputPrefixEqual(WAIT_WORD) == true && ListLength(l) == 3)
+
+		else if (IsInputEqual(INVENTORY_WORD) == true)
 		{
-			x = WordToInt(GetVal(l.contents[1]).w);
-			y = WordToInt(GetVal(l.contents[2]).w);
+			printf("input command INVENTORY\n");
+		}
+		
+		else if (IsInputPrefixEqual(WAIT_WORD) == true && ListDinElTypeLength(l) == 3)
+		{
+			x = WordToInt(GetVal(l.buffer[1]).w);
+			y = WordToInt(GetVal(l.buffer[2]).w);
 
 			if (x != NUM_UNDEF && y != NUM_UNDEF)
 			{

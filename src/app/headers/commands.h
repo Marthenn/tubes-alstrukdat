@@ -10,6 +10,7 @@
 /* APP */
 #include "filereader.h"
 #include "parser.h"
+#include "display.h"
 
 /**
  * @brief Load the config files to simulator
@@ -30,30 +31,30 @@ void Exit();
  * @brief Go into the buy submenu if possible
  * 
  */
-void Buy(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType BuyFoods);
+void Buy(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType BuyFoods, PrioQueue *delivery);
 
 /**
  * @brief Go into the mix submenu if possible
  * 
  */
-void Mix(Simulator* simulator, ListStatik foods, ListStatik recipes);
+void Mix(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType MixFoods);
 
 /**
  * @brief Go into the chop submenu if possible
  * 
  */
-void Chop(Simulator* simulator, ListStatik foods, ListStatik recipes);
+void Chop(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType ChopFoods);
 
 /**
  * @brief Go into the fry submenu if possible
  * 
  */
-void Fry(Simulator* simulator, ListStatik foods, ListStatik recipes);
+void Fry(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType FryFoods);
 
 /**
  * @brief Go into the boil submenu if possible
  * 
  */
-void Boil(Simulator* simulator, ListStatik foods, ListStatik recipes);
+void Boil(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType BoilFoods);
 
 #endif

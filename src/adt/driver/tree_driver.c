@@ -51,6 +51,8 @@ int main(){
     printf("--------\n");
     printf("GET CHILDREN\n");
     ListDin l = GetChildren(t);
-    PrintListDin(l);printf("\n");
+    printf("Children of node 1:");PrintListDin(l);printf("\n");
+    l = GetChildren(GetSubTree(t, 2));
+    printf("Children of node 2:");PrintListDin(l);printf("\n");
     return 0;
 }

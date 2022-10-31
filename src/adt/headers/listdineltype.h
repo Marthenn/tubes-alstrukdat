@@ -10,6 +10,8 @@ typedef struct{
     int capacity;
 } ListDinElType;
 
+#define LISTDIN_ELTYPE_MIN_CAP 2
+
 /**
  * @brief Create a ListDinElType object with known capacity
  * 
@@ -73,6 +75,7 @@ void PrintListDinElType(ListDinElType L);
  * @param e the element in which the index will be searched
  * @return the index of e, -1 if not found
  */
+
 int ListDinElTypeIdxOf(ListDinElType L, ElType e);
 
 /**
@@ -86,8 +89,20 @@ void InsertFirstListDinElType(ListDinElType *L, ElType e);
 void InsertLastListDinElType(ListDinElType *L, ElType e);
 
 /**
+ * @brief delete element at first index
+ */
+
+void DeleteFirstListDinElType(ListDinElType *L, ElType *e);
+
+/**
+ * @brief delete element at last index
+ */
+void DeleteLastListDinElType(ListDinElType *L, ElType *e);
+
+/**
  * @brief Expand the capacity of the ListDinElType by 1.5
  */
+
 void ExpandListDinElType(ListDinElType *L);
 
 /**
@@ -98,6 +113,6 @@ void ShrinkListDinElType(ListDinElType *L);
 /**
  * @brief Compress ListDinElType to the minimum capacity (capacity = nEff)
  */
-void CompresListDinElType(ListDinElType *L);
+void CompressListDinElType(ListDinElType *L);
 
 #endif

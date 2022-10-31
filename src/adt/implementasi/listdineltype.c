@@ -3,9 +3,15 @@
 #include "../headers/listdineltype.h"
 
 void CreateListDinElType(ListDinElType *L, int capacity){
-    (*L).buffer = (ElType*) malloc(capacity * sizeof(ElType));
-    (*L).capacity = capacity;
-    (*L).nEff = 0;
+    // KAMUS LOKAL
+    int cap;
+    // ALGORITMA
+    
+    cap = LISTDIN_ELTYPE_MIN_CAP > capacity? LISTDIN_ELTYPE_MIN_CAP : capacity;
+    L->buffer = (ElType*) malloc(cap * sizeof(ElType));
+
+    L->capacity = cap;
+    L->nEff = 0;
 }
 
 void DeallocateListDinElType(ListDinElType *L){
@@ -58,52 +64,69 @@ int ListDinElTypeIdxOf(ListDinElType L, ElType e){
 
 void InsertFirstListDinElType(ListDinElType *L, ElType e){
     int i;
-    if(!IsListDinElTypeFull(*L)){
-        for(i = L->nEff; i > 0; i--){
-            L->buffer[i] = L->buffer[i-1];
-        }
-        L->buffer[0] = e;
-        L->nEff++;
+
+    if (IsListDinElTypeFull(*L))
+    {
+        ExpandListDinElType(L);
     }
+    
+    for(i = L->nEff; i > 0; i--){
+        L->buffer[i] = L->buffer[i-1];
+    }
+
+    L->buffer[0] = e;
+    L->nEff++;
+    
 }
 
 void InsertLastListDinElType(ListDinElType *L, ElType e){
-    if(!IsListDinElTypeFull(*L)){
-        L->buffer[L->nEff] = e;
-        L->nEff++;
+    if (IsListDinElTypeFull(*L))
+    {
+        ExpandListDinElType(L);
     }
+
+    L->buffer[L->nEff] = e;
+    L->nEff++;
+
+}
+
+void DeleteFirstListDinElType(ListDinElType *L, ElType *e)
+{
+
+}
+
+void DeleteLastListDinElType(ListDinElType *L, ElType *e)
+{
+
 }
 
 void ExpandListDinElType(ListDinElType *L){
-    ElType *temp = (ElType*) malloc(1.5 * L->capacity * sizeof(ElType));
-    int i;
-    for(i = 0; i < L->nEff; i++){
-        temp[i] = L->buffer[i];
-    }
-    free(L->buffer);
-    L->buffer = temp;
+    L->buffer = (ElType*) realloc(L->buffer, L->capacity * 3 / 2 * sizeof(ElType));
+
     L->capacity = 1.5 * L->capacity;
 }
 
 void ShrinkListDinElType(ListDinElType *L){
-    ElType *temp = (ElType*) malloc(0.5 * L->capacity * sizeof(ElType));
-    L->capacity = 0.5 * L->capacity;
-    int i;
-    for(i = 0; i < L->nEff && i<L->capacity; i++){
-        temp[i] = L->buffer[i];
-    }
-    free(L->buffer);
-    L->buffer = temp;
-    L->nEff = L->capacity<L->nEff?L->capacity:L->nEff;
+    // KAMUS LOKAL
+    int newCap;
+    // ALGORITMA
+    
+    newCap = (LISTDIN_ELTYPE_MIN_CAP > L->capacity / 2)? LISTDIN_ELTYPE_MIN_CAP : L->capacity / 2;
+
+    L->capacity =  newCap;
+
+    L->buffer = (ElType*) realloc(L->buffer, newCap * sizeof(ElType));
+    // L->nEff = ((L->capacity) < (L->nEff))? (L->capacity) : (L->nEff);
 }
 
 void CompressListDinElType(ListDinElType *L){
-    ElType *temp = (ElType*) malloc(L->nEff * sizeof(ElType));
-    int i;
-    for(i = 0; i < L->nEff; i++){
-        temp[i] = L->buffer[i];
-    }
-    free(L->buffer);
-    L->buffer = temp;
-    L->capacity = L->nEff;
+    // KAMUS LOKAL
+    int newCap;
+    // ALGORITMA
+    
+    newCap = (LISTDIN_ELTYPE_MIN_CAP > L->capacity)? LISTDIN_ELTYPE_MIN_CAP : L->nEff;
+
+    L->capacity =  newCap;
+
+    L->buffer = (ElType*) realloc(L->buffer, newCap * sizeof(ElType));
 }

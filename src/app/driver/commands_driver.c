@@ -2,35 +2,37 @@
 #include "../headers/commands.h"
 
 int main(){
-    Simulator s;
-    Map m;ListStatik f,r;Word n;
-    ListDinElType bf,mf,cf,ff,bof;
-    Start(&s,&m,&f,&r,&bf,&mf,&cf,&ff,&bof);
+    Simulator simulator;
+    Map map;ListStatik foods, recipes; Word n;
+    ListDinElType buyFoods,mixFoods,chopFoods,fryFoods,boilFoods;
+    Stack undoRecord, redoRecord;
+    Start(&simulator, &foods, &recipes, &map, &buyFoods, &mixFoods, &fryFoods, &chopFoods, &boilFoods, undoRecord, redoRecord);
+
     printf("====MAP====\n");
-    DisplayCharMatriks(TAB(m));
+    DisplayCharMatriks(TAB(map));
     printf("====FOODS LIST====\n");
-    DisplayList(f);
+    DisplayList(foods);
     printf("\n");
     printf("====RECIPES LIST====\n");
-    DisplayList(r);
+    DisplayList(foods);
     printf("\n");
     printf("====BUY FOODS LIST====\n");
-    DisplayListDinElType(bf);
+    PrintListDinElType(buyFoods);
     printf("\n");
     printf("====MIX FOODS LIST====\n");
-    DisplayListDinElType(mf);
+    PrintListDinElType(mixFoods);
     printf("\n");
     printf("====CHOP FOODS LIST====\n");
-    DisplayListDinElType(cf);
+    PrintListDinElType(chopFoods);
     printf("\n");
     printf("====FRY FOODS LIST====\n");
-    DisplayListDinElType(ff);
+    PrintListDinElType(fryFoods);
     printf("\n");
     printf("====BOIL FOODS LIST====\n");
-    DisplayListDinElType(bof);
+    PrintListDinElType(boilFoods);
     printf("\n");
     printf("====PROCESS FOODS====\n");
     // proses makanan di sini (cek semuanya)
     Exit();
-    printf("This shouldnot be printed\n");
+    printf("This should not be printed\n");
 }

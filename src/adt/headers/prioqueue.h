@@ -10,9 +10,9 @@
 #include "makanan.h"
 #include "eltype.h"
 
-#define Nil -1
-#define DEF_SIZE 20
-#define IDX_UNDEF -1
+#define PQ_NIL -1
+#define PQ_DEF_SIZE 20
+#define PQ_IDX_UNDEF -1
 
 typedef int PQElType;
 typedef struct {

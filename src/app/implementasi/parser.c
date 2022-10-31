@@ -207,20 +207,20 @@ void DisplayWordLine(Word kata)
     printf("\n");
 }
 
-ListStatik SplitWord(Word kata, char separator)
+ListDinElType SplitWord(Word kata, char separator)
 // mengembalikan list berisi subkata yang dipisahkan karakter separator
 {
     // KAMUS LOKAL
-    ListStatik l;
+    ListDinElType l;
     Word subkata;
     int i, count, elmtCount;
 
     // ALGORITMA
     i = 0;
 
-    CreateListStatik(&l);
+    CreateListDinElType(&l, 0);
 
-    while(i < kata.Length && ListLength(l) < LISTSTATIK_CAP)
+    while(i < kata.Length)
     {
 
         while(kata.TabWord[i] == separator && i < kata.Length)
@@ -240,7 +240,7 @@ ListStatik SplitWord(Word kata, char separator)
         if (count > 0)
         {
             subkata.Length = count;
-            ListInsertLast(&l, NewElType(4, (union Data){.w=GetDefinedWord(subkata)}));
+            InsertLastListDinElType(&l, NewElType(4, (union Data){.w=GetDefinedWord(subkata)}));
         }
     }
 

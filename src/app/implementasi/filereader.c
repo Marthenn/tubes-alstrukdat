@@ -116,7 +116,7 @@ void ReadFoodConfig(ListStatik *l, Map *map)
     // KAMUS LOKAL
     Makanan food;
     ElType foodElement;
-    Word kata, judul, hari, jam, menit;
+    Word kata, judul, hari, jam, menit, aksi;
     int N, i, id, idx;
     Waktu expiredTime, deliveryTime;
     Point actionPoint;
@@ -146,29 +146,34 @@ void ReadFoodConfig(ListStatik *l, Map *map)
         if (IsWordEqual(kata, BUY_WORD))
         {
             actionPoint = T(*map);
+            aksi = BUY_WORD;
         }
         
         else if (IsWordEqual(kata, MIX_WORD))
         {
             actionPoint = M(*map);
+            aksi = MIX_WORD;
         }
 
         else if (IsWordEqual(kata, CHOP_WORD))
         {
             actionPoint = C(*map);
+            aksi = CHOP_WORD;
         }
 
         else if (IsWordEqual(kata, FRY_WORD))
         {
             actionPoint = F(*map);
+            aksi = FRY_WORD;
         }
 
         else if (IsWordEqual(kata, BOIL_WORD))
         {
             actionPoint = B(*map);
+            aksi = BOIL_WORD;
         }
 
-        CreateMakanan(&food, id, judul, expiredTime, deliveryTime, actionPoint);
+        CreateMakanan(&food, id, judul, expiredTime, deliveryTime, aksi, actionPoint);
         foodElement = NewElType(3, (union Data){.m=food});
         idx = ListIndexOf(*l, foodElement);
         

@@ -53,13 +53,26 @@ boolean Compare(ElType a, ElType b){
             case 5:
                 return (a.val.t == b.val.t);
         }
+
     }else{
         switch(a.type)
         {
+            case 3:
+                switch (b.type)
+                {
+                case 0:
+                    return ((a.val.m).Id == b.val.i);
+                    break;
+                
+                default:
+                    return false;
+                    break;
+                }
+
             case 5:
                 switch (b.type)
                 {
-                case 1:
+                case 0:
                     return ((a.val.t)->info == b.val.i);
                     break;
                 

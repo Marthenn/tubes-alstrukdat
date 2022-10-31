@@ -6,6 +6,7 @@ int main(){
     Map map;ListStatik foods, recipes; Word n;
     ListDinElType buyFoods,mixFoods,chopFoods,fryFoods,boilFoods;
     Stack undoRecord, redoRecord;
+    
     Start(&simulator, &foods, &recipes, &map, &buyFoods, &mixFoods, &chopFoods, &fryFoods, &boilFoods, &undoRecord, &redoRecord);
     printf("====MAP====\n");
     DisplayCharMatriks(TAB(map));

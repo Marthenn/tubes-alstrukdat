@@ -8,12 +8,17 @@
 #include "point.h"
 #include "prioqueue.h"
 #include "boolean.h"
+#include "Waktu.h"
 
 typedef struct Simulator {
     Word NamaPengguna;
     Point Lokasi;
     PrioQueue Inventory;
+    Waktu Time;
+    Word Notification;
 } Simulator;
+
+#define EMPTY_NOTIF NewWord("-", 1)
 
 /* *** KONSTRUKTOR *** */
 void CreateEmptySimulator(Simulator *sim, Word NamaPengguna);
@@ -31,6 +36,20 @@ Point GetLokasi(const Simulator *sim);
 /* Mengembalikan Point berisi lokasi pengguna */
 Word GetNamaPengguna(const Simulator *sim);
 /* Mengembalikan Word berisi NamaPengguna */
+
+Waktu GetTime(const Simulator *sim);
+/* Mengembalikan waktu saat ini*/
+
+void SetTime(Simulator *sim, Waktu newTime);
+/* I.S. sim telah dibentuk, newTime terdefinisi */
+/* F.S. Mengubah waktu sim */
+
+Word GetNotif(const Simulator *sim);
+/* Mengembalikan notifikasi saat ini*/
+
+void SetNotif(Simulator *sim, Word newNotification);
+/* I.S. sim telah dibentuk, newNotification terdefinisi */
+/* F.S. Mengubah notifikasi sim */
 
 /* *** OPERASI TERHADAP LOKASI *** */
 /* Ada di ADT Point */

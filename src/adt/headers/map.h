@@ -33,4 +33,7 @@ void MoveSimulator(Map *map, Point p);
 // I.S. map terdefinisi, command valid (yaitu antara 4 command MOVE)
 // F.S. posisi simulator di update
 
+void DisplayMap(Map map);
+// I.S. map terdefinisi
+// F.S. map ditampilkan ke layar
 #endif

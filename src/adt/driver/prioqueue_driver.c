@@ -36,6 +36,13 @@ int main(){
     printf("Time : "); CetakWaktuLengkap(GetHeadTime(Q)); printf("\n");
     printf("Elemen indeks ke-2 : %d\n",GetElmtInfo(Q,2));
     printf("Time : "); CetakWaktuLengkap(GetElmtTime(Q,2)); printf("\n");
+    printf("****** Cek Setter ******\n");
+    printf("Ubah Time indeks ke-3 menjadi 0\n");
+    SetElmtTime(&Q,3,0);
+    DisplayPQ(Q);
+    printf("Ubah Time indeks ke-0 menjadi 3\n");
+    SetElmtTime(&Q,0,3);
+    DisplayPQ(Q);
     printf("****** Cek Length ******\n");
     printf("Length : %d\n",LengthPQ(Q));
     printf("****** Cek IndexOf ******\n");

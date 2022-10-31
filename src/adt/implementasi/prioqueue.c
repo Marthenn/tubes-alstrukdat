@@ -37,6 +37,31 @@ Waktu GetElmtTime(PrioQueue Q,int idx)
     return Q.Tab[Q.Head+idx].Time;
 }
 
+void SetElmtTime(PrioQueue *Q, int idx, Waktu newTime)
+{
+    // Kamu Lokal
+    int pos;
+    infotype tmp;
+    Waktu oldTime;
+    // Algoritmas
+    oldTime = Q->Tab[Q->Head+idx].Time;
+    Q->Tab[Q->Head+idx].Time = newTime;
+    tmp = Q->Tab[Q->Head+idx];
+    pos = idx;
+    if (!IsWaktuGreaterEqual(newTime,oldTime)){
+        while (pos != 0 && !IsWaktuGreaterEqual(newTime,GetElmtTime(*Q,pos-1))){
+            Q->Tab[Q->Head+pos] = Q->Tab[Q->Head+pos-1];
+            pos--;
+        }
+    } else {
+        while (pos != LengthPQ(*Q)-1 && !IsWaktuGreaterEqual(GetElmtTime(*Q,pos+1),newTime)){
+            Q->Tab[Q->Head+pos] = Q->Tab[Q->Head+pos+1];
+            pos++;
+        }
+    }
+    Q->Tab[Q->Head+pos] = tmp;
+    return;
+}
 
 boolean IsEmptyPQ (PrioQueue Q)
 {

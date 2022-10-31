@@ -4,6 +4,7 @@
 #include "parser.h"
 #include "../../adt/headers/makanan.h"
 #include "../../adt/headers/listdineltype.h"
+#include "../../adt/headers/liststatik.h"
 
 /**
  * @brief Get the Makanan From Id identifier
@@ -12,10 +13,10 @@
  * @param id The id identifier
  * @return Makanan object from foods list
  */
-Makanan GetMakananFromId(ListStatik foods, int id);
+Makanan GetMakananFromId2(ListStatik foods, int id);
 
 /**
- * @brief Display a cat meowing splash scren
+ * @brief Display splash scren
  * 
  */
 void SplashScreen();
@@ -83,6 +84,14 @@ void BoilMenu(ListDinElType BoilFoods);
  * @param fryFoods list of all the foods that can be get from frying
  * @param boilFoods list of all the foods that can be get from boiling
  */
+
+/**
+ * @brief Go into the boil submenu if possible
+ * 
+ * @param foods List of foods available
+ */
+void Catalog(ListStatik foods);
+
 void CookBook(ListStatik foods, ListStatik recipes, ListDinElType mixFoods, ListDinElType chopFoods, ListDinElType fryFoods, ListDinElType boilFoods);
 
 #endif

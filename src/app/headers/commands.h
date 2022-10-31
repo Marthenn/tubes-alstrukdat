@@ -113,22 +113,6 @@ void Boil(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
 void Move(Simulator *simulator, Map *map, Stack *undoRecord, int moveCode);
 
 /**
- * @brief Go into the boil submenu if possible
- * 
- * @param foods List of foods available
- */
-void Catalog(ListStatik foods);
-
-/**
- * @brief Lists available foods in program
- * 
- * @param foods List of foods available
- * @param recipes List of recipes available
- * @param map The map of the simulator
- * 
- */
-void CookBook(ListStatik foods, ListStatik recipes, Map map);
-/**
  * @brief Lists recipes in program
  * 
  * @param simulator Simulator to be loaded

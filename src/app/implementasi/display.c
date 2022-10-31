@@ -4,18 +4,24 @@
 /* APP */
 #include "../headers/display.h"
 
-Makanan GetMakananFromId(ListStatik foods, int id){
-    int i;
-    for(i=0;i<foods.idxEff;i++){
-        if(GetVal(LIST_ELMT(foods,i)).m.Id==id){
-            return GetVal(LIST_ELMT(foods,i)).m;
-        }
+Makanan GetMakananFromId2(ListStatik foods, int id){
+
+    Makanan m;
+    Point p;
+
+    int idx = ListIndexOf(foods, NewElType(0, (union Data){.i=id}));
+
+    if (idx != LISTSTATIK_IDX_UNDEF)
+    {
+        return GetVal(LIST_ELMT(foods,idx)).m;
     }
-    Makanan m;Point p;
-    CreatePoint(&p,0,0);
-    // MARK SEBAGAI TIDAK ADA DENGAN ID -999
-    CreateMakanan(&m, -999, NewWord("Not Found", 9), 0, 0, p);
-    return m;
+
+    else {
+        CreatePoint(&p,0,0);
+        // MARK SEBAGAI TIDAK ADA DENGAN ID -999
+        CreateMakanan(&m, -999, NewWord("Not Found", 9), 0, 0, EMPTY_WORD, p);
+        return m;
+    }
 }
 
 void SplashScreen(){
@@ -172,7 +178,7 @@ void CookBook(ListStatik foods, ListStatik recipes, ListDinElType mixFoods, List
         }
         printf("--> ");
         for(j=0;j<ListDinLength(need);j++){
-            DisplayWord(GetMakananFromId(foods, need.buffer[j]).Nama);
+            DisplayWord(GetMakananFromId2(foods, need.buffer[j]).Nama);
             if(j<ListDinLength(need)-1){
                 printf(", ");
             }
@@ -196,7 +202,7 @@ void CookBook(ListStatik foods, ListStatik recipes, ListDinElType mixFoods, List
         }
         printf("--> ");
         for(j=0;j<ListDinLength(need);j++){
-            DisplayWord(GetMakananFromId(foods, need.buffer[j]).Nama);
+            DisplayWord(GetMakananFromId2(foods, need.buffer[j]).Nama);
             if(j<ListDinLength(need)-1){
                 printf(", ");
             }
@@ -220,7 +226,7 @@ void CookBook(ListStatik foods, ListStatik recipes, ListDinElType mixFoods, List
         }
         printf("--> ");
         for(j=0;j<ListDinLength(need);j++){
-            DisplayWord(GetMakananFromId(foods, need.buffer[j]).Nama);
+            DisplayWord(GetMakananFromId2(foods, need.buffer[j]).Nama);
             if(j<ListDinLength(need)-1){
                 printf(", ");
             }
@@ -244,11 +250,25 @@ void CookBook(ListStatik foods, ListStatik recipes, ListDinElType mixFoods, List
         }
         printf("--> ");
         for(j=0;j<ListDinLength(need);j++){
-            DisplayWord(GetMakananFromId(foods, need.buffer[j]).Nama);
+            DisplayWord(GetMakananFromId2(foods, need.buffer[j]).Nama);
             if(j<ListDinLength(need)-1){
                 printf(", ");
             }
         }
         printf("\n");
     }
+}
+
+void Catalog(ListStatik foods)
+{
+    int i;
+    printf("======LIST BAHAN DAN MAKANAN======\n");
+    
+    for (i = 0; i < ListLength(foods); i++)
+    {
+        printf("[%d] ", i + 1);
+        DisplayMakanan(GetVal(LIST_ELMT(foods, i)).m);
+        printf("\n");
+    }
+    printf("\n");
 }

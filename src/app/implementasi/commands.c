@@ -397,65 +397,6 @@ void Move(Simulator *simulator, Map *map, Stack *undoRecord, int moveCode)
     }
 }
 
-void Catalog(ListStatik foods)
-{
-    int i;
-    printf("======LIST BAHAN DAN MAKANAN======\n");
-    
-    for (i = 0; i < ListLength(foods); i++)
-    {
-        printf("[%d] ", i + 1);
-        DisplayMakanan(GetVal(LIST_ELMT(foods, i)).m);
-        printf("\n");
-    }
-    printf("\n");
-}
-
-void CookBook(ListStatik foods, ListStatik recipes, Map map)
-{
-    int i, idx, currentFoodId, count;
-    Address p;
-    Makanan currentFood;
-
-    printf("======LIST RESEP======\n");
-    
-    count = 0;
-
-    for (i = 0; i < ListLength(recipes); i++)
-    {
-        currentFoodId = GetVal(LIST_ELMT(recipes, i)).t->info;
-        p = GetVal(LIST_ELMT(recipes, i)).t->firstChild;
-        
-        if (p)
-        {
-            idx = ListIndexOf(foods, NewElType(0, (union Data){.i=currentFoodId}));
-            currentFood = GetVal(LIST_ELMT(foods, idx)).m;
-            
-            printf("[%d] ", count + 1);
-            DisplayWord(GetNama(currentFood));
-            printf("\n");
-            DisplayWord(GetAction(currentFood, map));
-            printf(" - ");
-            count++;
-        }
-
-        while(p)
-        {
-            idx = ListIndexOf(foods, NewElType(0, (union Data){.i=p->info}));
-
-            DisplayWord(GetNama((GetVal(LIST_ELMT(foods, idx)).m)));
-
-            p = p->nextSibling;
-
-            if (p)
-            {
-                printf(" - ");
-            }
-        }
-
-        printf("\n");
-    }
-}
 void Undo (Simulator* simulator, ListStatik* foods, ListStatik* recipes, Map* map, ListDinElType* buyFoods, ListDinElType* mixFoods, ListDinElType* chopFoods, ListDinElType* fryFoods, ListDinElType* boilFoods, Stack *undoRecord, Stack *redoRecord)
 {
     

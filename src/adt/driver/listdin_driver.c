@@ -19,7 +19,7 @@ int main() {
 
         printf("======MENU======\n");
         printf("[0] create new list din\n");
-        printf("[1] dealocate\n");
+        printf("[1] deallocate\n");
         printf("[2] last idx\n");
         printf("[3] copy list\n");
         printf("[4] count val\n");

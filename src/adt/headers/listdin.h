@@ -49,7 +49,7 @@ void CreateListDin(ListDin *l, int capacity);
 /* I.S. l sembarang, capacity > 0 */
 /* F.S. Terbentuk list dinamis l kosong dengan kapasitas capacity */
 
-void DealocateListDin(ListDin *l);
+void DeallocateListDin(ListDin *l);
 /* I.S. l terdefinisi; */
 /* F.S. (l) dikembalikan ke system, CAPACITY(l)=0; NEFF(l)=0 */
 

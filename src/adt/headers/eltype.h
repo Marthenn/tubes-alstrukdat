@@ -23,56 +23,54 @@ typedef struct ElType{
 /**
  * @brief Create a new ElType object
  * 
- * @param type 
- * @param val 
- * @return ElType 
+ * @param type Key to determine the type of the ElType
+ * @param val The value held by the ElType
+ * @return The new ElType object
  */
 ElType NewElType(int type, union Data val);
 
 /**
  * @brief Get the Type of an ElType object
  * 
- * @param e 
- * @return int 
+ * @param e The ElType object to be checked
+ * @return Key to determine the type of the ElType
  */
 int GetType(ElType e);
 
 /**
  * @brief Get the value of an ElType object
  * 
- * @param e 
- * @return int 
+ * @param e The ElType object to be checked
+ * @return union Data The value held by the ElType
  */
 union Data GetVal(ElType e);
 
 /**
  * @brief Set the Val of an ElType object
  * 
- * @param e 
- * @param val 
+ * @param e The ElType object to be modified
+ * @param type Key to determine the type of the ElType
+ * @param val The value that will be held by the ElType
  */
 void SetVal(ElType *e, int type, union Data val);
 
 /**
- * @brief copy the value of an ElType object
+ * @brief copy the value of an ElType (b) object to another ElType (a) object
  * 
- * @param a 
- * @param b 
  */
 void CopyElType(ElType *a, ElType b);
 
 /**
  * @brief compare the val of two ElType
  * 
- * @param e 
- * @param val 
+ * @return is a equals to b 
  */
 boolean Compare(ElType a, ElType b);
 
 /**
  * @brief print the val of an ElType
  * 
- * @param e 
+ * @param e the ElType to be printed
  */
 void PrintElType(ElType a);
 

@@ -178,6 +178,7 @@ int main(){
 
 			// else {
 			// 	UpdateStack(simulator, delivery, inventoryRecord, deliveryRecord, &undoStack);
+			// CreateEmptyStack(&redoStack);
 			// }
 		}
     }

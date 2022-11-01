@@ -41,26 +41,31 @@ void SetElmtTime(PrioQueue *Q, int idx, Waktu newTime)
 {
     // Kamu Lokal
     int pos;
-    PQInfoType tmp;
+    PQInfoType newElmt;
     Waktu oldTime;
     // Algoritmas
     oldTime = Q->Tab[Q->Head+idx].Time;
-    Q->Tab[Q->Head+idx].Time = newTime;
-    tmp = Q->Tab[Q->Head+idx];
+    newElmt.Info = Q->Tab[Q->Head+idx].Info;
+    newElmt.Time = newTime;
     pos = idx;
-    if (!IsWaktuGreaterEqual(newTime,oldTime)){
-        while (pos != 0 && !IsWaktuGreaterEqual(newTime,GetElmtTime(*Q,pos-1))){
-            Q->Tab[Q->Head+pos] = Q->Tab[Q->Head+pos-1];
-            pos--;
-        }
-    } else {
-        while (pos != LengthPQ(*Q)-1 && !IsWaktuGreaterEqual(GetElmtTime(*Q,pos+1),newTime)){
-            Q->Tab[Q->Head+pos] = Q->Tab[Q->Head+pos+1];
-            pos++;
-        }
+    // swap ke depan hingga berada di posisi yang tepat
+    while (pos != 0 && IsEarlier(newElmt,Q->Tab[Q->Head+pos-1])){
+        Q->Tab[Q->Head+pos] = Q->Tab[Q->Head+pos-1];
+        pos--;
     }
-    Q->Tab[Q->Head+pos] = tmp;
+    // swap ke belakang hingga berada di posisi yang tepat
+    while (pos != LengthPQ(*Q)-1 && IsEarlier(Q->Tab[Q->Head+pos+1],newElmt)){
+        Q->Tab[Q->Head+pos] = Q->Tab[Q->Head+pos+1];
+        pos++;
+    }
+    Q->Tab[Q->Head+pos] = newElmt;
     return;
+}
+
+boolean IsEarlier(PQInfoType a, PQInfoType b){
+    if (a.Time == b.Time){
+        return a.Info < b.Info;
+    } else return !IsWaktuGreaterEqual(a.Time,b.Time);
 }
 
 boolean IsEmptyPQ (PrioQueue Q)
@@ -181,8 +186,7 @@ void Enqueue (PrioQueue * Q, PQElType X, Waktu time)
         Q->Tail++;
     }
     idx = Q->Tail;
-    while (idx != Q->Head && !IsWaktuGreaterEqual(newInfo.Time,Q->Tab[idx-1].Time)){
-        
+    while (idx != Q->Head && IsEarlier(newInfo,Q->Tab[idx-1])){
         Q->Tab[idx] = Q->Tab[idx-1];
         idx--;
     }

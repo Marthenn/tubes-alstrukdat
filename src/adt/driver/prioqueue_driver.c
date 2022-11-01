@@ -29,6 +29,7 @@ int main(){
     Enqueue(&Q,5,3);
     Enqueue(&Q,8,1);
     Enqueue(&Q,5,7);
+    Enqueue(&Q,7,3);
     Enqueue(&Q,1,3);
     DisplayPQ(Q);
     printf("****** Cek Getter ******\n");

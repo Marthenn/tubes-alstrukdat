@@ -292,3 +292,20 @@ void Catalog(ListStatik foods)
     }
     printf("\n");
 }
+
+void DisplayDelivery(ListStatik foods, PrioQueue deliveryRecord){
+    int i;
+    printf("======LIST PESANAN======\n");
+    if(IsEmptyPQ(deliveryRecord)){
+        printf("Tidak ada pesanan yang sedang dalam perjalanan\n");
+    } else {
+        printf("(nama - sisa waktu [JJ.MM])\n");
+        for(i=0;i<LengthPQ(deliveryRecord);i++){
+            printf("%d. ",i+1);
+            DisplayWord(GetMakananFromId(foods,deliveryRecord.Tab[i].Info).Nama);
+            printf(" - ");
+            CetakWaktuJJMM(deliveryRecord.Tab[i].Time);
+            printf("\n");
+        }
+    }
+}

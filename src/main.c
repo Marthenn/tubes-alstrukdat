@@ -82,7 +82,7 @@ int main(){
 
 			else if (IsInputEqual(DELIVERY_WORD))
 			{
-				printf("input command DELIVERY\n");
+				DisplayDelivery(foods, deliveryRecord);
 			}
 
 			else if (IsInputEqual(MOVE_EAST_WORD))

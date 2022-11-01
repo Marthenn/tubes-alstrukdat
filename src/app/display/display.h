@@ -5,6 +5,7 @@
 #include "../../adt/makanan/makanan.h"
 #include "../../adt/listdineltype/listdineltype.h"
 #include "../../adt/liststatik/liststatik.h"
+#include "../../adt/prioqueue/prioqueue.h"
 
 /**
  * @brief Get the Makanan From Id identifier
@@ -84,6 +85,7 @@ void BoilMenu(ListDinElType BoilFoods);
  * @param fryFoods list of all the foods that can be get from frying
  * @param boilFoods list of all the foods that can be get from boiling
  */
+void CookBook(ListStatik foods, ListStatik recipes, ListDinElType mixFoods, ListDinElType chopFoods, ListDinElType fryFoods, ListDinElType boilFoods);
 
 /**
  * @brief Go into the boil submenu if possible
@@ -92,6 +94,12 @@ void BoilMenu(ListDinElType BoilFoods);
  */
 void Catalog(ListStatik foods);
 
-void CookBook(ListStatik foods, ListStatik recipes, ListDinElType mixFoods, ListDinElType chopFoods, ListDinElType fryFoods, ListDinElType boilFoods);
+/**
+ * @brief Display the current status of foods in delivery
+ * 
+ * @param foods List of foods available
+ * @param deliveryRecord Queue of foods in delivery
+ */
+void DisplayDelivery(ListStatik foods, PrioQueue deliveryRecord);
 
 #endif

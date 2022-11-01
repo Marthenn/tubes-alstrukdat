@@ -75,82 +75,82 @@ int main(){
 
 			wordList = SplitWord(currentWord, ' ');
 
-			if (IsInputEqual(BUY_WORD) == true)
+			if (IsInputEqual(BUY_WORD))
 			{
 				printf("input command BUY\n");
 			}
 
-			else if (IsInputEqual(DELIVERY_WORD) == true)
+			else if (IsInputEqual(DELIVERY_WORD))
 			{
 				printf("input command DELIVERY\n");
 			}
 
-			else if (IsInputEqual(MOVE_EAST_WORD) == true)
+			else if (IsInputEqual(MOVE_EAST_WORD))
 			{
 				Move(&simulator, &map, 0);
 			}
 
-			else if (IsInputEqual(MOVE_WEST_WORD) == true)
+			else if (IsInputEqual(MOVE_WEST_WORD))
 			{
 				Move(&simulator, &map, 1);
 			}
 
-			else if (IsInputEqual(MOVE_NORTH_WORD) == true)
+			else if (IsInputEqual(MOVE_NORTH_WORD))
 			{
 				Move(&simulator, &map, 2);
 			}
-			else if (IsInputEqual(MOVE_SOUTH_WORD) == true)
+			else if (IsInputEqual(MOVE_SOUTH_WORD))
 			{
 				Move(&simulator, &map, 3);
 			}
 			
-			else if (IsInputEqual(MIX_WORD) == true)
+			else if (IsInputEqual(MIX_WORD))
 			{
 				printf("input command MIX\n");
 			}
 			
-			else if (IsInputEqual(CHOP_WORD) == true)
+			else if (IsInputEqual(CHOP_WORD))
 			{
 				printf("input command CHOP\n");
 			}
 			
-			else if (IsInputEqual(FRY_WORD) == true)
+			else if (IsInputEqual(FRY_WORD))
 			{
 				printf("input command FRY\n");
 			}
 			
-			else if (IsInputEqual(BOIL_WORD) == true)
+			else if (IsInputEqual(BOIL_WORD))
 			{
 				printf("input command BOIL\n");
 			}
 			
-			else if (IsInputEqual(UNDO_WORD) == true)
+			else if (IsInputEqual(UNDO_WORD))
 			{
 				isUndo = true;
 				printf("input command UNDO\n");
 			}
 			
-			else if (IsInputEqual(REDO_WORD) == true)
+			else if (IsInputEqual(REDO_WORD))
 			{
 				printf("input command REDO\n");
 			}
 			
-			else if (IsInputEqual(CATALOG_WORD) == true)
+			else if (IsInputEqual(CATALOG_WORD))
 			{
 				Catalog(foods);
 			}
 			
-			else if (IsInputEqual(COOKBOOK_WORD) == true)
+			else if (IsInputEqual(COOKBOOK_WORD))
 			{
 				CookBook(foods, recipes, mixFoods, chopFoods, fryFoods, boilFoods);
 			}
 
-			else if (IsInputEqual(HELP_WORD) == true) 
+			else if (IsInputEqual(HELP_WORD)) 
 			{
 				Help();
 			}
 			
-			else if (IsInputPrefixEqual(WAIT_WORD) == true && ListDinElTypeLength(wordList) == 3)
+			else if (IsInputPrefixEqual(WAIT_WORD) && ListDinElTypeLength(wordList) == 3)
 			{
 				x = WordToInt(GetVal(wordList.buffer[1]).w);
 				y = WordToInt(GetVal(wordList.buffer[2]).w);
@@ -166,7 +166,7 @@ int main(){
 				}
 			}
 
-			else if (IsInputEqual(EXIT_WORD) == true)
+			else if (IsInputEqual(EXIT_WORD))
 			{
 				Exit();
 			}

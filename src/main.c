@@ -179,7 +179,12 @@ int main(){
 			// else {
 			// 	UpdateStack(simulator, delivery, inventoryRecord, deliveryRecord, &undoStack);
 			// }
-		}
+
+
+			else {
+				UpdateStack(simulator, delivery, inventoryRecord, deliveryRecord, &undoStack);
+			}
+	
     }
 
     return 0;

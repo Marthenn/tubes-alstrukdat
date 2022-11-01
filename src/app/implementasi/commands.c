@@ -394,6 +394,16 @@ void Undo (Simulator* simulator, PrioQueue delivery, PrioQueue inventoryRecord, 
     UpdateInverse(*simulator, prevRecord, undoStack);
 }
 
+void Redo (Simulator* simulator, PrioQueue delivery, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *undoStack, Stack *redoStack)
+{   
+    Record prevRecord, undoRecord;
+
+    PopStack(undoStack, &undoRecord);
+
+    UpdateStack(*simulator, delivery, inventoryRecord, deliveryRecord, undoStack);
+    UpdateInverse(*simulator, prevRecord, redoStack);
+}
+
 void UpdateStack(Simulator simulator, PrioQueue delivery, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *stack)
 {
     Record newRecord;

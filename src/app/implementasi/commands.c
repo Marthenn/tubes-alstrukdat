@@ -390,6 +390,7 @@ void Undo (Simulator* simulator, PrioQueue delivery, PrioQueue inventoryRecord, 
     PopStack(undoStack, &prevRecord);
 
     UpdateStack(*simulator, delivery, inventoryRecord, deliveryRecord, redoStack);
+
     UpdateInverse(*simulator, prevRecord, undoStack);
 }
 
@@ -466,14 +467,13 @@ void GetQueueChanges(PrioQueue *addChanges, PrioQueue *delChanges, PrioQueue pre
         else if (GetHeadTime(prevQueue) > GetHeadTime(currentQueue)) {
             Dequeue(&currentQueue, &val, &t);
             Enqueue(addChanges, val, t);
-        }
 
         else {
             Dequeue(&prevQueue, &val, &t);
             Enqueue(delChanges, val, t);
         }
     }
-
+    
     while(IsEmptyPQ(prevQueue) == false)
     {
         Dequeue(&prevQueue, &val, &t);

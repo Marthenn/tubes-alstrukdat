@@ -180,7 +180,12 @@ int main(){
 			// 	UpdateStack(simulator, delivery, inventoryRecord, deliveryRecord, &undoStack);
 			// CreateEmptyStack(&redoStack);
 			// }
-		}
+
+
+			else {
+				UpdateStack(simulator, delivery, inventoryRecord, deliveryRecord, &undoStack);
+			}
+	
     }
 
     return 0;

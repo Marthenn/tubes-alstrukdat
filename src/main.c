@@ -14,15 +14,17 @@ int main(){
     ListStatik foods, recipes; 
     Word n;
     ListDinElType buyFoods,mixFoods,chopFoods,fryFoods,boilFoods, wordList;
-    Stack undoRecord, redoRecord;
+    Stack undoStack, redoStack;
 	PrioQueue inventoryRecord, deliveryRecord, delivery;
 
-	boolean isStarted;
+	boolean isStarted, isUndo;
     int x, y;
     
     // ALGORITMA
 
 	isStarted = false;
+	isUndo = false;
+
 	CreateEmptyPQ(&inventoryRecord);
 	CreateEmptyPQ(&deliveryRecord);
     StartScreen();
@@ -36,7 +38,7 @@ int main(){
 		{	
 			if (IsInputEqual(START_WORD))
 			{
-				Start(&simulator, &foods, &recipes, &map, &buyFoods, &mixFoods, &chopFoods, &fryFoods, &boilFoods, &delivery, &undoRecord, &redoRecord);
+				Start(&simulator, &foods, &recipes, &map, &buyFoods, &mixFoods, &chopFoods, &fryFoods, &boilFoods, &delivery, &undoStack, &redoStack);
 
 				isStarted = true;
 			}
@@ -85,21 +87,21 @@ int main(){
 
 			else if (IsInputEqual(MOVE_EAST_WORD) == true)
 			{
-				Move(&simulator, &map, &undoRecord, 0);
+				Move(&simulator, &map, 0);
 			}
 
 			else if (IsInputEqual(MOVE_WEST_WORD) == true)
 			{
-				Move(&simulator, &map, &undoRecord, 1);
+				Move(&simulator, &map, 1);
 			}
 
 			else if (IsInputEqual(MOVE_NORTH_WORD) == true)
 			{
-				Move(&simulator, &map, &undoRecord, 2);
+				Move(&simulator, &map, 2);
 			}
 			else if (IsInputEqual(MOVE_SOUTH_WORD) == true)
 			{
-				Move(&simulator, &map, &undoRecord, 3);
+				Move(&simulator, &map, 3);
 			}
 			
 			else if (IsInputEqual(MIX_WORD) == true)
@@ -124,6 +126,7 @@ int main(){
 			
 			else if (IsInputEqual(UNDO_WORD) == true)
 			{
+				isUndo = true;
 				printf("input command UNDO\n");
 			}
 			
@@ -166,6 +169,15 @@ int main(){
 			else {
 				printf("Command tidak valid!\n");
 				printf("(Masukkan command 'help' untuk melihat semua perintah yang valid)\n");
+			}
+
+			if (isUndo)
+			{
+				isUndo = false;
+			}
+
+			else {
+				UpdateStack(simulator, delivery, inventoryRecord, deliveryRecord, &undoStack);
 			}
 		}
     }

@@ -110,8 +110,15 @@ void Boil(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
  * 
  */
 
-void Move(Simulator *simulator, Map *map, Stack *undoRecord, int moveCode);
+void Move(Simulator *simulator, Map *map, int moveCode);
 
 void Undo (Simulator* simulator, PrioQueue delivery, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *undoRecord, Stack *redoRecord);
 
+void GetQueueChanges(PrioQueue *addChanges, PrioQueue *delChanges, PrioQueue prevQueue, PrioQueue currentQueue);
+
+void UpdateStack(Simulator simulator, PrioQueue delivery, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *stack);
+
+void UpdateInverse(Simulator simulator, Record inverseRecord, Stack *stack);
+
+void GetQueueChanges(PrioQueue *addChanges, PrioQueue *delChanges, PrioQueue prevQueue, PrioQueue currentQueue);
 #endif

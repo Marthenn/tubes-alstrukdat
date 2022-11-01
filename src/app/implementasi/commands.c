@@ -457,7 +457,7 @@ void GetQueueChanges(PrioQueue *addChanges, PrioQueue *delChanges, PrioQueue pre
         else if (GetHeadTime(prevQueue) > GetHeadTime(currentQueue)) {
             Dequeue(&currentQueue, &val, &t);
             Enqueue(addChanges, val, t);
-
+        }
         else {
             Dequeue(&prevQueue, &val, &t);
             Enqueue(delChanges, val, t);

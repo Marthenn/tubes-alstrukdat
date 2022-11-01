@@ -144,6 +144,11 @@ int main(){
 			{
 				CookBook(foods, recipes, mixFoods, chopFoods, fryFoods, boilFoods);
 			}
+
+			else if (IsInputEqual(HELP_WORD) == true) 
+			{
+				Help();
+			}
 			
 			else if (IsInputPrefixEqual(WAIT_WORD) == true && ListDinElTypeLength(wordList) == 3)
 			{
@@ -181,10 +186,10 @@ int main(){
 			// }
 
 
-			else {
-				UpdateStack(simulator, delivery, inventoryRecord, deliveryRecord, &undoStack);
-			}
-	
+			// else {
+			// 	UpdateStack(simulator, delivery, inventoryRecord, deliveryRecord, &undoStack);
+			// }
+		}
     }
 
     return 0;

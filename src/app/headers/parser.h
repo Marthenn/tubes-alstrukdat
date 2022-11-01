@@ -30,6 +30,7 @@
 #define INVENTORY_WORD NewWord("INVENTORY",9)
 #define EMPTY_WORD NewWord("", 0)
 #define BLANK_WORD NewWord(" ", 1)
+#define HELP_WORD NewWord("HELP", 4)
 
 #define NUM_CHAR_MIN '0'
 #define NUM_CHAR_MAX '9'

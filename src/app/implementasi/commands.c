@@ -327,7 +327,7 @@ void Boil(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
     }
 }
 
-void Move(Simulator *simulator, Map *map, Stack *undoRecord, int moveCode)
+void Move(Simulator *simulator, Map *map, int moveCode)
 // 0 : east, 1 : west, 2 : north, 3 : south
 {
     Point currentLocation = GetLokasi(simulator);
@@ -376,11 +376,17 @@ void Move(Simulator *simulator, Map *map, Stack *undoRecord, int moveCode)
     }
 }
 
-void Undo (Simulator* simulator, PrioQueue delivery, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *undoRecord, Stack *redoRecord)
+void Undo (Simulator* simulator, PrioQueue delivery, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *undoStack, Stack *redoStack)
 {
+    Record prevRecord, redoRecord;
+
+    PopStack(undoStack, &prevRecord);
+
+    UpdateStack(*simulator, delivery, inventoryRecord, deliveryRecord, &redoStack);
+    UpdateInverse(*simulator, prevRecord, undoStack);
 }
 
-void UpdateStack(Simulator* simulator, PrioQueue delivery, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *undoRecord, Stack *redoRecord)
+void UpdateStack(Simulator simulator, PrioQueue delivery, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *stack)
 {
     Record newRecord;
 
@@ -388,7 +394,25 @@ void UpdateStack(Simulator* simulator, PrioQueue delivery, PrioQueue inventoryRe
     newRecord.SimulatorLoc = GetLokasi(&simulator);
 
     GetQueueChanges(&newRecord.DeliveryAdd, &newRecord.DeliveryDel, deliveryRecord, delivery);
-    GetQueueChanges(&newRecord.InventoryAdd, &newRecord.InventoryDel, inventoryRecord, simulator->Inventory);
+    GetQueueChanges(&newRecord.InventoryAdd, &newRecord.InventoryDel, inventoryRecord, simulator.Inventory);
+
+    PushStack(stack, newRecord);
+}
+
+void UpdateInverse(Simulator simulator, Record inverseRecord, Stack *stack)
+{
+    Record newRecord;
+
+    newRecord.Time = GetTime(&simulator);
+    newRecord.SimulatorLoc = GetLokasi(&simulator);
+
+    newRecord.DeliveryAdd = inverseRecord.DeliveryDel;
+    newRecord.DeliveryDel = inverseRecord.DeliveryAdd;
+    newRecord.InventoryAdd = inverseRecord.DeliveryDel;
+    newRecord.InventoryDel = inverseRecord.DeliveryAdd;
+
+    PushStack(stack, newRecord);
+
 }
 
 void GetQueueChanges(PrioQueue *addChanges, PrioQueue *delChanges, PrioQueue prevQueue, PrioQueue currentQueue)
@@ -401,18 +425,47 @@ void GetQueueChanges(PrioQueue *addChanges, PrioQueue *delChanges, PrioQueue pre
     prev = prevQueue;
     currentQueue = currentQueue;
 
-    while (IsEmptyPQ(prevQueue) == false)
+    while (IsEmptyPQ(prevQueue) == false && IsEmptyPQ(currentQueue) == false)
     {
-        if (GetHeadInfo(prevQueue) == currentQueue.Tab[i].Info && currentQueue.Tab[i].Info)
+        if (GetHeadTime(prevQueue) == GetHeadTime(currentQueue))
         {
-            Dequeue(&prevQueue, &val, &t);
-            Dequeue(&currentQueue, &val, &t);
+            if (GetHeadInfo(prevQueue) == currentQueue.Tab[i].Info)
+            {
+                Dequeue(&prevQueue, &val, &t);
+                Dequeue(&currentQueue, &val, &t);
+            }
+
+            else if (GetHeadInfo(prevQueue) > currentQueue.Tab[i].Info) {
+                Dequeue(&currentQueue, &val, &t);
+                Enqueue(addChanges, val, t);
+            }
+
+            else {
+                Dequeue(&prevQueue, &val, &t);
+                Enqueue(delChanges, val, t);
+            }
         }
 
-        // else if ()
-        // else {
-        //     Dequeue(&prevQueue, &val, &t);
-        //     Enqueue(delChanges, val, t);
-        // }
+        else if (GetHeadTime(prevQueue) > GetHeadTime(currentQueue)) {
+            Dequeue(&currentQueue, &val, &t);
+            Enqueue(addChanges, val, t);
+        }
+
+        else {
+            Dequeue(&prevQueue, &val, &t);
+            Enqueue(delChanges, val, t);
+        }
+    }
+
+    while(IsEmptyPQ(prevQueue) == false)
+    {
+        Dequeue(&prevQueue, &val, &t);
+        Enqueue(delChanges, val, t);
+    }
+
+    while(IsEmptyPQ(currentQueue) == false)
+    {
+        Dequeue(&currentQueue, &val, &t);
+        Enqueue(addChanges, val, t);
     }
 }

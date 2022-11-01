@@ -124,9 +124,16 @@ void DeleteLastListDinElType(ListDinElType *L, ElType *e)
 }
 
 void ExpandListDinElType(ListDinElType *L){
-    L->buffer = (ElType*) realloc(L->buffer, L->capacity * 3 / 2 * sizeof(ElType));
 
-    L->capacity = 1.5 * L->capacity;
+    int newCap = L->capacity * 3 / 2;
+    if (newCap == L->capacity)
+    {
+        newCap++;
+    }
+
+    L->buffer = (ElType*) realloc(L->buffer, newCap * sizeof(ElType));
+
+    L->capacity = newCap;
 }
 
 void ShrinkListDinElType(ListDinElType *L){

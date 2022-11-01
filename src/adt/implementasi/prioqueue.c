@@ -41,7 +41,7 @@ void SetElmtTime(PrioQueue *Q, int idx, Waktu newTime)
 {
     // Kamu Lokal
     int pos;
-    infotype tmp;
+    PQInfoType tmp;
     Waktu oldTime;
     // Algoritmas
     oldTime = Q->Tab[Q->Head+idx].Time;
@@ -88,7 +88,7 @@ void CreateEmptyPQ(PrioQueue* Q)
 {
     // Kamus Lokal
     // Algoritma
-    Q->Tab = (infotype*) malloc(PQ_DEF_SIZE*sizeof(infotype));
+    Q->Tab = (PQInfoType*) malloc(PQ_DEF_SIZE*sizeof(PQInfoType));
     Q->Head =  PQ_NIL;
     Q->Tail =  PQ_NIL;
     if (Q->Tab != NULL){
@@ -111,7 +111,7 @@ void DeallocatePQ(PrioQueue * Q)
 void ReallocatePQ(PrioQueue * Q, int newCap)
 {
     // Kamus Lokal
-    infotype* tmp;
+    PQInfoType* tmp;
     int i;
     // Algoritma
     if (newCap < Q->Cap){
@@ -121,7 +121,7 @@ void ReallocatePQ(PrioQueue * Q, int newCap)
         Q->Tail -= Q->Head;
         Q->Head = 0;
     }
-    tmp = realloc(Q->Tab,sizeof(infotype)*newCap);
+    tmp = realloc(Q->Tab,sizeof(PQInfoType)*newCap);
     if (tmp != NULL){
         Q->Tab = tmp;
         Q->Cap = newCap;
@@ -154,7 +154,7 @@ void Enqueue (PrioQueue * Q, PQElType X, Waktu time)
 {
     // Kamus Lokal
     int i,oldCap,newCap,idx;
-    infotype newInfo;
+    PQInfoType newInfo;
     // Algoritma
     newInfo.Info = X;
     newInfo.Time = time;
@@ -182,6 +182,7 @@ void Enqueue (PrioQueue * Q, PQElType X, Waktu time)
     }
     idx = Q->Tail;
     while (idx != Q->Head && !IsWaktuGreaterEqual(newInfo.Time,Q->Tab[idx-1].Time)){
+        
         Q->Tab[idx] = Q->Tab[idx-1];
         idx--;
     }
@@ -191,7 +192,7 @@ void Dequeue (PrioQueue * Q, PQElType* X)
 {
     // Kamus Lokal
     int i,oldCap,newCap;
-    infotype* tmpTab;
+    PQInfoType* tmpTab;
     // Algoritma
     *X = GetHeadInfo(*Q);
     if (LengthPQ(*Q) == 1){
@@ -211,7 +212,7 @@ void DeleteAtPQ (PrioQueue* Q, PQElType* X,int idx)
 {
     // Kamus Lokal
     int i,oldCap,newCap;
-    infotype* tmpTab;
+    PQInfoType* tmpTab;
     // Algoritma
     if (idx == 0){
         Dequeue(Q,X);
@@ -229,7 +230,7 @@ void DeleteAtPQ (PrioQueue* Q, PQElType* X,int idx)
     }
 }
 
-void DisplayInfoTypePQ(infotype p){
+void DisplayInfoTypePQ(PQInfoType p){
     // Kamus Lokal
     // Algoritma
     printf("< %d, ",p.Info);

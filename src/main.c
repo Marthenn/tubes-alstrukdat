@@ -15,13 +15,16 @@ int main(){
     Word n;
     ListDinElType buyFoods,mixFoods,chopFoods,fryFoods,boilFoods, wordList;
     Stack undoRecord, redoRecord;
+	PrioQueue inventoryRecord, deliveryRecord, delivery;
+
 	boolean isStarted;
     int x, y;
     
     // ALGORITMA
 
 	isStarted = false;
-
+	CreateEmptyPQ(&inventoryRecord);
+	CreateEmptyPQ(&deliveryRecord);
     StartScreen();
 
 	printf("Enter Command: ");
@@ -33,7 +36,7 @@ int main(){
 		{	
 			if (IsInputEqual(START_WORD))
 			{
-				Start(&simulator, &foods, &recipes, &map, &buyFoods, &mixFoods, &chopFoods, &fryFoods, &boilFoods, &undoRecord, &redoRecord);
+				Start(&simulator, &foods, &recipes, &map, &buyFoods, &mixFoods, &chopFoods, &fryFoods, &boilFoods, &delivery, &undoRecord, &redoRecord);
 
 				isStarted = true;
 			}

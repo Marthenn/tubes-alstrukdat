@@ -10,7 +10,7 @@ typedef struct{
     int capacity;
 } ListDinElType;
 
-#define LISTDIN_ELTYPE_MIN_CAP 2
+#define LISTDIN_ELTYPE_MIN_CAP 0
 
 /**
  * @brief Create a ListDinElType object with known capacity

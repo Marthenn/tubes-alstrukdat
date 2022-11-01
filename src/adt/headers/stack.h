@@ -7,19 +7,29 @@
 
 /* ADT */
 #include "boolean.h"
-#include "listdin.h"
-
+#include "point.h"
+#include "prioqueue.h"
 #define STACK_NIL -1
 
 /* Nil adalah stack dengan elemen kosong . */
 
 typedef int StackAddress;   /* indeks tabel */
 
+typedef struct {
+  PrioQueue InventoryAdd;
+  PrioQueue DeliveryAdd;
+  PrioQueue InventoryDel;
+  PrioQueue DeliveryDel;
+  Point SimulatorLoc;
+  Waktu Time;
+} Record;
+
 /* Contoh deklarasi variabel bertype stack dengan ciri TOP : */
 /* Versi I : dengan menyimpan tabel dan alamat top secara eksplisit*/
 typedef struct { 
-  ListDin T; /* tabel penyimpan elemen */
+  Record* T; /* tabel penyimpan elemen */
   StackAddress TOP;  /* alamat TOP: elemen puncak */
+  int CAP;
 } Stack;
 /* Definisi stack S kosong : S.TOP = Nil */
 /* Elemen yang dipakai menyimpan nilai Stack T[0]..T[MaxEl-1] */
@@ -29,8 +39,9 @@ typedef struct {
 
 /* Definisi akses dengan Selektor : Set dan Get */
 #define StackTop(S) (S).TOP
-#define StackInfoTop(S) LISTDIN_ELMT((S).T, (S).TOP)
+#define StackInfoTop(S) (S).T[StackTop((S))]
 #define StackTab(S) (S).T
+#define StackCap(S) (S).CAP
 
 /* ************ Prototype ************ */
 /* *** Konstruktor/Kreator *** */
@@ -45,15 +56,18 @@ boolean IsStackEmpty(Stack S);
 /* Mengirim true jika Stack kosong: lihat definisi di atas */
 
 /* ************ Menambahkan sebuah elemen ke Stack ************ */
-void PushStack(Stack * S, int X);
+void PushStack(Stack * S, Record X);
 /* Menambahkan X sebagai elemen Stack S. */
 /* I.S. S mungkin kosong, tabel penampung elemen stack TIDAK penuh */
 /* F.S. X menjadi TOP yang baru,TOP bertambah 1 */
 
 /* ************ Menghapus sebuah elemen Stack ************ */
-void PopStack(Stack * S, int* X);
+void PopStack(Stack * S, Record* X);
 /* Menghapus X dari Stack S. */
 /* I.S. S  tidak mungkin kosong */
 /* F.S. X adalah nilai elemen TOP yang lama, TOP berkurang 1 */
 
+
+void ExpandStack(Stack *S);
+void ShrinkStack(Stack *S);
 #endif

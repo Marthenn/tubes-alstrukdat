@@ -1,3 +1,5 @@
+/* C libraries */
+#include <stdlib.h>
 /* ADT */
 #include "../headers/boolean.h"
 #include "../headers/stack.h"
@@ -14,7 +16,8 @@ void CreateEmptyStack(Stack *S)
 	
 	//ALGORITMA
 	StackTop(*S) = STACK_NIL;
-	CreateListDin(&StackTab(*S), 0);
+	StackTab(*S) = (Record*) malloc(0);
+	StackCap(*S) = 0;
 }
 
 /* ************ Predikat Untuk test keadaan KOLEKSI ************ */
@@ -33,7 +36,7 @@ boolean IsStackEmpty(Stack S)
 }
 
 /* ************ Menambahkan sebuah elemen ke Stack ************ */
-void PushStack(Stack * S, int X)
+void PushStack(Stack * S, Record X)
 /* Menambahkan X sebagai elemen Stack S. */
 /* I.S. S mungkin kosong, tabel penampung elemen stack TIDAK penuh */
 /* F.S. X menjadi TOP yang baru,TOP bertambah 1 */
@@ -42,11 +45,17 @@ void PushStack(Stack * S, int X)
 	//ALGORITMA
 	
 	StackTop(*S)++;
-	InsertLastListDin(&StackTab(*S), X);
+
+	if (StackTop(*S) == StackCap(*S))
+	{
+		ExpandStack(S);
+	}
+
+	StackTab(*S)[StackTop(*S)] = X;
 }
 
 /* ************ Menghapus sebuah elemen Stack ************ */
-void PopStack(Stack * S, int* X)
+void PopStack(Stack * S, Record* X)
 /* Menghapus X dari Stack S. */
 /* I.S. S  tidak mungkin kosong */
 /* F.S. X adalah nilai elemen TOP yang lama, TOP berkurang 1 */
@@ -54,6 +63,38 @@ void PopStack(Stack * S, int* X)
 	//KAMUS LOKAL
 	//ALGORITMA
 	
-	DeleteLastListDin(&StackTab(*S), X);
+	*X = StackInfoTop(*S);
+
+	if (StackTop(*S) <= StackCap(*S) / 4)
+	{
+		ShrinkStack(S);
+	}
+
 	StackTop(*S)--;
+	
+}
+
+void ExpandStack(Stack *S)
+{
+	// KAMUS LOKAL
+    int newCap;
+    // ALGORITMA
+    
+    newCap = StackCap(*S) * 3 / 2;
+
+    if (newCap == StackCap(*S))
+    {
+        newCap++;
+    }
+    StackTab(*S) = realloc(StackTab(*S), newCap * sizeof(Record));
+    StackCap(*S) = newCap;
+}
+
+void ShrinkStack(Stack *S)
+{
+	int newCap = StackCap(*S) / 2;
+
+	StackTab(*S) = realloc(StackTab(*S), newCap * sizeof(Record));
+    StackCap(*S) = newCap;
+
 }

@@ -426,6 +426,11 @@ void ExpandListDin(ListDin *l)
     // ALGORITMA
     
     newCap = LISTDIN_CAP(*l) * 3 / 2;
+
+    if (newCap == LISTDIN_CAP(*l))
+    {
+        newCap++;
+    }
     LISTDIN_BUFFER(*l) = realloc(LISTDIN_BUFFER(*l), newCap * sizeof(int));
     LISTDIN_CAP(*l) = newCap;
    

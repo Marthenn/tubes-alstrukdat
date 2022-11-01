@@ -1,6 +1,7 @@
 /* File : prioqueue.h */
 /* Definisi Priority Queue versi 2 dengan list dinamik */
 /* Priority queue memiliki komponen Info berupa int dan Time berupa Waktu */
+/* Elemen akan terurut membesar berdasarkan Iime, apabila sama maka Info lebih kecil didahulukan */
 
 #ifndef prioqueue_H
 #define prioqueue_H
@@ -44,6 +45,10 @@ void SetElmtTime(PrioQueue *Q, int idx, Waktu newTime);
 /* Mengganti nilai waktu dari elemen indeks ke-idx secara logikal pada Q dan
 /* memposisikan ulang elemen tersebut. idx = 0 adahal Head */
 /* idx berada pada rentang [0..length(Q)] */
+
+/* ********* Element Comparator ********* */
+boolean IsEarlier(PQInfoType a, PQInfoType b);
+/* Mengembalikan true apabila a terletak lebih awal daripada b di priority queue*/
 
 /* ********* Prototype ********* */
 boolean IsEmptyPQ (PrioQueue Q);

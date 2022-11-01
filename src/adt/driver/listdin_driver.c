@@ -12,7 +12,7 @@ int main() {
 
     // ALGORITMA
 
-    CreateListDin(&l, 2);
+    CreateListDin(&l, 0);
 
     while (true)
     {
@@ -44,13 +44,13 @@ int main() {
         if (input == 0)
         {
             scanf("%d", &cap);
-            DealocateListDin(&l);
+            DeallocateListDin(&l);
             CreateListDin(&l, cap);
         }
 
         else if (input == 1)
         {
-            DealocateListDin(&l);
+            DeallocateListDin(&l);
         }
 
         else if (input == 2)

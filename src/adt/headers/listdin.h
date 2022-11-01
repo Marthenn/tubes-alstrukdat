@@ -15,7 +15,7 @@
 #define LISTDIN_IDX_UNDEF -1
 /* Indeks tak terdefinisi*/
 
-#define MIN_LISTDIN_CAP 2
+#define MIN_LISTDIN_CAP 0
 
 /* Definisi elemen dan koleksi objek */
 typedef int IdxType;

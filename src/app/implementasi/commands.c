@@ -4,7 +4,7 @@
 /* APP */
 #include "../headers/commands.h"
 
-void Start(Simulator* simulator, ListStatik* foods, ListStatik* recipes, Map* map, ListDinElType* buyFoods, ListDinElType* mixFoods, ListDinElType* chopFoods, ListDinElType* fryFoods, ListDinElType* boilFoods, Stack *undoRecord, Stack *redoRecord){
+void Start(Simulator* simulator, ListStatik* foods, ListStatik* recipes, Map* map, ListDinElType* buyFoods, ListDinElType* mixFoods, ListDinElType* chopFoods, ListDinElType* fryFoods, ListDinElType* boilFoods, PrioQueue *delivery, Stack *undoRecord, Stack *redoRecord){
     ReadAllConfig(map, foods, recipes);
     int i;
 
@@ -376,39 +376,43 @@ void Move(Simulator *simulator, Map *map, Stack *undoRecord, int moveCode)
     }
 }
 
-void Undo (Simulator* simulator, ListStatik* foods, ListStatik* recipes, Map* map, ListDinElType* buyFoods, ListDinElType* mixFoods, ListDinElType* chopFoods, ListDinElType* fryFoods, ListDinElType* boilFoods, Stack *undoRecord, Stack *redoRecord)
+void Undo (Simulator* simulator, PrioQueue delivery, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *undoRecord, Stack *redoRecord)
 {
-    
 }
 
-Word GetAction(Makanan m, Map map)
+void UpdateStack(Simulator* simulator, PrioQueue delivery, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *undoRecord, Stack *redoRecord)
 {
-    Point actionLocation = GetLokasiAksi(m);
+    Record newRecord;
 
-    if(IsEqualPoint(T(map), actionLocation))
+    newRecord.Time = GetTime(&simulator);
+    newRecord.SimulatorLoc = GetLokasi(&simulator);
+
+    GetQueueChanges(&newRecord.DeliveryAdd, &newRecord.DeliveryDel, deliveryRecord, delivery);
+    GetQueueChanges(&newRecord.InventoryAdd, &newRecord.InventoryDel, inventoryRecord, simulator->Inventory);
+}
+
+void GetQueueChanges(PrioQueue *addChanges, PrioQueue *delChanges, PrioQueue prevQueue, PrioQueue currentQueue)
+{
+    int i;
+    PrioQueue prev, current;
+    PQElType val;
+    Waktu t;
+
+    prev = prevQueue;
+    currentQueue = currentQueue;
+
+    while (IsEmptyPQ(prevQueue) == false)
     {
-        return BUY_WORD;
-    } 
-    
-    else if (IsEqualPoint(M(map), actionLocation))
-    {
-        return MIX_WORD;
-    } 
-    
-    else if (IsEqualPoint(C(map), actionLocation))
-    {
-        return CHOP_WORD;
-    } 
-    
-    else if (IsEqualPoint(F(map), actionLocation))
-    {
-        return FRY_WORD;
-    } 
-    
-    else if (IsEqualPoint(B(map), actionLocation))
-    {
-        return BOIL_WORD;
+        if (GetHeadInfo(prevQueue) == currentQueue.Tab[i].Info && currentQueue.Tab[i].Info)
+        {
+            Dequeue(&prevQueue, &val, &t);
+            Dequeue(&currentQueue, &val, &t);
+        }
+
+        // else if ()
+        // else {
+        //     Dequeue(&prevQueue, &val, &t);
+        //     Enqueue(delChanges, val, t);
+        // }
     }
-
-    return EMPTY_WORD;
 }

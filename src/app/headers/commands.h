@@ -25,7 +25,7 @@
  * @param undoRecord Stack of action that is done
  * @param redoRecord Stack of action that is undone
  */
-void Start(Simulator* simulator, ListStatik* foods, ListStatik* recipes, Map* map, ListDinElType* buyFoods, ListDinElType* mixFoods, ListDinElType* chopFoods, ListDinElType* fryFoods, ListDinElType* boilFoods, Stack *undoRecord, Stack *redoRecord);
+void Start(Simulator* simulator, ListStatik* foods, ListStatik* recipes, Map* map, ListDinElType* buyFoods, ListDinElType* mixFoods, ListDinElType* chopFoods, ListDinElType* fryFoods, ListDinElType* boilFoods,PrioQueue *delivery, Stack *undoRecord, Stack *redoRecord);
 
 /**
  * @brief Exit the simulator
@@ -112,23 +112,6 @@ void Boil(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
 
 void Move(Simulator *simulator, Map *map, Stack *undoRecord, int moveCode);
 
-/**
- * @brief Lists recipes in program
- * 
- * @param simulator Simulator to be loaded
- * @param foods List of foods available
- * @param recipes List of recipes available
- * @param map The map of the simulator
- * @param buyFoods List of foods that can be get from buying
- * @param mixFoods List of foods that can be get from mixing
- * @param chopFoods List of foods that can be get from chopping
- * @param fryFoods List of foods that can be get from frying
- * @param boilFoods List of foods that can be get from boiling
- * @param undoRecord Stack of action that is done
- * @param redoRecord Stack of action that is undone
- * 
- */
-void Undo (Simulator* simulator, ListStatik* foods, ListStatik* recipes, Map* map, ListDinElType* buyFoods, ListDinElType* mixFoods, ListDinElType* chopFoods, ListDinElType* fryFoods, ListDinElType* boilFoods, Stack *undoRecord, Stack *redoRecord);
+void Undo (Simulator* simulator, PrioQueue delivery, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *undoRecord, Stack *redoRecord);
 
-Word GetAction(Makanan m, Map map);
 #endif

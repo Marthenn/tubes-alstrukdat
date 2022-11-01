@@ -18,10 +18,10 @@ typedef int PQElType;
 typedef struct {
     Waktu Time;
     PQElType Info;
-} infotype;
+} PQInfoType;
 
 typedef struct{
-    infotype * Tab;
+    PQInfoType * Tab;
     int Head,Tail,Cap;
 } PrioQueue;
 

@@ -45,7 +45,8 @@ int main(){
 
 			else if (IsInputEqual(EXIT_WORD))
 			{
-				Exit();
+				printf("Exiting the simulator...\n");
+				return 0;
 			}
 
 			else
@@ -168,7 +169,8 @@ int main(){
 
 			else if (IsInputEqual(EXIT_WORD))
 			{
-				Exit();
+				printf("Exiting the simulator...\n");
+				return 0;
 			}
 
 			else {

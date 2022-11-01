@@ -28,12 +28,6 @@
 void Start(Simulator* simulator, ListStatik* foods, ListStatik* recipes, Map* map, ListDinElType* buyFoods, ListDinElType* mixFoods, ListDinElType* chopFoods, ListDinElType* fryFoods, ListDinElType* boilFoods,PrioQueue *delivery, Stack *undoRecord, Stack *redoRecord);
 
 /**
- * @brief Exit the simulator
- * 
- */
-void Exit();
-
-/**
  * @brief Go into the buy submenu if possible
  * 
  * @param simulator Current simulator

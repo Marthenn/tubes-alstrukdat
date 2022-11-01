@@ -56,29 +56,30 @@ void Start(Simulator* simulator, ListStatik* foods, ListStatik* recipes, Map* ma
     CreateEmptySimulator(simulator, GetNamaPengguna(simulator));
 }
 
-void Exit(){
-    printf("Exiting the simulator...\n");
-    exit(0);
-}
-
 void Buy(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType BuyFoods, PrioQueue *delivery, Stack *undoRecord){
     if(!(IsAdjacent((*simulator).Lokasi,T(map)))){
-        DisplayWord((*simulator).NamaPengguna);
+        DisplayWord(GetNamaPengguna(simulator));
         printf(" tidak berada di area telepon!\n");
     } else {
         BuyMenu(BuyFoods);
         int x; boolean success = false;
         while(!success){
-            printf("Enter Command: ");scanf("%d",&x);
-            x--;
-            if(x==-1){
-                success = true;
-            } else if (x>ListDinElTypeLength(BuyFoods)){
-                printf("Out of range!\n");
-            } else {
-                //beli makanan disini
-                Enqueue(delivery, GetVal(BuyFoods.buffer[x]).m.Id, GetMakananFromId(foods,GetVal(BuyFoods.buffer[x]).m.Id).Pengiriman);
-                success = true;
+            printf("Enter Command: ");
+            STARTWORD();
+            x = WordToInt(currentWord);
+            if((x/10)+1!=currentWord.Length){
+                printf("Input bukan integer\n");
+            } else {    
+                x--;
+                if(x==-1){
+                    success = true;
+                } else if (x>ListDinElTypeLength(BuyFoods)-1){
+                    printf("Out of range!\n");
+                } else {
+                    //beli makanan disini
+                    Enqueue(delivery, GetVal(BuyFoods.buffer[x]).m.Id, GetMakananFromId(foods,GetVal(BuyFoods.buffer[x]).m.Id).Pengiriman);
+                    success = true;
+                }
             }
         }
     }
@@ -88,59 +89,70 @@ void Mix(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
     Waktu time;
 
     if(!(IsAdjacent((*simulator).Lokasi,M(map)))){
-        DisplayWord((*simulator).NamaPengguna);
+        DisplayWord(GetNamaPengguna(simulator));
         printf(" tidak berada di area mixing!\n");
     } else {
         MixMenu(mixFoods);
         int x; boolean success = false;
         while(!success){
-            printf("Enter Command: ");scanf("%d",&x);
-            x--;
-            if(x==-1){
-                success = true;
-            } else if (x>ListDinElTypeLength(mixFoods)){
-                printf("Out of range!\n");
+            //handle input harus integer
+            printf("Enter Command: ");
+            STARTWORD();
+            x = WordToInt(currentWord);
+            if((x/10)+1!=currentWord.Length){
+                printf("Input tidak valid!\n");
             } else {
-                Makanan dibuat = GetMakananFromId(foods, GetVal(mixFoods.buffer[x]).m.Id);
-                ListDin need; CreateListDin(&need,10);
-                while(IsListDinEmpty(need)){
-                    need = GetChildren(GetVal(LIST_ELMT(recipes,x)).t);
-                }
-                ListDin needLeft; //copy listdin need
-                CopyListDin(need, &needLeft);
-                int needLength = ListDinLength(need);
-                int needCount = 0;
-                int i,temp;
-                for(i=0;i<needLength;i++){
-                    //cek apakah ada di inventory
-                    int j;
-                    for(j=0;j<LengthPQ((*simulator).Inventory);j++){
-                        if(need.buffer[i]==(*simulator).Inventory.Tab[j].Info){
-                            needCount++;
-                            break;
+                x--;
+                if(x==-1){
+                    success = true;
+                } else if (x>ListDinElTypeLength(mixFoods)-1){
+                    printf("Input tidak valid!\n");
+                } else {
+                    Makanan dibuat = GetMakananFromId(foods, GetVal(mixFoods.buffer[x]).m.Id);
+                    ListDin need; CreateListDin(&need,10);
+                    int i,temp;
+                    i=0;
+                    while(IsListDinEmpty(need)){
+                        if(IsPartOf(GetVal(LIST_ELMT(recipes,i)).t, dibuat.Id)){
+                            need = GetChildren(GetSubTree(GetVal(LIST_ELMT(recipes,i)).t, dibuat.Id));
+                        }
+                        i++;
+                    }
+                    ListDin needLeft; //copy listdin need
+                    CopyListDin(need, &needLeft);
+                    int needLength = ListDinLength(need);
+                    int needCount = 0;
+                    for(i=0;i<needLength;i++){
+                        //cek apakah ada di inventory
+                        int j;
+                        for(j=0;j<LengthPQ((*simulator).Inventory);j++){
+                            if(need.buffer[i]==(*simulator).Inventory.Tab[j].Info){
+                                needCount++;
+                                //hapus dari needLeft jika ada
+                                DeleteAtListDin(&needLeft, &temp,ListDinIndexOf(needLeft, need.buffer[i]));
+                                break;
+                            }
                         }
                     }
-                    //hapus dari needLeft
-                    DeleteAtListDin(&needLeft, &temp,ListDinIndexOf(needLeft, need.buffer[i]));
-                }
-                if(needCount==needLength){
-                    success = true;
-                    //kurangi inventory
-                    for(i=0;i<needLength;i++){
-                        DeleteAtPQ(&(*simulator).Inventory, &temp, &time, need.buffer[i]);
+                    if(needCount==needLength){
+                        success = true;
+                        //kurangi inventory
+                        for(i=0;i<needLength;i++){
+                            temp = DeleteMakanan(simulator, need.buffer[i]);
+                        }
+                        //tambah ke inventory
+                        InsertMakanan(simulator, dibuat.Id, dibuat.Kedaluarsa);
+                    } else {
+                        printf("Gagal membuat ");
+                        DisplayWord(dibuat.Nama);
+                        printf(" karena kamu tidak memiliki bahan berikut:\n");
+                        for(i=0;i<ListDinLength(needLeft);i++){
+                            //print yang kurang apa aja
+                            printf("   %d. ",i+1);
+                            DisplayWordLine(GetMakananFromId(foods,needLeft.buffer[i]).Nama);
+                        }
+                        printf("\n");
                     }
-                    //tambah ke inventory
-                    Enqueue(&(*simulator).Inventory, dibuat.Id, dibuat.Kedaluarsa);
-                } else {
-                    printf("Gagal membuat ");
-                    DisplayWord(dibuat.Nama);
-                    printf(" karena kamu tidak memiliki bahan berikut:\n");
-                    for(i=0;i<ListDinLength(needLeft);i++){
-                        //print yang kurang apa aja
-                        printf("   %d. ",i+1);
-                        DisplayWordLine(GetMakananFromId(foods,needLeft.buffer[i]).Nama);
-                    }
-                    printf("\n");
                 }
             }
         }
@@ -151,59 +163,70 @@ void Chop(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
     Waktu time;
 
     if(!(IsAdjacent((*simulator).Lokasi,C(map)))){
-        DisplayWord((*simulator).NamaPengguna);
-        printf(" tidak berada di area pemotongan!\n");
+        DisplayWord(GetNamaPengguna(simulator));
+        printf(" tidak berada di area chopping!\n");
     } else {
-        ChopMenu(chopFoods);
+        MixMenu(chopFoods);
         int x; boolean success = false;
         while(!success){
-            printf("Enter Command: ");scanf("%d",&x);
-            x--;
-            if(x==-1){
-                success = true;
-            } else if (x>ListDinElTypeLength(chopFoods)){
-                printf("Out of range!\n");
+            //handle input harus integer
+            printf("Enter Command: ");
+            STARTWORD();
+            x = WordToInt(currentWord);
+            if((x/10)+1!=currentWord.Length){
+                printf("Input tidak valid!\n");
             } else {
-                Makanan dibuat = GetMakananFromId(foods, GetVal(chopFoods.buffer[x]).m.Id);
-                ListDin need; CreateListDin(&need,10);
-                while(IsListDinEmpty(need)){
-                    need = GetChildren(GetVal(LIST_ELMT(recipes,x)).t);
-                }
-                ListDin needLeft; //copy listdin need
-                CopyListDin(need, &needLeft);
-                int needLength = ListDinLength(need);
-                int needCount = 0;
-                int i,temp;
-                for(i=0;i<needLength;i++){
-                    //cek apakah ada di inventory
-                    int j;
-                    for(j=0;j<LengthPQ((*simulator).Inventory);j++){
-                        if(need.buffer[i]==(*simulator).Inventory.Tab[j].Info){
-                            needCount++;
-                            break;
+                x--;
+                if(x==-1){
+                    success = true;
+                } else if (x>ListDinElTypeLength(chopFoods)-1){
+                    printf("Input tidak valid!\n");
+                } else {
+                    Makanan dibuat = GetMakananFromId(foods, GetVal(chopFoods.buffer[x]).m.Id);
+                    ListDin need; CreateListDin(&need,10);
+                    int i,temp;
+                    i=0;
+                    while(IsListDinEmpty(need)){
+                        if(IsPartOf(GetVal(LIST_ELMT(recipes,i)).t, dibuat.Id)){
+                            need = GetChildren(GetSubTree(GetVal(LIST_ELMT(recipes,i)).t, dibuat.Id));
+                        }
+                        i++;
+                    }
+                    ListDin needLeft; //copy listdin need
+                    CopyListDin(need, &needLeft);
+                    int needLength = ListDinLength(need);
+                    int needCount = 0;
+                    for(i=0;i<needLength;i++){
+                        //cek apakah ada di inventory
+                        int j;
+                        for(j=0;j<LengthPQ((*simulator).Inventory);j++){
+                            if(need.buffer[i]==(*simulator).Inventory.Tab[j].Info){
+                                needCount++;
+                                //hapus dari needLeft jika ada
+                                DeleteAtListDin(&needLeft, &temp,ListDinIndexOf(needLeft, need.buffer[i]));
+                                break;
+                            }
                         }
                     }
-                    //hapus dari needLeft
-                    DeleteAtListDin(&needLeft, &temp,ListDinIndexOf(needLeft, need.buffer[i]));
-                }
-                if(needCount==needLength){
-                    success = true;
-                    //kurangi inventory
-                    for(i=0;i<needLength;i++){
-                        DeleteAtPQ(&(*simulator).Inventory, &temp, &time, need.buffer[i]);
+                    if(needCount==needLength){
+                        success = true;
+                        //kurangi inventory
+                        for(i=0;i<needLength;i++){
+                            temp = DeleteMakanan(simulator, need.buffer[i]);
+                        }
+                        //tambah ke inventory
+                        InsertMakanan(simulator, dibuat.Id, dibuat.Kedaluarsa);
+                    } else {
+                        printf("Gagal membuat ");
+                        DisplayWord(dibuat.Nama);
+                        printf(" karena kamu tidak memiliki bahan berikut:\n");
+                        for(i=0;i<ListDinLength(needLeft);i++){
+                            //print yang kurang apa aja
+                            printf("   %d. ",i+1);
+                            DisplayWordLine(GetMakananFromId(foods,needLeft.buffer[i]).Nama);
+                        }
+                        printf("\n");
                     }
-                    //tambah ke inventory
-                    Enqueue(&(*simulator).Inventory, dibuat.Id, dibuat.Kedaluarsa);
-                } else {
-                    printf("Gagal membuat ");
-                    DisplayWord(dibuat.Nama);
-                    printf(" karena kamu tidak memiliki bahan berikut:\n");
-                    for(i=0;i<ListDinLength(needLeft);i++){
-                        //print yang kurang apa aja
-                        printf("   %d. ",i+1);
-                        DisplayWordLine(GetMakananFromId(foods,needLeft.buffer[i]).Nama);
-                    }
-                    printf("\n");
                 }
             }
         }
@@ -214,59 +237,70 @@ void Fry(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
     Waktu time;
 
     if(!(IsAdjacent((*simulator).Lokasi,F(map)))){
-        DisplayWord((*simulator).NamaPengguna);
-        printf(" tidak berada di area penggorengan!\n");
+        DisplayWord(GetNamaPengguna(simulator));
+        printf(" tidak berada di area frying!\n");
     } else {
-        FryMenu(fryFoods);
+        MixMenu(fryFoods);
         int x; boolean success = false;
         while(!success){
-            printf("Enter Command: ");scanf("%d",&x);
-            x--;
-            if(x==-1){
-                success = true;
-            } else if (x>ListDinElTypeLength(fryFoods)){
-                printf("Out of range!\n");
+            //handle input harus integer
+            printf("Enter Command: ");
+            STARTWORD();
+            x = WordToInt(currentWord);
+            if((x/10)+1!=currentWord.Length){
+                printf("Input tidak valid!\n");
             } else {
-                Makanan dibuat = GetMakananFromId(foods, GetVal(fryFoods.buffer[x]).m.Id);
-                ListDin need; CreateListDin(&need,10);
-                while(IsListDinEmpty(need)){
-                    need = GetChildren(GetVal(LIST_ELMT(recipes,x)).t);
-                }
-                ListDin needLeft; //copy listdin need
-                CopyListDin(need, &needLeft);
-                int needLength = ListDinLength(need);
-                int needCount = 0;
-                int i,temp;
-                for(i=0;i<needLength;i++){
-                    //cek apakah ada di inventory
-                    int j;
-                    for(j=0;j<LengthPQ((*simulator).Inventory);j++){
-                        if(need.buffer[i]==(*simulator).Inventory.Tab[j].Info){
-                            needCount++;
-                            break;
+                x--;
+                if(x==-1){
+                    success = true;
+                } else if (x>ListDinElTypeLength(fryFoods)-1){
+                    printf("Input tidak valid!\n");
+                } else {
+                    Makanan dibuat = GetMakananFromId(foods, GetVal(fryFoods.buffer[x]).m.Id);
+                    ListDin need; CreateListDin(&need,10);
+                    int i,temp;
+                    i=0;
+                    while(IsListDinEmpty(need)){
+                        if(IsPartOf(GetVal(LIST_ELMT(recipes,i)).t, dibuat.Id)){
+                            need = GetChildren(GetSubTree(GetVal(LIST_ELMT(recipes,i)).t, dibuat.Id));
+                        }
+                        i++;
+                    }
+                    ListDin needLeft; //copy listdin need
+                    CopyListDin(need, &needLeft);
+                    int needLength = ListDinLength(need);
+                    int needCount = 0;
+                    for(i=0;i<needLength;i++){
+                        //cek apakah ada di inventory
+                        int j;
+                        for(j=0;j<LengthPQ((*simulator).Inventory);j++){
+                            if(need.buffer[i]==(*simulator).Inventory.Tab[j].Info){
+                                needCount++;
+                                //hapus dari needLeft jika ada
+                                DeleteAtListDin(&needLeft, &temp,ListDinIndexOf(needLeft, need.buffer[i]));
+                                break;
+                            }
                         }
                     }
-                    //hapus dari needLeft
-                    DeleteAtListDin(&needLeft, &temp,ListDinIndexOf(needLeft, need.buffer[i]));
-                }
-                if(needCount==needLength){
-                    success = true;
-                    //kurangi inventory
-                    for(i=0;i<needLength;i++){
-                        DeleteAtPQ(&(*simulator).Inventory, &temp, &time, need.buffer[i]);
+                    if(needCount==needLength){
+                        success = true;
+                        //kurangi inventory
+                        for(i=0;i<needLength;i++){
+                            temp = DeleteMakanan(simulator, need.buffer[i]);
+                        }
+                        //tambah ke inventory
+                        InsertMakanan(simulator, dibuat.Id, dibuat.Kedaluarsa);
+                    } else {
+                        printf("Gagal membuat ");
+                        DisplayWord(dibuat.Nama);
+                        printf(" karena kamu tidak memiliki bahan berikut:\n");
+                        for(i=0;i<ListDinLength(needLeft);i++){
+                            //print yang kurang apa aja
+                            printf("   %d. ",i+1);
+                            DisplayWordLine(GetMakananFromId(foods,needLeft.buffer[i]).Nama);
+                        }
+                        printf("\n");
                     }
-                    //tambah ke inventory
-                    Enqueue(&(*simulator).Inventory, dibuat.Id, dibuat.Kedaluarsa);
-                } else {
-                    printf("Gagal membuat ");
-                    DisplayWord(dibuat.Nama);
-                    printf(" karena kamu tidak memiliki bahan berikut:\n");
-                    for(i=0;i<ListDinLength(needLeft);i++){
-                        //print yang kurang apa aja
-                        printf("   %d. ",i+1);
-                        DisplayWordLine(GetMakananFromId(foods,needLeft.buffer[i]).Nama);
-                    }
-                    printf("\n");
                 }
             }
         }
@@ -275,60 +309,72 @@ void Fry(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
 
 void Boil(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType boilFoods, Stack *undoRecord){
     Waktu time;
+
     if(!(IsAdjacent((*simulator).Lokasi,B(map)))){
-        DisplayWord((*simulator).NamaPengguna);
-        printf(" tidak berada di area perebusan!\n");
+        DisplayWord(GetNamaPengguna(simulator));
+        printf(" tidak berada di area mixing!\n");
     } else {
-        BoilMenu(boilFoods);
+        MixMenu(boilFoods);
         int x; boolean success = false;
         while(!success){
-            printf("Enter Command: ");scanf("%d",&x);
-            x--;
-            if(x==-1){
-                success = true;
-            } else if (x>ListDinElTypeLength(boilFoods)){
-                printf("Out of range!\n");
+            //handle input harus integer
+            printf("Enter Command: ");
+            STARTWORD();
+            x = WordToInt(currentWord);
+            if((x/10)+1!=currentWord.Length){
+                printf("Input tidak valid!\n");
             } else {
-                Makanan dibuat = GetMakananFromId(foods, GetVal(boilFoods.buffer[x]).m.Id);
-                ListDin need; CreateListDin(&need,10);
-                while(IsListDinEmpty(need)){
-                    need = GetChildren(GetVal(LIST_ELMT(recipes,x)).t);
-                }
-                ListDin needLeft; //copy listdin need
-                CopyListDin(need, &needLeft);
-                int needLength = ListDinLength(need);
-                int needCount = 0;
-                int i,temp;
-                for(i=0;i<needLength;i++){
-                    //cek apakah ada di inventory
-                    int j;
-                    for(j=0;j<LengthPQ((*simulator).Inventory);j++){
-                        if(need.buffer[i]==(*simulator).Inventory.Tab[j].Info){
-                            needCount++;
-                            break;
+                x--;
+                if(x==-1){
+                    success = true;
+                } else if (x>ListDinElTypeLength(boilFoods)-1){
+                    printf("Input tidak valid!\n");
+                } else {
+                    Makanan dibuat = GetMakananFromId(foods, GetVal(boilFoods.buffer[x]).m.Id);
+                    ListDin need; CreateListDin(&need,10);
+                    int i,temp;
+                    i=0;
+                    while(IsListDinEmpty(need)){
+                        if(IsPartOf(GetVal(LIST_ELMT(recipes,i)).t, dibuat.Id)){
+                            need = GetChildren(GetSubTree(GetVal(LIST_ELMT(recipes,i)).t, dibuat.Id));
+                        }
+                        i++;
+                    }
+                    ListDin needLeft; //copy listdin need
+                    CopyListDin(need, &needLeft);
+                    int needLength = ListDinLength(need);
+                    int needCount = 0;
+                    for(i=0;i<needLength;i++){
+                        //cek apakah ada di inventory
+                        int j;
+                        for(j=0;j<LengthPQ((*simulator).Inventory);j++){
+                            if(need.buffer[i]==(*simulator).Inventory.Tab[j].Info){
+                                needCount++;
+                                //hapus dari needLeft jika ada
+                                DeleteAtListDin(&needLeft, &temp,ListDinIndexOf(needLeft, need.buffer[i]));
+                                break;
+                            }
                         }
                     }
-                    //hapus dari needLeft
-                    DeleteAtListDin(&needLeft, &temp,ListDinIndexOf(needLeft, need.buffer[i]));
-                }
-                if(needCount==needLength){
-                    success = true;
-                    //kurangi inventory
-                    for(i=0;i<needLength;i++){
-                        DeleteAtPQ(&(*simulator).Inventory, &temp, &time, need.buffer[i]);
+                    if(needCount==needLength){
+                        success = true;
+                        //kurangi inventory
+                        for(i=0;i<needLength;i++){
+                            temp = DeleteMakanan(simulator, need.buffer[i]);
+                        }
+                        //tambah ke inventory
+                        InsertMakanan(simulator, dibuat.Id, dibuat.Kedaluarsa);
+                    } else {
+                        printf("Gagal membuat ");
+                        DisplayWord(dibuat.Nama);
+                        printf(" karena kamu tidak memiliki bahan berikut:\n");
+                        for(i=0;i<ListDinLength(needLeft);i++){
+                            //print yang kurang apa aja
+                            printf("   %d. ",i+1);
+                            DisplayWordLine(GetMakananFromId(foods,needLeft.buffer[i]).Nama);
+                        }
+                        printf("\n");
                     }
-                    //tambah ke inventory
-                    Enqueue(&(*simulator).Inventory, dibuat.Id, dibuat.Kedaluarsa);
-                } else {
-                    printf("Gagal membuat ");
-                    DisplayWord(dibuat.Nama);
-                    printf(" karena kamu tidak memiliki bahan berikut:\n");
-                    for(i=0;i<ListDinLength(needLeft);i++){
-                        //print yang kurang apa aja
-                        printf("   %d. ",i+1);
-                        DisplayWordLine(GetMakananFromId(foods,needLeft.buffer[i]).Nama);
-                    }
-                    printf("\n");
                 }
             }
         }

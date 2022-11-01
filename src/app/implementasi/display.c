@@ -100,7 +100,7 @@ void BuyMenu(ListDinElType BuyFoods){
     printf("List Bahan Makanan:\n");
     int i;
     for(i=1;i<=BuyFoods.nEff;i++){
-        printf("   %d. ",i);DisplayWordLine(GetVal(BuyFoods.buffer[i]).m.Nama);
+        printf("   %d. ",i);DisplayWordLine(GetVal(BuyFoods.buffer[i-1]).m.Nama);
     }
     printf("\nKirim 0 untuk exit.\n\n");
 }
@@ -112,7 +112,7 @@ void MixMenu(ListDinElType MixFoods){
     printf("List Bahan Makanan:\n");
     int i;
     for(i=1;i<=MixFoods.nEff;i++){
-        printf("   %d. ",i);DisplayWordLine(GetVal(MixFoods.buffer[i]).m.Nama);
+        printf("   %d. ",i);DisplayWordLine(GetVal(MixFoods.buffer[i-1]).m.Nama);
     }
     printf("\nKirim 0 untuk exit.\n\n");
 }
@@ -124,7 +124,7 @@ void ChopMenu(ListDinElType ChopFoods){
     printf("List Bahan Makanan:\n");
     int i;
     for(i=1;i<=ChopFoods.nEff;i++){
-        printf("   %d. ",i);DisplayWordLine(GetVal(ChopFoods.buffer[i]).m.Nama);
+        printf("   %d. ",i);DisplayWordLine(GetVal(ChopFoods.buffer[i-1]).m.Nama);
     }
     printf("\nKirim 0 untuk exit.\n\n");
 }
@@ -136,7 +136,7 @@ void FryMenu(ListDinElType FryFoods){
     printf("List Bahan Makanan:\n");
     int i;
     for(i=1;i<=FryFoods.nEff;i++){
-        printf("   %d. ",i);DisplayWordLine(GetVal(FryFoods.buffer[i]).m.Nama);
+        printf("   %d. ",i);DisplayWordLine(GetVal(FryFoods.buffer[i-1]).m.Nama);
     }
     printf("\nKirim 0 untuk exit.\n\n");
 }
@@ -148,7 +148,7 @@ void BoilMenu(ListDinElType BoilFoods){
     printf("List Bahan Makanan:\n");
     int i;
     for(i=1;i<=BoilFoods.nEff;i++){
-        printf("   %d. ",i);DisplayWordLine(GetVal(BoilFoods.buffer[i]).m.Nama);
+        printf("   %d. ",i);DisplayWordLine(GetVal(BoilFoods.buffer[i-1]).m.Nama);
     }
     printf("\nKirim 0 untuk exit.\n\n");
 }

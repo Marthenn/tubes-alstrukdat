@@ -78,6 +78,7 @@ void Buy(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
             } else {
                 //beli makanan disini
                 Enqueue(delivery, GetVal(BuyFoods.buffer[x]).m.Id, GetMakananFromId(foods,GetVal(BuyFoods.buffer[x]).m.Id).Pengiriman);
+                success = true;
             }
         }
     }

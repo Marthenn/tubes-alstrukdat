@@ -77,7 +77,7 @@ int main(){
 
 			if (IsInputEqual(BUY_WORD))
 			{
-				printf("input command BUY\n");
+				Buy(&simulator, foods, recipes, map, buyFoods, &deliveryRecord, &undoStack);
 			}
 
 			else if (IsInputEqual(DELIVERY_WORD))
@@ -106,22 +106,22 @@ int main(){
 			
 			else if (IsInputEqual(MIX_WORD))
 			{
-				printf("input command MIX\n");
+				Mix(&simulator,foods,recipes,map,mixFoods,&undoStack);
 			}
 			
 			else if (IsInputEqual(CHOP_WORD))
 			{
-				printf("input command CHOP\n");
+				Chop(&simulator,foods,recipes,map,chopFoods,&undoStack);
 			}
 			
 			else if (IsInputEqual(FRY_WORD))
 			{
-				printf("input command FRY\n");
+				Fry(&simulator,foods,recipes,map,fryFoods,&undoStack);
 			}
 			
 			else if (IsInputEqual(BOIL_WORD))
 			{
-				printf("input command BOIL\n");
+				Boil(&simulator,foods,recipes,map,boilFoods,&undoStack);
 			}
 			
 			else if (IsInputEqual(UNDO_WORD))

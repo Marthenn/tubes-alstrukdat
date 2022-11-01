@@ -1,10 +1,9 @@
 #include <stdio.h>
-//include semuanya 👍
 
 /* ADT */
 /* APP */
 
-#include "app/headers/commands.h"
+#include "app/commands/commands.h"
 
 int main(){
 

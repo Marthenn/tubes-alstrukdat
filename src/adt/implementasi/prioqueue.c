@@ -192,13 +192,15 @@ void Enqueue (PrioQueue * Q, PQElType X, Waktu time)
     }
     Q->Tab[idx] = newInfo;
 }
-void Dequeue (PrioQueue * Q, PQElType* X)
+void Dequeue (PrioQueue * Q, PQElType* X, Waktu *time)
 {
     // Kamus Lokal
     int i,oldCap,newCap;
     PQInfoType* tmpTab;
     // Algoritma
     *X = GetHeadInfo(*Q);
+    *time = GetHeadTime(*Q);
+
     if (LengthPQ(*Q) == 1){
         Q->Head =  PQ_NIL;
         Q->Tail =  PQ_NIL;
@@ -212,14 +214,14 @@ void Dequeue (PrioQueue * Q, PQElType* X)
     }
 }
 
-void DeleteAtPQ (PrioQueue* Q, PQElType* X,int idx)
+void DeleteAtPQ (PrioQueue* Q, PQElType* X, Waktu *time, int idx)
 {
     // Kamus Lokal
     int i,oldCap,newCap;
     PQInfoType* tmpTab;
     // Algoritma
     if (idx == 0){
-        Dequeue(Q,X);
+        Dequeue(Q, X, time);
     } else {
         *X = GetElmtInfo(*Q,idx);
         for (i = idx+1+Q->Head;i <= Q->Tail;i++){

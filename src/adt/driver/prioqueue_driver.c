@@ -14,6 +14,7 @@
 int main(){
     // Kamus
     PrioQueue Q;
+    Waktu time;
     int tmp;
     int i;
     // Algoritma
@@ -49,13 +50,13 @@ int main(){
     printf("****** Cek IndexOf ******\n");
     printf("5 pertama berada pada indeks ke-%d\n",IndexOfPQ(Q,5));
     printf("****** Cek Dequeue ******\n");
-    Dequeue(&Q,&tmp);
+    Dequeue(&Q,&tmp, &time);
     printf("%d\n",tmp);
     DisplayPQ(Q);
     printf("****** Cek sifat queue yang tetap ketika enque ke Head dan deque dilakukan bergantian ******\n");
     for (i = 0;i < 20;i++){
         Enqueue(&Q,-1,0);
-        Dequeue(&Q,&tmp);
+        Dequeue(&Q,&tmp, &time);
     }
     DisplayPQ(Q);
     printf("****** Cek DeleteAt ******\n");
@@ -65,7 +66,7 @@ int main(){
     DisplayPQ(Q);
     printf("Mengosongkan queue...\n");
     while (!IsEmptyPQ(Q)){
-        Dequeue(&Q,&tmp);
+        Dequeue(&Q,&tmp, &time);
     }
     DisplayPQ(Q);
     printf("****** Uji Q ketika full ******\n");
@@ -85,11 +86,11 @@ int main(){
     printf("****** Cek realokasi jika queue sepi ******\n");
     printf("Capacity : %d\n",Q.Cap);
     while (LengthPQ(Q) > 20){
-        Dequeue(&Q,&tmp);
+        Dequeue(&Q,&tmp, &time);
     }
     printf("Capacity : %d\n",Q.Cap);
         while (LengthPQ(Q) > 10){
-        Dequeue(&Q,&tmp);
+        Dequeue(&Q,&tmp, &time);
     }
     printf("Capacity : %d\n",Q.Cap);
 }

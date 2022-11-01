@@ -84,6 +84,8 @@ void Buy(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
 }
 
 void Mix(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType mixFoods, Stack *undoRecord){
+    Waktu time;
+
     if(!(IsAdjacent((*simulator).Lokasi,M(map)))){
         DisplayWord((*simulator).NamaPengguna);
         printf(" tidak berada di area mixing!\n");
@@ -124,7 +126,7 @@ void Mix(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
                     success = true;
                     //kurangi inventory
                     for(i=0;i<needLength;i++){
-                        DeleteAtPQ(&(*simulator).Inventory, &temp, need.buffer[i]);
+                        DeleteAtPQ(&(*simulator).Inventory, &temp, &time, need.buffer[i]);
                     }
                     //tambah ke inventory
                     Enqueue(&(*simulator).Inventory, dibuat.Id, dibuat.Kedaluarsa);
@@ -145,6 +147,8 @@ void Mix(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
 }
 
 void Chop(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType chopFoods, Stack *undoRecord){
+    Waktu time;
+
     if(!(IsAdjacent((*simulator).Lokasi,C(map)))){
         DisplayWord((*simulator).NamaPengguna);
         printf(" tidak berada di area pemotongan!\n");
@@ -185,7 +189,7 @@ void Chop(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
                     success = true;
                     //kurangi inventory
                     for(i=0;i<needLength;i++){
-                        DeleteAtPQ(&(*simulator).Inventory, &temp, need.buffer[i]);
+                        DeleteAtPQ(&(*simulator).Inventory, &temp, &time, need.buffer[i]);
                     }
                     //tambah ke inventory
                     Enqueue(&(*simulator).Inventory, dibuat.Id, dibuat.Kedaluarsa);
@@ -206,6 +210,8 @@ void Chop(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
 }
 
 void Fry(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType fryFoods, Stack *undoRecord){
+    Waktu time;
+
     if(!(IsAdjacent((*simulator).Lokasi,F(map)))){
         DisplayWord((*simulator).NamaPengguna);
         printf(" tidak berada di area penggorengan!\n");
@@ -246,7 +252,7 @@ void Fry(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
                     success = true;
                     //kurangi inventory
                     for(i=0;i<needLength;i++){
-                        DeleteAtPQ(&(*simulator).Inventory, &temp, need.buffer[i]);
+                        DeleteAtPQ(&(*simulator).Inventory, &temp, &time, need.buffer[i]);
                     }
                     //tambah ke inventory
                     Enqueue(&(*simulator).Inventory, dibuat.Id, dibuat.Kedaluarsa);
@@ -267,6 +273,7 @@ void Fry(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
 }
 
 void Boil(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType boilFoods, Stack *undoRecord){
+    Waktu time;
     if(!(IsAdjacent((*simulator).Lokasi,B(map)))){
         DisplayWord((*simulator).NamaPengguna);
         printf(" tidak berada di area perebusan!\n");
@@ -307,7 +314,7 @@ void Boil(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
                     success = true;
                     //kurangi inventory
                     for(i=0;i<needLength;i++){
-                        DeleteAtPQ(&(*simulator).Inventory, &temp, need.buffer[i]);
+                        DeleteAtPQ(&(*simulator).Inventory, &temp, &time, need.buffer[i]);
                     }
                     //tambah ke inventory
                     Enqueue(&(*simulator).Inventory, dibuat.Id, dibuat.Kedaluarsa);
@@ -382,7 +389,7 @@ void Undo (Simulator* simulator, PrioQueue delivery, PrioQueue inventoryRecord, 
 
     PopStack(undoStack, &prevRecord);
 
-    UpdateStack(*simulator, delivery, inventoryRecord, deliveryRecord, &redoStack);
+    UpdateStack(*simulator, delivery, inventoryRecord, deliveryRecord, redoStack);
     UpdateInverse(*simulator, prevRecord, undoStack);
 }
 

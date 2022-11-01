@@ -67,4 +67,18 @@ void HapusMakananKedaluarsa(Simulator *sim, Waktu now);
 /* I.S. sim, now terdefinisi */
 /* F.S. seluruh isi inventory yang kedaluarsa dihapus */
 
+void TakeTime(Simulator *sim, int Hari, int Jam, int Menit);
+/* I.S. sim terdefinisi */
+/* F.S. waktu bertambah, dengan default bertambah selama 1 menit
+   Makanan kedaluarsa dihapus */
+
+void Wait(Simulator *sim, int Jam, int Menit);
+/* I.S. sim terdefinisi, command WAIT x y dilakukan */
+/* F.S. waktu bertambah selama x jam dan y menit
+   Makanan kedaluarsa dihapus */
+
+void DisplayInventory(Simulator sim);
+/* Keluaran data inventory dengan ID Makanan
+   dan waktu expirednya */
+
 #endif

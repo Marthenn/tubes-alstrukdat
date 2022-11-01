@@ -103,3 +103,45 @@ void HapusMakananKedaluarsa(Simulator *sim, Waktu now)
         Dequeue(&(sim->Inventory), &tmp, &time);
     }
 }
+
+void TakeTime(Simulator *sim, int Hari, int Jam, int Menit){
+/* I.S. sim terdefinisi */
+/* F.S. waktu bertambah, dengan default bertambah selama 1 menit { TakeTime(&sim, 0, 0, 1) }
+   Makanan kedaluarsa dihapus */
+
+    // KAMUS LOKAL
+    Waktu now;
+    // ALGORITMA
+    now = GetTime(sim);
+    TambahWaktu(&now, Hari, Jam, Menit);
+    SetTime(sim, now);
+    HapusMakananKedaluarsa(sim, GetTime(sim));
+}
+
+void Wait(Simulator *sim, int Jam, int Menit){
+/* I.S. sim terdefinisi, command WAIT x y dilakukan */
+/* F.S. waktu bertambah selama x jam dan y menit
+   Makanan kedaluarsa dihapus */
+
+    // KAMUS LOKAL
+    // ALGORITMA
+    TakeTime(sim, 0, Jam, Menit);
+}
+
+void DisplayInventory(Simulator sim){
+/* Keluaran data inventory dengan ID Makanan
+   dan waktu expirednya */
+   
+    // Kamus Lokal
+    int i;
+    // ALGORITMA
+    printf("--------------\n");
+    if (!IsEmptyPQ(sim.Inventory)){
+        for (i = sim.Inventory.Head;i <= sim.Inventory.Tail;i++){
+            (sim.Inventory).Tab[i].Time -= GetTime(&sim);
+            DisplayInfoTypePQ(sim.Inventory.Tab[i]);
+            printf("\n");
+        }
+    }
+    printf("--------------\n");
+}

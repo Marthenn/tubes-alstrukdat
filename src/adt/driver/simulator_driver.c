@@ -43,7 +43,21 @@ int main() {
     puts("Hapus makanan dengan ID 0");
     DeleteMakanan(&sim, 0);
     DisplayPQ(sim.Inventory);
+    
+    puts("\nTest lain : ");
 
+    InsertMakanan(&sim, 0, 3);
+    InsertMakanan(&sim, 1, 5);
+    InsertMakanan(&sim, 3, 15);
+
+    printf("Waktu = ");
+    CetakWaktuJJMM(GetTime(&sim));printf("\n");
+    DisplayInventory(sim);
+    TakeTime(&sim, 0, 0, 7);
+    printf("Waktu = ");
+    CetakWaktuJJMM(GetTime(&sim));printf("\n");
+    DisplayInventory(sim);
+    
     printf("Seluruh tes berhasil dijalankan.\n");
 
     return 0;

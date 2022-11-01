@@ -171,15 +171,20 @@ int main(){
 				printf("(Masukkan command 'help' untuk melihat semua perintah yang valid)\n");
 			}
 
-			if (isUndo)
-			{
-				isUndo = false;
-			}
+			// if (isUndo)
+			// {
+			// 	isUndo = false;
+			// }
+
+			// else {
+			// 	UpdateStack(simulator, delivery, inventoryRecord, deliveryRecord, &undoStack);
+			// }
+
 
 			else {
 				UpdateStack(simulator, delivery, inventoryRecord, deliveryRecord, &undoStack);
 			}
-		}
+	
     }
 
     return 0;

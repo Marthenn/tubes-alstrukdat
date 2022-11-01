@@ -96,14 +96,14 @@ void Enqueue (PrioQueue * Q, PQElType X, Waktu time);
         Jika realokasi gagal, X tidak dimasukkan ke Q dan pesan kesalahan akan ditampilkan
         di layar. */
 
-void Dequeue (PrioQueue * Q, PQElType* X);
+void Dequeue (PrioQueue * Q, PQElType* X, Waktu* time);
 /* Proses: Menghapus X pada Q dengan aturan FIFO */
 /* I.S. Q tidak mungkin kosong */
 /* F.S. X = nilai elemen HEAD pd I.S., HEAD dimajukan. Q mungkin kosong. 
         Kapasitas Q akan direalokasikan menjadi setengahnya jika Q sepi,
         yaitu ketika length(Q) <= Q.cap div 4*/
 
-void DeleteAtPQ(PrioQueue* Q, PQElType* X,int idx);
+void DeleteAtPQ(PrioQueue* Q, PQElType* X, Waktu *time, int idx);
 /* Proses: Menghapus elemen ke-idx pada Q */
 /* I.S. Q tidak mungkin kosong. idx berada padas rentang [0..length(Q)-1]*/
 /* F.S. Elemen ke-idx dihapus, elemen sebelumnya akan dimajukan jika Q tidak menjadi kosong.

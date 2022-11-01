@@ -79,9 +79,10 @@ boolean DeleteMakanan(Simulator *sim, int ID)
 /* Jika tidak, return false */
 {
     int tmp;
+    Waktu time;
     int idx = IndexOfPQ(sim->Inventory, ID);
     if(idx == -1) return false;
-    DeleteAtPQ(&(sim->Inventory), &tmp, ID);
+    DeleteAtPQ(&(sim->Inventory), &tmp, &time, ID);
     return true;
 }
 
@@ -97,7 +98,8 @@ void HapusMakananKedaluarsa(Simulator *sim, Waktu now)
 /* F.S. seluruh isi inventory yang kedaluarsa dihapus */
 {
     int tmp;
+    Waktu time;
     while(!(IsEmptyPQ(sim->Inventory)) && GetHeadTime(sim->Inventory) <= now) {
-        Dequeue(&(sim->Inventory), &tmp);
+        Dequeue(&(sim->Inventory), &tmp, &time);
     }
 }

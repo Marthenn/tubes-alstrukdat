@@ -70,4 +70,5 @@ void PopStack(Stack * S, Record* X);
 
 void ExpandStack(Stack *S);
 void ShrinkStack(Stack *S);
+
 #endif

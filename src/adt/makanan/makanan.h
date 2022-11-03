@@ -15,11 +15,12 @@ typedef struct {
     Waktu Kedaluarsa, WaktuAksi;
     Word Aksi;
     Point LokasiAksi;
+    int SizeX, SizeY;
 } Makanan;
 
 /* *** KONSTRUKTOR *** */
 void CreateMakanan(Makanan *m, int id, Word nama, Waktu kedaluarsa, 
-                    Waktu pengiriman, Word aksi, Point lokasiAksi);
+                    Waktu pengiriman, Word aksi, Point lokasiAksi, int sizeX, int sizeY);
 /* I.S. m sembarang. ID, Nama, Kedaluarsa, LokasiAksi, Pengiriman terdefinisi */
 /* F.S. terbentuk makanan m */
 
@@ -30,6 +31,8 @@ Waktu GetKedaluarsa(Makanan m);
 Waktu GetPengiriman(Makanan m);
 Point GetLokasiAksi(Makanan m);
 Word GetAksi(Makanan m);
+int GetSizeX(Makanan m);
+int GetSizeY(Makanan m);
 void DisplayMakanan(Makanan m);
 
 #endif

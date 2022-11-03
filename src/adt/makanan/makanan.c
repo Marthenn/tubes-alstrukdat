@@ -12,7 +12,7 @@
 
 /* *** KONSTRUKTOR *** */
 void CreateMakanan(Makanan *m, int id, Word nama, Waktu kedaluarsa, 
-                    Waktu waktuAksi, Word aksi, Point lokasiAksi)
+                    Waktu waktuAksi, Word aksi, Point lokasiAksi, int sizeX, int sizeY)
 /* I.S. m sembarang. ID, Nama, Kedaluarsa, LokasiAksi, Pengiriman terdefinisi */
 /* F.S. terbentuk makanan m */
 {
@@ -22,6 +22,8 @@ void CreateMakanan(Makanan *m, int id, Word nama, Waktu kedaluarsa,
     m->Aksi = aksi;
     m->LokasiAksi = lokasiAksi;
     m->WaktuAksi = waktuAksi;
+    m->SizeX = sizeX;
+    m->SizeY = sizeY;
 }
 
 /* *** GETTER *** */
@@ -40,11 +42,15 @@ Point GetLokasiAksi(Makanan m) {
 Waktu GetPengiriman(Makanan m) {
     return m.WaktuAksi;
 }
-
 Word GetAksi(Makanan m) {
     return m.Aksi;
 }
-
+int GetSizeX(Makanan m) {
+    return m.SizeX;
+}
+int GetSizeY(Makanan m) {
+    return m.SizeY;
+}
 void DisplayMakanan(Makanan m)
 {
     DisplayWord(m.Nama);

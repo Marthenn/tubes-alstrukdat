@@ -82,6 +82,25 @@ void ReadInt(int *num)
     ADVFILEWORD();
 }
 
+void ReadSize(int *sizeX, int *sizeY)
+// I.S. sizeX, sizeY sembarang
+// F.S. sizeX dan sizeY merupakan representasi integer dari baris yang sedang dibaca, mesin kata dan karakter menuju line berikutnya
+{
+    // KAMUS LOKAL
+    Word kataSizeX, kataSizeY;
+
+    // ALGORITMA
+    CopyDefinedWord(&kataSizeX, currentFileWord);
+    ADVFILEWORD();
+
+    CopyDefinedWord(&kataSizeY, currentFileWord);
+    
+    *sizeX = WordToInt(kataSizeX);
+    *sizeY = WordToInt(kataSizeY);
+
+    NextLine();
+}
+
 void ReadTime(Waktu *time)
 
 // I.S. nilai komponen pada time sembarang;
@@ -120,6 +139,7 @@ void ReadFoodConfig(ListStatik *l, Map *map)
     int N, i, id, idx;
     Waktu expiredTime, deliveryTime;
     Point actionPoint;
+    int sizeX, sizeY;
 
     // ALGORITMA
 
@@ -139,6 +159,9 @@ void ReadFoodConfig(ListStatik *l, Map *map)
 
         // read delivery time
         ReadTime(&deliveryTime);
+
+        // read food size
+        ReadSize(&sizeX, &sizeY);
 
         ReadLine(&kata);
         CREATE_POINT_UNDEF(actionPoint);
@@ -173,7 +196,7 @@ void ReadFoodConfig(ListStatik *l, Map *map)
             aksi = BOIL_WORD;
         }
 
-        CreateMakanan(&food, id, judul, expiredTime, deliveryTime, aksi, actionPoint);
+        CreateMakanan(&food, id, judul, expiredTime, deliveryTime, aksi, actionPoint, sizeX, sizeY);
         foodElement = NewElType(3, (union Data){.m=food});
         idx = ListIndexOf(*l, foodElement);
         

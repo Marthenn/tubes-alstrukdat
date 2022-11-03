@@ -236,6 +236,35 @@ void DeleteAtPQ (PrioQueue* Q, PQElType* X, Waktu *time, int idx)
     }
 }
 
+void DeleteElmtPQ(PrioQueue* Q, PQElType X, Waktu time)
+/* Proses: Menghapus elemen pada Q yang memiliki nilai X dan waktu time */
+/* I.S. Q tidak mungkin kosong.*/
+/* F.S. Elemen dengan nilai X dan waktu time dihapus, elemen sebelumnya akan dimajukan jika Q tidak menjadi kosong.
+        Elemen dapat tidak ditemukan (tidak dilakukan apa-apa). Kapasitas Q akan direalokasikan menjadi setengahnya jika Q sepi,
+        yaitu ketika length(Q) <= Q.cap div 4 */
+{
+    int idx, length, temp;
+    Waktu t;
+    boolean found;
+
+    found = false;
+    idx = 0;
+    length =  LengthPQ(*Q);
+
+    while (idx < LengthPQ(*Q) && !found)
+    {
+        if (Q->Tab[idx].Info == X && Q->Tab[idx].Time == time)
+        {
+            found = true;
+            DeleteAtPQ(Q, &X, &t, idx);
+        }
+
+        else
+        {
+            idx++;
+        }
+    }
+}
 void DisplayInfoTypePQ(PQInfoType p){
     // Kamus Lokal
     // Algoritma

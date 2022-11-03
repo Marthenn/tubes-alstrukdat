@@ -103,15 +103,18 @@ void HapusDelivery(Simulator *sim, ListStatik foods)
 /* F.S. makanan dengan waktu delivery yang melewati waktu saat ini dimasukkan ke inventory */
 {
     int id, idx;
-    Waktu time;
+    Waktu time, now;
 
-    while(!(IsEmptyPQ(sim->Delivery)) && GetHeadTime(sim->Delivery) <= GetTime(sim)) {
+    now = GetTime(sim);
+
+    while(!(IsEmptyPQ(sim->Delivery)) && GetHeadTime(sim->Delivery) <= now) {
         Dequeue(&(sim->Delivery), &id, &time);
         
         idx = ListIndexOf(foods, NewElType(0, (union Data){.i=id}));
 
-        Enqueue(&sim->Inventory, id, GetVal(foods.contents[idx]).m.Kedaluarsa + (2 * time) - GetTime(sim));
+        Enqueue(&sim->Inventory, id, GetVal(foods.contents[idx]).m.Kedaluarsa + time);
     }
+
 }
 
 void HapusMakananKedaluarsa(Simulator *sim)
@@ -159,12 +162,19 @@ void DisplayInventory(Simulator sim){
    
     // Kamus Lokal
     int i;
+    PQInfoType elmt;
+    Waktu currentTime;
+
     // ALGORITMA
+;
+    currentTime = GetTime(&sim);
     printf("--------------\n");
     if (!IsEmptyPQ(sim.Inventory)){
         for (i = sim.Inventory.Head;i <= sim.Inventory.Tail;i++){
-            (sim.Inventory).Tab[i].Time -= GetTime(&sim);
-            DisplayInfoTypePQ(sim.Inventory.Tab[i]);
+            
+            elmt.Info = (sim.Inventory).Tab[i].Info;
+            elmt.Time = (sim.Inventory).Tab[i].Time - currentTime;
+            DisplayInfoTypePQ(elmt);
             printf("\n");
         }
     }

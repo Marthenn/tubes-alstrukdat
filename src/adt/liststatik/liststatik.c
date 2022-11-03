@@ -78,6 +78,7 @@ int ListIndexOf(ListStatik l, ElType val){
     // KAMUS LOKAL
     int i;
     // ALGORITMA
+    
     i = 0;
     for(i = 0; i <= GetLastListIdx(l); i++){
         if(Compare(LIST_ELMT(l, i), val) == true){

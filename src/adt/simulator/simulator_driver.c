@@ -19,8 +19,11 @@ void _assert(boolean x, char ID[])
 int main() {
     Simulator sim;
     Point p; p.x = 5; p.y = 7;
+    ListStatik foods;
+
     CreateEmptySimulator(&sim, NewWord("Bruno Earth", 11));
     DisplayWordLine(GetNamaPengguna(&sim));
+    CreateListStatik(&foods);
 
     SetLokasi(&sim, p);
     CetakPoint(sim.Lokasi);
@@ -53,7 +56,7 @@ int main() {
     printf("Waktu = ");
     CetakWaktuJJMM(GetTime(&sim));printf("\n");
     DisplayInventory(sim);
-    TakeTime(&sim, 0, 0, 7);
+    TakeTime(&sim, 0, 0, 7, foods);
     printf("Waktu = ");
     CetakWaktuJJMM(GetTime(&sim));printf("\n");
     DisplayInventory(sim);

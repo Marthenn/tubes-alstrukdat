@@ -520,13 +520,13 @@ void GetQueueChanges(PrioQueue *addChanges, PrioQueue *delChanges, PrioQueue pre
     {
         if (GetHeadTime(prevQueue) == GetHeadTime(currentQueue))
         {
-            if (GetHeadInfo(prevQueue) == currentQueue.Tab[i].Info)
+            if (GetHeadInfo(prevQueue) == GetHeadInfo(currentQueue))
             {
                 Dequeue(&prevQueue, &val, &t);
                 Dequeue(&currentQueue, &val, &t);
             }
 
-            else if (GetHeadInfo(prevQueue) > currentQueue.Tab[i].Info) {
+            else if (GetHeadInfo(prevQueue) > GetHeadInfo(currentQueue)) {
                 Dequeue(&currentQueue, &val, &t);
                 Enqueue(addChanges, val, t);
             }

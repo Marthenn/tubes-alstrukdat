@@ -303,7 +303,7 @@ void DisplayDelivery(ListStatik foods, Simulator simulator){
         printf("Tidak ada pesanan yang sedang dalam perjalanan\n");
     } else {
         printf("(nama - sisa waktu\n");
-        for(i=0;i<LengthPQ(delivery);i++){
+        for(i=delivery.Head;i<=delivery.Tail;i++){
             printf("%d. ",i+1);
             DisplayWord(GetMakananFromId(foods,delivery.Tab[i].Info).Nama);
             printf(" - ");

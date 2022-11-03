@@ -16,6 +16,7 @@ void CreateEmptyStack(Stack *S)
 	
 	//ALGORITMA
 	StackTop(*S) = STACK_NIL;
+	free(&StackTab(*S));
 	StackTab(*S) = (Record*) malloc(0);
 	StackCap(*S) = 0;
 }

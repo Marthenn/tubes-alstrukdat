@@ -5,6 +5,8 @@
 #include "../../adt/map/map.h"
 #include "../../adt/simulator/simulator.h"
 #include "../../adt/stack/stack.h"
+#include "../../adt/waktu/waktu.h"
+#include "../../adt/map/map.h"
 
 /* APP */
 #include "../filereader/filereader.h"
@@ -39,7 +41,7 @@ void Start(Simulator* simulator, ListStatik* foods, ListStatik* recipes, Map* ma
  * @param redoRecord Stack of action that is undone
  * 
  */
-void Buy(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType buyFoods, Stack *undoRecord);
+void Buy(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType buyFoods, Stack *undoRecord, boolean *success);
 
 /**
  * @brief Go into the mix submenu if possible
@@ -52,7 +54,7 @@ void Buy(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
  * @param undoRecord Stack of action that is done
  * 
  */
-void Mix(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType mixFoods, Stack *undoRecord);
+void Mix(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType mixFoods, Stack *undoRecord, boolean *success);
 
 /**
  * @brief Go into the chop submenu if possible
@@ -65,7 +67,7 @@ void Mix(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
  * @param undoRecord Stack of action that is done
  * 
  */
-void Chop(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType chopFoods, Stack *undoRecord);
+void Chop(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType chopFoods, Stack *undoRecord, boolean *success);
 
 /**
  * @brief Go into the fry submenu if possible
@@ -78,7 +80,7 @@ void Chop(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
  * @param undoRecord Stack of action that is done
  * 
  */
-void Fry(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType fryFoods, Stack *undoRecord);
+void Fry(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType fryFoods, Stack *undoRecord, boolean *success);
 
 /**
  * @brief Go into the boil submenu if possible
@@ -91,7 +93,7 @@ void Fry(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
  * @param undoRecord Stack of action that is done
  * 
  */
-void Boil(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType boilFoods, Stack *undoRecord);
+void Boil(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType boilFoods, Stack *undoRecord, boolean *success);
 
 /**
  * @brief move simulator
@@ -103,17 +105,17 @@ void Boil(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
  * 
  */
 
-void Move(Simulator *simulator, Map *map, int moveCode, ListStatik foods);
+void Move(Simulator *simulator, Map *map, int moveCode, ListStatik foods, boolean *success);
 
-void Undo (Simulator* simulator, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *undoRecord, Stack *redoRecord);
+void resetState(Simulator* simulator, Record record, Map *map);
 
-void Redo (Simulator* simulator, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *undoStack, Stack *redoStack);
+void Undo (Simulator* simulator, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *undoStack, Stack *redoStack, Waktu timeRecord, Point locRecord, Map *map);
 
-void GetQueueChanges(PrioQueue *addChanges, PrioQueue *delChanges, PrioQueue prevQueue, PrioQueue currentQueue);
-
-void UpdateStack(Simulator simulator, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *stack);
-
-void UpdateInverse(Simulator simulator, Record inverseRecord, Stack *stack);
+void Redo (Simulator* simulator, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *undoStack, Stack *redoStack, Waktu timeRecord, Point locRecord, Map *map);
 
 void GetQueueChanges(PrioQueue *addChanges, PrioQueue *delChanges, PrioQueue prevQueue, PrioQueue currentQueue);
+
+void UpdateStack(Simulator simulator, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *stack, Waktu timeRecord, Point locRecord);
+
+void UpdateInverse(Simulator simulator, Record inverseRecord, Stack *stack, Waktu timeRecord, Point locRecord);
 #endif

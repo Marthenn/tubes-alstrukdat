@@ -110,6 +110,13 @@ void DeleteAtPQ(PrioQueue* Q, PQElType* X, Waktu *time, int idx);
         X berisi elemen yang dihapus. Kapasitas Q akan direalokasikan menjadi setengahnya jika Q sepi,
         yaitu ketika length(Q) <= Q.cap div 4 */
 
+void DeleteElmtPQ(PrioQueue* Q, PQElType X, Waktu time);
+/* Proses: Menghapus elemen pada Q yang memiliki nilai X dan waktu time */
+/* I.S. Q tidak mungkin kosong.*/
+/* F.S. Elemen dengan nilai X dan waktu time dihapus, elemen sebelumnya akan dimajukan jika Q tidak menjadi kosong.
+        Elemen dapat tidak ditemukan (tidak dilakukan apa-apa). Kapasitas Q akan direalokasikan menjadi setengahnya jika Q sepi,
+        yaitu ketika length(Q) <= Q.cap div 4 */
+        
 /* Operasi Tambahan */
 void DisplayInfoTypePQ(PQInfoType p);
 /* Menampilkan info dari PQInfoType */

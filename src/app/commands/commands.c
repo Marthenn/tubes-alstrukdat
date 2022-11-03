@@ -60,14 +60,14 @@ void Start(Simulator* simulator, ListStatik* foods, ListStatik* recipes, Map* ma
     CreateEmptySimulator(simulator, GetNamaPengguna(simulator));
 }
 
-void Buy(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType BuyFoods, Stack *undoRecord){
+void Buy(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType BuyFoods, Stack *undoRecord, boolean *success){
     if(!(IsAdjacent((*simulator).Lokasi,T(map)))){
         DisplayWord(GetNamaPengguna(simulator));
         printf(" tidak berada di area telepon!\n");
     } else {
         BuyMenu(BuyFoods);
-        int x; boolean success = false;
-        while(!success){
+        int x;
+        while(!*success){
             printf("Enter Command: ");
             STARTWORD();
             x = WordToInt(currentWord);
@@ -76,7 +76,7 @@ void Buy(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
             } else {    
                 x--;
                 if(x==-1){
-                    success = true;
+                    *success = true;
                 } else if (x>ListDinElTypeLength(BuyFoods)-1){
                     printf("Out of range!\n");
                 } else {
@@ -87,14 +87,14 @@ void Buy(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
                     // tambah waktu
                     TakeTime(simulator, 0, 0, 1, foods);
 
-                    success = true;
+                    *success = true;
                 }
             }
         }
     }
 }
 
-void Mix(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType mixFoods, Stack *undoRecord){
+void Mix(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType mixFoods, Stack *undoRecord, boolean *success){
     Waktu time;
 
     if(!(IsAdjacent((*simulator).Lokasi,M(map)))){
@@ -102,8 +102,8 @@ void Mix(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
         printf(" tidak berada di area mixing!\n");
     } else {
         MixMenu(mixFoods);
-        int x; boolean success = false;
-        while(!success){
+        int x;
+        while(!*success){
             //handle input harus integer
             printf("Enter Command: ");
             STARTWORD();
@@ -113,7 +113,7 @@ void Mix(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
             } else {
                 x--;
                 if(x==-1){
-                    success = true;
+                    *success = true;
                 } else if (x>ListDinElTypeLength(mixFoods)-1){
                     printf("Input tidak valid!\n");
                 } else {
@@ -144,7 +144,7 @@ void Mix(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
                         }
                     }
                     if(needCount==needLength){
-                        success = true;
+                        *success = true;
                         //kurangi inventory
                         for(i=0;i<needLength;i++){
                             temp = DeleteMakanan(simulator, need.buffer[i]);
@@ -172,7 +172,7 @@ void Mix(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
     }
 }
 
-void Chop(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType chopFoods, Stack *undoRecord){
+void Chop(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType chopFoods, Stack *undoRecord, boolean *success){
     Waktu time;
 
     if(!(IsAdjacent((*simulator).Lokasi,C(map)))){
@@ -180,8 +180,8 @@ void Chop(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
         printf(" tidak berada di area chopping!\n");
     } else {
         MixMenu(chopFoods);
-        int x; boolean success = false;
-        while(!success){
+        int x;
+        while(!*success){
             //handle input harus integer
             printf("Enter Command: ");
             STARTWORD();
@@ -191,7 +191,7 @@ void Chop(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
             } else {
                 x--;
                 if(x==-1){
-                    success = true;
+                    *success = true;
                 } else if (x>ListDinElTypeLength(chopFoods)-1){
                     printf("Input tidak valid!\n");
                 } else {
@@ -222,7 +222,7 @@ void Chop(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
                         }
                     }
                     if(needCount==needLength){
-                        success = true;
+                        *success = true;
                         //kurangi inventory
                         for(i=0;i<needLength;i++){
                             temp = DeleteMakanan(simulator, need.buffer[i]);
@@ -250,7 +250,7 @@ void Chop(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
     }
 }
 
-void Fry(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType fryFoods, Stack *undoRecord){
+void Fry(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType fryFoods, Stack *undoRecord, boolean *success){
     Waktu time;
 
     if(!(IsAdjacent((*simulator).Lokasi,F(map)))){
@@ -258,8 +258,8 @@ void Fry(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
         printf(" tidak berada di area frying!\n");
     } else {
         MixMenu(fryFoods);
-        int x; boolean success = false;
-        while(!success){
+        int x;
+        while(!*success){
             //handle input harus integer
             printf("Enter Command: ");
             STARTWORD();
@@ -269,7 +269,7 @@ void Fry(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
             } else {
                 x--;
                 if(x==-1){
-                    success = true;
+                    *success = true;
                 } else if (x>ListDinElTypeLength(fryFoods)-1){
                     printf("Input tidak valid!\n");
                 } else {
@@ -300,7 +300,7 @@ void Fry(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
                         }
                     }
                     if(needCount==needLength){
-                        success = true;
+                        *success = true;
                         //kurangi inventory
                         for(i=0;i<needLength;i++){
                             temp = DeleteMakanan(simulator, need.buffer[i]);
@@ -328,7 +328,7 @@ void Fry(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
     }
 }
 
-void Boil(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType boilFoods, Stack *undoRecord){
+void Boil(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType boilFoods, Stack *undoRecord, boolean *success){
     Waktu time;
 
     if(!(IsAdjacent((*simulator).Lokasi,B(map)))){
@@ -336,8 +336,8 @@ void Boil(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
         printf(" tidak berada di area mixing!\n");
     } else {
         MixMenu(boilFoods);
-        int x; boolean success = false;
-        while(!success){
+        int x;
+        while(!*success){
             //handle input harus integer
             printf("Enter Command: ");
             STARTWORD();
@@ -347,7 +347,7 @@ void Boil(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
             } else {
                 x--;
                 if(x==-1){
-                    success = true;
+                    *success = true;
                 } else if (x>ListDinElTypeLength(boilFoods)-1){
                     printf("Input tidak valid!\n");
                 } else {
@@ -378,7 +378,7 @@ void Boil(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
                         }
                     }
                     if(needCount==needLength){
-                        success = true;
+                        *success = true;
                         //kurangi inventory
                         for(i=0;i<needLength;i++){
                             temp = DeleteMakanan(simulator, need.buffer[i]);
@@ -406,7 +406,7 @@ void Boil(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
     }
 }
 
-void Move(Simulator *simulator, Map *map, int moveCode, ListStatik foods)
+void Move(Simulator *simulator, Map *map, int moveCode, ListStatik foods, boolean *success)
 // 0 : east, 1 : west, 2 : north, 3 : south
 {
     Point currentLocation = GetLokasi(simulator);
@@ -453,36 +453,83 @@ void Move(Simulator *simulator, Map *map, int moveCode, ListStatik foods)
         SetLokasi(simulator, newPoint);
         MoveSimulator(map, newPoint);
         TakeTime(simulator, 0, 0, 1, foods);
+        *success = true;
+
     }
 }
 
-void Undo (Simulator* simulator, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *undoStack, Stack *redoStack)
+void resetState(Simulator* simulator, Record record, Map *map)
 {
+    PQElType id;
+    Waktu time;
+    PrioQueue p;
+
+    SetTime(simulator, record.Time);
+    SetLokasi(simulator, record.SimulatorLoc);
+    MoveSimulator(map, record.SimulatorLoc);
+
+    while(!IsEmptyPQ(record.DeliveryAdd))
+    {
+        Dequeue(&record.DeliveryAdd, &id, &time);
+        DeleteElmtPQ(&simulator->Delivery, id, time);
+    }
+
+    while(!IsEmptyPQ(record.DeliveryDel))
+    {
+        Dequeue(&record.DeliveryDel, &id, &time);
+        Enqueue(&simulator->Delivery, id, time);
+    }
+
+    while(!IsEmptyPQ(record.InventoryAdd))
+    {
+        Dequeue(&record.InventoryAdd, &id, &time);
+        DeleteElmtPQ(&simulator->Inventory, id, time);
+    }
+
+    while(!IsEmptyPQ(record.InventoryDel))
+    {
+        Dequeue(&record.InventoryDel, &id, &time);
+        Enqueue(&simulator->Inventory, id, time);
+    }
+    
+}
+void Undo (Simulator* simulator, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *undoStack, Stack *redoStack, Waktu timeRecord, Point locRecord, Map *map)
+{
+    Record undoRecord;
+
+    if (!IsStackEmpty(*undoStack))
+    {
+        PopStack(undoStack, &undoRecord);
+
+        resetState(simulator, undoRecord, map);
+
+        UpdateInverse(*simulator, undoRecord, redoStack, timeRecord, locRecord);
+    }
+}
+
+void Redo (Simulator* simulator, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *undoStack, Stack *redoStack, Waktu timeRecord, Point locRecord, Map *map)
+{   
     Record prevRecord, redoRecord;
 
-    PopStack(undoStack, &prevRecord);
+    if (!IsStackEmpty(*redoStack))
+    {
 
-    UpdateStack(*simulator, inventoryRecord, deliveryRecord, redoStack);
+        PopStack(redoStack, &redoRecord);
 
-    UpdateInverse(*simulator, prevRecord, undoStack);
+        resetState(simulator, redoRecord, map);
+
+        UpdateInverse(*simulator, redoRecord, undoStack, timeRecord, locRecord);
+
+    }
 }
 
-void Redo (Simulator* simulator, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *undoStack, Stack *redoStack)
-{   
-    Record prevRecord, undoRecord;
-
-    PopStack(undoStack, &undoRecord);
-
-    UpdateStack(*simulator, inventoryRecord, deliveryRecord, undoStack);
-    UpdateInverse(*simulator, prevRecord, redoStack);
-}
-
-void UpdateStack(Simulator simulator, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *stack)
+void UpdateStack(Simulator simulator, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *stack, Waktu timeRecord, Point locRecord)
 {
     Record newRecord;
 
-    newRecord.Time = GetTime(&simulator);
-    newRecord.SimulatorLoc = GetLokasi(&simulator);
+
+    newRecord.Time = timeRecord;
+    newRecord.SimulatorLoc = locRecord;
 
     GetQueueChanges(&newRecord.DeliveryAdd, &newRecord.DeliveryDel, deliveryRecord, simulator.Delivery);
     GetQueueChanges(&newRecord.InventoryAdd, &newRecord.InventoryDel, inventoryRecord, simulator.Inventory);
@@ -490,17 +537,17 @@ void UpdateStack(Simulator simulator, PrioQueue inventoryRecord, PrioQueue deliv
     PushStack(stack, newRecord);
 }
 
-void UpdateInverse(Simulator simulator, Record inverseRecord, Stack *stack)
+void UpdateInverse(Simulator simulator, Record inverseRecord, Stack *stack, Waktu timeRecord, Point locRecord)
 {
     Record newRecord;
 
-    newRecord.Time = GetTime(&simulator);
-    newRecord.SimulatorLoc = GetLokasi(&simulator);
+    newRecord.Time = timeRecord;
+    newRecord.SimulatorLoc = locRecord;
 
     newRecord.DeliveryAdd = inverseRecord.DeliveryDel;
     newRecord.DeliveryDel = inverseRecord.DeliveryAdd;
-    newRecord.InventoryAdd = inverseRecord.DeliveryDel;
-    newRecord.InventoryDel = inverseRecord.DeliveryAdd;
+    newRecord.InventoryAdd = inverseRecord.InventoryDel;
+    newRecord.InventoryDel = inverseRecord.InventoryAdd;
 
     PushStack(stack, newRecord);
 
@@ -509,14 +556,13 @@ void UpdateInverse(Simulator simulator, Record inverseRecord, Stack *stack)
 void GetQueueChanges(PrioQueue *addChanges, PrioQueue *delChanges, PrioQueue prevQueue, PrioQueue currentQueue)
 {
     int i;
-    PrioQueue prev, current;
     PQElType val;
     Waktu t;
 
-    prev = prevQueue;
-    currentQueue = currentQueue;
+    CreateEmptyPQ(addChanges);
+    CreateEmptyPQ(delChanges);
 
-    while (IsEmptyPQ(prevQueue) == false && IsEmptyPQ(currentQueue) == false)
+    while (!IsEmptyPQ(prevQueue) && !IsEmptyPQ(currentQueue))
     {
         if (GetHeadTime(prevQueue) == GetHeadTime(currentQueue))
         {
@@ -547,13 +593,13 @@ void GetQueueChanges(PrioQueue *addChanges, PrioQueue *delChanges, PrioQueue pre
         }
     }
     
-    while(IsEmptyPQ(prevQueue) == false)
+    while(!IsEmptyPQ(prevQueue))
     {
         Dequeue(&prevQueue, &val, &t);
         Enqueue(delChanges, val, t);
     }
 
-    while(IsEmptyPQ(currentQueue) == false)
+    while(!IsEmptyPQ(currentQueue))
     {
         Dequeue(&currentQueue, &val, &t);
         Enqueue(addChanges, val, t);

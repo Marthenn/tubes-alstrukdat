@@ -12,7 +12,7 @@
 typedef struct {
     int Id;
     Word Nama; 
-    Waktu Kedaluarsa, Pengiriman;
+    Waktu Kedaluarsa, WaktuAksi;
     Word Aksi;
     Point LokasiAksi;
 } Makanan;

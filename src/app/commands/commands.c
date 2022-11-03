@@ -1,10 +1,14 @@
 /* C libraries */
 #include <stdio.h>
 #include <stdlib.h>
+
+/* ADT */
+#include "../../adt/waktu/waktu.h"
+
 /* APP */
 #include "commands.h"
 
-void Start(Simulator* simulator, ListStatik* foods, ListStatik* recipes, Map* map, ListDinElType* buyFoods, ListDinElType* mixFoods, ListDinElType* chopFoods, ListDinElType* fryFoods, ListDinElType* boilFoods, PrioQueue *delivery, Stack *undoRecord, Stack *redoRecord){
+void Start(Simulator* simulator, ListStatik* foods, ListStatik* recipes, Map* map, ListDinElType* buyFoods, ListDinElType* mixFoods, ListDinElType* chopFoods, ListDinElType* fryFoods, ListDinElType* boilFoods, Stack *undoRecord, Stack *redoRecord){
     ReadAllConfig(map, foods, recipes);
     int i;
 
@@ -56,7 +60,7 @@ void Start(Simulator* simulator, ListStatik* foods, ListStatik* recipes, Map* ma
     CreateEmptySimulator(simulator, GetNamaPengguna(simulator));
 }
 
-void Buy(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType BuyFoods, PrioQueue *delivery, Stack *undoRecord){
+void Buy(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType BuyFoods, Stack *undoRecord){
     if(!(IsAdjacent((*simulator).Lokasi,T(map)))){
         DisplayWord(GetNamaPengguna(simulator));
         printf(" tidak berada di area telepon!\n");
@@ -77,7 +81,12 @@ void Buy(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
                     printf("Out of range!\n");
                 } else {
                     //beli makanan disini
-                    Enqueue(delivery, GetVal(BuyFoods.buffer[x]).m.Id, GetMakananFromId(foods,GetVal(BuyFoods.buffer[x]).m.Id).Pengiriman);
+                    Enqueue(&simulator->Delivery, GetVal(BuyFoods.buffer[x]).m.Id, 
+                        GetMakananFromId(foods,GetVal(BuyFoods.buffer[x]).m.Id).WaktuAksi + GetTime(simulator) + 1);
+
+                    // tambah waktu
+                    TakeTime(simulator, 0, 0, 1, foods);
+
                     success = true;
                 }
             }
@@ -142,6 +151,10 @@ void Mix(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
                         }
                         //tambah ke inventory
                         InsertMakanan(simulator, dibuat.Id, dibuat.Kedaluarsa);
+
+                        // tambah waktu
+                        TakeTime(simulator, GetHari(dibuat.WaktuAksi), GetJam(dibuat.WaktuAksi), GetMenit(dibuat.WaktuAksi), foods);
+
                     } else {
                         printf("Gagal membuat ");
                         DisplayWord(dibuat.Nama);
@@ -216,6 +229,10 @@ void Chop(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
                         }
                         //tambah ke inventory
                         InsertMakanan(simulator, dibuat.Id, dibuat.Kedaluarsa);
+
+                        // tambah waktu
+                        TakeTime(simulator, GetHari(dibuat.WaktuAksi), GetJam(dibuat.WaktuAksi), GetMenit(dibuat.WaktuAksi), foods);
+
                     } else {
                         printf("Gagal membuat ");
                         DisplayWord(dibuat.Nama);
@@ -290,6 +307,10 @@ void Fry(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
                         }
                         //tambah ke inventory
                         InsertMakanan(simulator, dibuat.Id, dibuat.Kedaluarsa);
+
+                        // tambah waktu
+                        TakeTime(simulator, GetHari(dibuat.WaktuAksi), GetJam(dibuat.WaktuAksi), GetMenit(dibuat.WaktuAksi), foods);
+
                     } else {
                         printf("Gagal membuat ");
                         DisplayWord(dibuat.Nama);
@@ -364,6 +385,10 @@ void Boil(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
                         }
                         //tambah ke inventory
                         InsertMakanan(simulator, dibuat.Id, dibuat.Kedaluarsa);
+
+                        // tambah waktu
+                        TakeTime(simulator, GetHari(dibuat.WaktuAksi), GetJam(dibuat.WaktuAksi), GetMenit(dibuat.WaktuAksi), foods);
+                        
                     } else {
                         printf("Gagal membuat ");
                         DisplayWord(dibuat.Nama);
@@ -381,7 +406,7 @@ void Boil(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
     }
 }
 
-void Move(Simulator *simulator, Map *map, int moveCode)
+void Move(Simulator *simulator, Map *map, int moveCode, ListStatik foods)
 // 0 : east, 1 : west, 2 : north, 3 : south
 {
     Point currentLocation = GetLokasi(simulator);
@@ -427,38 +452,39 @@ void Move(Simulator *simulator, Map *map, int moveCode)
 
         SetLokasi(simulator, newPoint);
         MoveSimulator(map, newPoint);
+        TakeTime(simulator, 0, 0, 1, foods);
     }
 }
 
-void Undo (Simulator* simulator, PrioQueue delivery, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *undoStack, Stack *redoStack)
+void Undo (Simulator* simulator, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *undoStack, Stack *redoStack)
 {
     Record prevRecord, redoRecord;
 
     PopStack(undoStack, &prevRecord);
 
-    UpdateStack(*simulator, delivery, inventoryRecord, deliveryRecord, redoStack);
+    UpdateStack(*simulator, inventoryRecord, deliveryRecord, redoStack);
 
     UpdateInverse(*simulator, prevRecord, undoStack);
 }
 
-void Redo (Simulator* simulator, PrioQueue delivery, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *undoStack, Stack *redoStack)
+void Redo (Simulator* simulator, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *undoStack, Stack *redoStack)
 {   
     Record prevRecord, undoRecord;
 
     PopStack(undoStack, &undoRecord);
 
-    UpdateStack(*simulator, delivery, inventoryRecord, deliveryRecord, undoStack);
+    UpdateStack(*simulator, inventoryRecord, deliveryRecord, undoStack);
     UpdateInverse(*simulator, prevRecord, redoStack);
 }
 
-void UpdateStack(Simulator simulator, PrioQueue delivery, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *stack)
+void UpdateStack(Simulator simulator, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *stack)
 {
     Record newRecord;
 
     newRecord.Time = GetTime(&simulator);
     newRecord.SimulatorLoc = GetLokasi(&simulator);
 
-    GetQueueChanges(&newRecord.DeliveryAdd, &newRecord.DeliveryDel, deliveryRecord, delivery);
+    GetQueueChanges(&newRecord.DeliveryAdd, &newRecord.DeliveryDel, deliveryRecord, simulator.Delivery);
     GetQueueChanges(&newRecord.InventoryAdd, &newRecord.InventoryDel, inventoryRecord, simulator.Inventory);
 
     PushStack(stack, newRecord);

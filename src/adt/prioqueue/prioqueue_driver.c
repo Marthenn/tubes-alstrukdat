@@ -61,7 +61,7 @@ int main(){
     DisplayPQ(Q);
     printf("****** Cek DeleteAt ******\n");
     printf("Hapus Elemen ke-2\n");
-    DeleteAtPQ(&Q,&tmp,2);
+    DeleteAtPQ(&Q,&tmp, &time, 2);
     printf("Hapus %d\n",tmp);
     DisplayPQ(Q);
     printf("Mengosongkan queue...\n");

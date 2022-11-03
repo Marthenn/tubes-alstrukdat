@@ -1,8 +1,13 @@
 /* File: simulator.c */
 /* Body ADT simulator */
 
+/* C libraries */
 #include <stdio.h>
+
+/* ADT */
 #include "simulator.h"
+
+/* APP */
 #include "../../app/parser/parser.h"
 
 /* *** KONSTRUKTOR *** */
@@ -17,7 +22,7 @@ void CreateEmptySimulator(Simulator *sim, Word NamaPengguna)
     sim->NamaPengguna = NamaPengguna;
     CreatePoint(&(sim->Lokasi), 0, 0);
     CreateEmptyPQ(&(sim->Inventory));
-
+    CreateEmptyPQ(&(sim->Delivery));
     SetTime(sim, newTime);
 
     SetNotif(sim, EMPTY_NOTIF);
@@ -93,18 +98,37 @@ void InsertMakanan(Simulator *sim, int ID, Waktu kedaluarsa)
     Enqueue(&(sim->Inventory), ID, kedaluarsa);
 }
 
-void HapusMakananKedaluarsa(Simulator *sim, Waktu now)
+void HapusDelivery(Simulator *sim, ListStatik foods)
+/* I.S. sim terdefinisi */
+/* F.S. makanan dengan waktu delivery yang melewati waktu saat ini dimasukkan ke inventory */
+{
+    int id, idx;
+    Waktu time;
+
+    while(!(IsEmptyPQ(sim->Delivery)) && GetHeadTime(sim->Delivery) <= GetTime(sim)) {
+        Dequeue(&(sim->Delivery), &id, &time);
+        
+        idx = ListIndexOf(foods, NewElType(0, (union Data){.i=id}));
+
+        Enqueue(&sim->Inventory, id, GetVal(foods.contents[idx]).m.Kedaluarsa + (2 * time) - GetTime(sim));
+    }
+}
+
+void HapusMakananKedaluarsa(Simulator *sim)
 /* I.S. sim, now terdefinisi */
 /* F.S. seluruh isi inventory yang kedaluarsa dihapus */
 {
     int tmp;
-    Waktu time;
+    Waktu time, now;
+
+    now = GetTime(sim);
+
     while(!(IsEmptyPQ(sim->Inventory)) && GetHeadTime(sim->Inventory) <= now) {
         Dequeue(&(sim->Inventory), &tmp, &time);
     }
 }
 
-void TakeTime(Simulator *sim, int Hari, int Jam, int Menit){
+void TakeTime(Simulator *sim, int Hari, int Jam, int Menit, ListStatik foods){
 /* I.S. sim terdefinisi */
 /* F.S. waktu bertambah, dengan default bertambah selama 1 menit { TakeTime(&sim, 0, 0, 1) }
    Makanan kedaluarsa dihapus */
@@ -115,17 +139,18 @@ void TakeTime(Simulator *sim, int Hari, int Jam, int Menit){
     now = GetTime(sim);
     TambahWaktu(&now, Hari, Jam, Menit);
     SetTime(sim, now);
-    HapusMakananKedaluarsa(sim, GetTime(sim));
+    HapusDelivery(sim, foods);
+    HapusMakananKedaluarsa(sim);
 }
 
-void Wait(Simulator *sim, int Jam, int Menit){
+void Wait(Simulator *sim, int Jam, int Menit, ListStatik foods){
 /* I.S. sim terdefinisi, command WAIT x y dilakukan */
 /* F.S. waktu bertambah selama x jam dan y menit
    Makanan kedaluarsa dihapus */
 
     // KAMUS LOKAL
     // ALGORITMA
-    TakeTime(sim, 0, Jam, Menit);
+    TakeTime(sim, 0, Jam, Menit, foods);
 }
 
 void DisplayInventory(Simulator sim){

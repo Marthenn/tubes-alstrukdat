@@ -1,11 +1,16 @@
 #ifndef DISPLAY_H
 #define DISPLAY_H
 
-#include "../parser/parser.h"
+/* ADT */
 #include "../../adt/makanan/makanan.h"
 #include "../../adt/listdineltype/listdineltype.h"
 #include "../../adt/liststatik/liststatik.h"
 #include "../../adt/prioqueue/prioqueue.h"
+#include "../../adt/simulator/simulator.h"
+
+/* APP */
+#include "../parser/parser.h"
+
 
 /**
  * @brief Get the Makanan From Id identifier
@@ -100,6 +105,6 @@ void Catalog(ListStatik foods);
  * @param foods List of foods available
  * @param deliveryRecord Queue of foods in delivery
  */
-void DisplayDelivery(ListStatik foods, PrioQueue deliveryRecord);
+void DisplayDelivery(ListStatik foods, Simulator simulator);
 
 #endif

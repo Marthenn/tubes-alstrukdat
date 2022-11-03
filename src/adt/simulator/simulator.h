@@ -9,11 +9,13 @@
 #include "../prioqueue/prioqueue.h"
 #include "../../boolean.h"
 #include "../waktu/waktu.h"
+#include "../liststatik/liststatik.h"
 
 typedef struct Simulator {
     Word NamaPengguna;
     Point Lokasi;
     PrioQueue Inventory;
+    PrioQueue Delivery;
     Waktu Time;
     Word Notification;
 } Simulator;
@@ -63,16 +65,19 @@ void InsertMakanan(Simulator *sim, int ID, Waktu kedaluarsa);
 /* I.S. sim terdefinisi. kedaluarsa = waktu sekarang + waktu kedaluarsa makanan */
 /* F.S. sim->Inventory ditambahkan makanan */
 
-void HapusMakananKedaluarsa(Simulator *sim, Waktu now);
+void HapusDelivery(Simulator *sim, ListStatik foods);
+/* I.S. sim terdefinisi */
+/* F.S. makanan dengan waktu delivery yang melewati waktu saat ini dimasukkan ke inventory */
+void HapusMakananKedaluarsa(Simulator *sim);
 /* I.S. sim, now terdefinisi */
 /* F.S. seluruh isi inventory yang kedaluarsa dihapus */
 
-void TakeTime(Simulator *sim, int Hari, int Jam, int Menit);
+void TakeTime(Simulator *sim, int Hari, int Jam, int Menit, ListStatik foods);
 /* I.S. sim terdefinisi */
 /* F.S. waktu bertambah, dengan default bertambah selama 1 menit
    Makanan kedaluarsa dihapus */
 
-void Wait(Simulator *sim, int Jam, int Menit);
+void Wait(Simulator *sim, int Jam, int Menit, ListStatik foods);
 /* I.S. sim terdefinisi, command WAIT x y dilakukan */
 /* F.S. waktu bertambah selama x jam dan y menit
    Makanan kedaluarsa dihapus */

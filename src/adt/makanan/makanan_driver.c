@@ -6,7 +6,7 @@ int main() {
     Makanan m;
     Point p;
     CreatePoint(&p, 2, 3);
-    CreateMakanan(&m, 5, NewWord("Telur", 5), 10, 0, p);
+    CreateMakanan(&m, 5, NewWord("Telur", 5), 10, 0, BUY_WORD, p);
 
     DisplayMakanan(m);
     return 0;

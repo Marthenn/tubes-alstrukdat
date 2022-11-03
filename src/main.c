@@ -213,22 +213,22 @@ int main(){
 			}
 
 			else if (success) {
+				printf("end action\n");
 				UpdateStack(simulator, inventoryRecord, deliveryRecord, &undoStack, timeRecord, locationRecord);
-
+				
 				if (!IsStackEmpty(redoStack))
 				{
 					CreateEmptyStack(&redoStack);
 				}
 			}
-
+			printf("end cicle\n");
 			deliveryRecord = simulator.Delivery;
 			inventoryRecord = simulator.Inventory;
 			timeRecord = GetTime(&simulator);
 			locationRecord = GetLokasi(&simulator);
 			success = false;
 			
-			printf("lol");
-			DisplayPQ(simulator.Inventory);
+			// program crash kalau buy 1, buy 2, undo, redo, buy 1
 		}
     }
 	

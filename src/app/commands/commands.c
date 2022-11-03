@@ -527,10 +527,9 @@ void UpdateStack(Simulator simulator, PrioQueue inventoryRecord, PrioQueue deliv
 {
     Record newRecord;
 
-
     newRecord.Time = timeRecord;
     newRecord.SimulatorLoc = locRecord;
-
+    
     GetQueueChanges(&newRecord.DeliveryAdd, &newRecord.DeliveryDel, deliveryRecord, simulator.Delivery);
     GetQueueChanges(&newRecord.InventoryAdd, &newRecord.InventoryDel, inventoryRecord, simulator.Inventory);
 
@@ -561,9 +560,10 @@ void GetQueueChanges(PrioQueue *addChanges, PrioQueue *delChanges, PrioQueue pre
 
     CreateEmptyPQ(addChanges);
     CreateEmptyPQ(delChanges);
-
+    
     while (!IsEmptyPQ(prevQueue) && !IsEmptyPQ(currentQueue))
     {
+        
         if (GetHeadTime(prevQueue) == GetHeadTime(currentQueue))
         {
             if (GetHeadInfo(prevQueue) == GetHeadInfo(currentQueue))
@@ -592,6 +592,7 @@ void GetQueueChanges(PrioQueue *addChanges, PrioQueue *delChanges, PrioQueue pre
             Enqueue(delChanges, val, t);
         }
     }
+
     
     while(!IsEmptyPQ(prevQueue))
     {

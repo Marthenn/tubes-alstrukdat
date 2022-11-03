@@ -18,13 +18,14 @@ int main(){
 	// NOTE : inventoryRecord dan deliveryRecord BUKAN inventory dan delivery yang di ada di dalam simulator
 	PrioQueue inventoryRecord, deliveryRecord;
 
-	boolean isStarted, isUndo;
+	boolean isStarted, isUndo, stay;
     int x, y;
     
     // ALGORITMA
 
 	isStarted = false;
 	isUndo = false;
+	stay = false;
 
 	CreateEmptyPQ(&inventoryRecord);
     StartScreen();
@@ -139,21 +140,25 @@ int main(){
 			else if (IsInputEqual(CATALOG_WORD))
 			{
 				Catalog(foods);
+				stay = true;
 			}
 			
 			else if (IsInputEqual(COOKBOOK_WORD))
 			{
 				CookBook(foods, recipes, mixFoods, chopFoods, fryFoods, boilFoods);
+				stay = true;
 			}
 
 			else if (IsInputEqual(HELP_WORD)) 
 			{
 				Help();
+				stay = true;
 			}
 
 			else if(IsInputEqual(INVENTORY_WORD))
 			{
 				DisplayInventory(simulator);
+				stay = true;
 			}
 			
 			else if (IsInputPrefixEqual(WAIT_WORD) && ListDinElTypeLength(wordList) == 3)
@@ -183,15 +188,19 @@ int main(){
 				printf("(Masukkan command 'help' untuk melihat semua perintah yang valid)\n");
 			}
 
-			// if (isUndo)
-			// {
-			// 	isUndo = false;
-			// }
+			if (isUndo)
+			{
+				isUndo = false;
+			}
 
-			// else {
-			// 	UpdateStack(simulator, inventoryRecord, deliveryRecord, &undoStack);
-			// 	CreateEmptyStack(&redoStack);
-			// }
+			else if (stay)
+			{
+				stay = false;
+			}
+			else {
+				UpdateStack(simulator, inventoryRecord, deliveryRecord, &undoStack);
+				CreateEmptyStack(&redoStack);
+			}
 		}
     }
 

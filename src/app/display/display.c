@@ -298,7 +298,6 @@ void DisplayDelivery(ListStatik foods, Simulator simulator){
     Waktu delta;
     PrioQueue delivery = simulator.Delivery;
 
-    DisplayPQ(delivery);
     printf("======LIST PESANAN======\n");
     if(IsEmptyPQ(delivery)){
         printf("Tidak ada pesanan yang sedang dalam perjalanan\n");

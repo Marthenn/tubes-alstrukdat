@@ -293,18 +293,25 @@ void Catalog(ListStatik foods)
     printf("\n");
 }
 
-void DisplayDelivery(ListStatik foods, PrioQueue deliveryRecord){
-    int i;
+void DisplayDelivery(ListStatik foods, Simulator simulator){
+    int i, h, j, m;
+    Waktu delta;
+    PrioQueue delivery = simulator.Delivery;
+
+    DisplayPQ(delivery);
     printf("======LIST PESANAN======\n");
-    if(IsEmptyPQ(deliveryRecord)){
+    if(IsEmptyPQ(delivery)){
         printf("Tidak ada pesanan yang sedang dalam perjalanan\n");
     } else {
-        printf("(nama - sisa waktu [JJ.MM])\n");
-        for(i=0;i<LengthPQ(deliveryRecord);i++){
+        printf("(nama - sisa waktu\n");
+        for(i=0;i<LengthPQ(delivery);i++){
             printf("%d. ",i+1);
-            DisplayWord(GetMakananFromId(foods,deliveryRecord.Tab[i].Info).Nama);
+            DisplayWord(GetMakananFromId(foods,delivery.Tab[i].Info).Nama);
             printf(" - ");
-            CetakWaktuJJMM(deliveryRecord.Tab[i].Time);
+
+            delta = delivery.Tab[i].Time - GetTime(&simulator);
+
+            CetakWaktuLengkap(delta);
             printf("\n");
         }
     }

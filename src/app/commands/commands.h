@@ -25,7 +25,7 @@
  * @param undoRecord Stack of action that is done
  * @param redoRecord Stack of action that is undone
  */
-void Start(Simulator* simulator, ListStatik* foods, ListStatik* recipes, Map* map, ListDinElType* buyFoods, ListDinElType* mixFoods, ListDinElType* chopFoods, ListDinElType* fryFoods, ListDinElType* boilFoods,PrioQueue *delivery, Stack *undoRecord, Stack *redoRecord);
+void Start(Simulator* simulator, ListStatik* foods, ListStatik* recipes, Map* map, ListDinElType* buyFoods, ListDinElType* mixFoods, ListDinElType* chopFoods, ListDinElType* fryFoods, ListDinElType* boilFoods, Stack *undoRecord, Stack *redoRecord);
 
 /**
  * @brief Go into the buy submenu if possible
@@ -35,12 +35,11 @@ void Start(Simulator* simulator, ListStatik* foods, ListStatik* recipes, Map* ma
  * @param recipes List of recipes available
  * @param map The map of the simulator
  * @param buyFoods List of foods that can be get from buying
- * @param delivery The delivery status of the simulator
  * @param undoRecord Stack of action that is done
  * @param redoRecord Stack of action that is undone
  * 
  */
-void Buy(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType buyFoods, PrioQueue *delivery, Stack *undoRecord);
+void Buy(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType buyFoods, Stack *undoRecord);
 
 /**
  * @brief Go into the mix submenu if possible
@@ -104,15 +103,15 @@ void Boil(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
  * 
  */
 
-void Move(Simulator *simulator, Map *map, int moveCode);
+void Move(Simulator *simulator, Map *map, int moveCode, ListStatik foods);
 
-void Undo (Simulator* simulator, PrioQueue delivery, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *undoRecord, Stack *redoRecord);
+void Undo (Simulator* simulator, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *undoRecord, Stack *redoRecord);
 
-void Redo (Simulator* simulator, PrioQueue delivery, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *undoStack, Stack *redoStack);
+void Redo (Simulator* simulator, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *undoStack, Stack *redoStack);
 
 void GetQueueChanges(PrioQueue *addChanges, PrioQueue *delChanges, PrioQueue prevQueue, PrioQueue currentQueue);
 
-void UpdateStack(Simulator simulator, PrioQueue delivery, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *stack);
+void UpdateStack(Simulator simulator, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *stack);
 
 void UpdateInverse(Simulator simulator, Record inverseRecord, Stack *stack);
 

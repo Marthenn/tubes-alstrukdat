@@ -14,7 +14,9 @@ int main(){
     Word n;
     ListDinElType buyFoods,mixFoods,chopFoods,fryFoods,boilFoods, wordList;
     Stack undoStack, redoStack;
-	PrioQueue inventoryRecord, deliveryRecord, delivery;
+
+	// NOTE : inventoryRecord dan deliveryRecord BUKAN inventory dan delivery yang di ada di dalam simulator
+	PrioQueue inventoryRecord, deliveryRecord;
 
 	boolean isStarted, isUndo;
     int x, y;
@@ -25,7 +27,6 @@ int main(){
 	isUndo = false;
 
 	CreateEmptyPQ(&inventoryRecord);
-	CreateEmptyPQ(&deliveryRecord);
     StartScreen();
 
 	printf("Enter Command: ");
@@ -37,7 +38,7 @@ int main(){
 		{	
 			if (IsInputEqual(START_WORD))
 			{
-				Start(&simulator, &foods, &recipes, &map, &buyFoods, &mixFoods, &chopFoods, &fryFoods, &boilFoods, &delivery, &undoStack, &redoStack);
+				Start(&simulator, &foods, &recipes, &map, &buyFoods, &mixFoods, &chopFoods, &fryFoods, &boilFoods, &undoStack, &redoStack);
 
 				isStarted = true;
 			}
@@ -77,31 +78,31 @@ int main(){
 
 			if (IsInputEqual(BUY_WORD))
 			{
-				Buy(&simulator, foods, recipes, map, buyFoods, &deliveryRecord, &undoStack);
+				Buy(&simulator, foods, recipes, map, buyFoods, &undoStack);
 			}
 
 			else if (IsInputEqual(DELIVERY_WORD))
 			{
-				DisplayDelivery(foods, deliveryRecord);
+				DisplayDelivery(foods, simulator);
 			}
 
 			else if (IsInputEqual(MOVE_EAST_WORD))
 			{
-				Move(&simulator, &map, 0);
+				Move(&simulator, &map, 0, foods);
 			}
 
 			else if (IsInputEqual(MOVE_WEST_WORD))
 			{
-				Move(&simulator, &map, 1);
+				Move(&simulator, &map, 1, foods);
 			}
 
 			else if (IsInputEqual(MOVE_NORTH_WORD))
 			{
-				Move(&simulator, &map, 2);
+				Move(&simulator, &map, 2, foods);
 			}
 			else if (IsInputEqual(MOVE_SOUTH_WORD))
 			{
-				Move(&simulator, &map, 3);
+				Move(&simulator, &map, 3, foods);
 			}
 			
 			else if (IsInputEqual(MIX_WORD))
@@ -149,6 +150,11 @@ int main(){
 			{
 				Help();
 			}
+
+			else if(IsInputEqual(INVENTORY_WORD))
+			{
+				DisplayInventory(simulator);
+			}
 			
 			else if (IsInputPrefixEqual(WAIT_WORD) && ListDinElTypeLength(wordList) == 3)
 			{
@@ -157,7 +163,7 @@ int main(){
 
 				if (x != NUM_UNDEF && y != NUM_UNDEF)
 				{
-					printf("input command WAIT %d %d\n", x, y);
+					Wait(&simulator, x, y, foods);
 				}
 
 				else {
@@ -183,13 +189,8 @@ int main(){
 			// }
 
 			// else {
-			// 	UpdateStack(simulator, delivery, inventoryRecord, deliveryRecord, &undoStack);
-			// CreateEmptyStack(&redoStack);
-			// }
-
-
-			// else {
-			// 	UpdateStack(simulator, delivery, inventoryRecord, deliveryRecord, &undoStack);
+			// 	UpdateStack(simulator, inventoryRecord, deliveryRecord, &undoStack);
+			// 	CreateEmptyStack(&redoStack);
 			// }
 		}
     }

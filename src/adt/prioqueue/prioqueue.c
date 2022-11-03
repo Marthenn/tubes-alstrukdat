@@ -86,14 +86,21 @@ int LengthPQ (PrioQueue Q)
 {
     // Kamus Lokal
     // Algoritma
-    return Q.Tail - Q.Head+1;
+    if (IsEmptyPQ(Q))
+    {
+        return 0;
+    }
+
+    return Q.Tail - Q.Head + 1;
 }
 
 void CreateEmptyPQ(PrioQueue* Q)
 {
     // Kamus Lokal
     // Algoritma
+
     Q->Tab = (PQInfoType*) malloc(PQ_DEF_SIZE*sizeof(PQInfoType));
+
     Q->Head =  PQ_NIL;
     Q->Tail =  PQ_NIL;
     if (Q->Tab != NULL){
@@ -248,10 +255,9 @@ void DeleteElmtPQ(PrioQueue* Q, PQElType X, Waktu time)
     boolean found;
 
     found = false;
-    idx = 0;
-    length =  LengthPQ(*Q);
+    idx = Q->Head;
 
-    while (idx < LengthPQ(*Q) && !found)
+    while (idx <= Q->Tail && !found)
     {
         if (Q->Tab[idx].Info == X && Q->Tab[idx].Time == time)
         {

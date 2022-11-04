@@ -13,7 +13,7 @@
 
 int main(){
     // Kamus
-    PrioQueue Q;
+    PrioQueue Q,P;
     Waktu time;
     int tmp;
     int i;
@@ -64,33 +64,42 @@ int main(){
     DeleteAtPQ(&Q,&tmp, &time, 2);
     printf("Hapus %d\n",tmp);
     DisplayPQ(Q);
+    printf("****** Cek DeleteElmt ******\n");
+    printf("Hapus < 7, 3 >\n");
+    DeleteElmtPQ(&Q,7,3);
+    DisplayPQ(Q);
+    printf("****** Cek operasi Assign ******\n");
+    CreateEmptyPQ(&P);
+    AssignPQ(Q, &P);
+    printf("Salinan Q : \n");
+    DisplayPQ(P);
     printf("Mengosongkan queue...\n");
     while (!IsEmptyPQ(Q)){
         Dequeue(&Q,&tmp, &time);
     }
     DisplayPQ(Q);
-    printf("****** Uji Q ketika full ******\n");
+    printf("****** Cek realokasi jika queue tidak muat ******\n");
+    printf("Length : %d ; Capacity : %d\n",LengthPQ(Q),Q.Cap);
+    Enqueue(&Q,0,0);
+    printf("Length : %d ; Capacity : %d\n",LengthPQ(Q),Q.Cap);
+    for (i = 1;i <= 40;i++){
+        Enqueue(&Q,i,i);    
+    }
+    printf("Length : %d ; Capacity : %d\n",LengthPQ(Q),Q.Cap);
+    printf("****** Cek realokasi jika queue sepi ******\n");
+    printf("Length : %d ; Capacity : %d\n",LengthPQ(Q),Q.Cap);
+    while (LengthPQ(Q) > 16){
+        Dequeue(&Q,&tmp, &time);
+    }
+    printf("Length : %d ; Capacity : %d\n",LengthPQ(Q),Q.Cap);
+        while (LengthPQ(Q) > 1){
+        Dequeue(&Q,&tmp, &time);
+    }
+    printf("Length : %d ; Capacity : %d\n",LengthPQ(Q),Q.Cap);
+        printf("****** Uji Q ketika full ******\n");
     printf("Mengisi queue hingga penuh...\n");
-    for (i = 0;i < Q.Cap;i++){
+    for (i = 0;i < Q.Cap-LengthPQ(Q);i++){
         Enqueue(&Q,i,i);    
     }
     printf(strbol(IsFullPQ(Q)));
-    printf("****** Cek realokasi jika queue tidak muat ******\n");
-    printf("Capacity : %d\n",Q.Cap);
-    Enqueue(&Q,20,20);
-    printf("Capacity : %d\n",Q.Cap);
-    for (i = 0;i < 40;i++){
-        Enqueue(&Q,21+i,21+i);    
-    }
-    printf("Capacity : %d\n",Q.Cap);
-    printf("****** Cek realokasi jika queue sepi ******\n");
-    printf("Capacity : %d\n",Q.Cap);
-    while (LengthPQ(Q) > 20){
-        Dequeue(&Q,&tmp, &time);
-    }
-    printf("Capacity : %d\n",Q.Cap);
-        while (LengthPQ(Q) > 10){
-        Dequeue(&Q,&tmp, &time);
-    }
-    printf("Capacity : %d\n",Q.Cap);
 }

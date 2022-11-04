@@ -98,17 +98,10 @@ void CreateEmptyPQ(PrioQueue* Q)
 {
     // Kamus Lokal
     // Algoritma
-
-    Q->Tab = (PQInfoType*) malloc(PQ_DEF_SIZE*sizeof(PQInfoType));
-
+    Q->Tab = NULL;
     Q->Head =  PQ_NIL;
     Q->Tail =  PQ_NIL;
-    if (Q->Tab != NULL){
-        Q->Cap = PQ_DEF_SIZE;
-    } else {
-        printf("Gagal alokasi!");
-        Q->Cap = 0;
-    }
+    Q->Cap = 0;
 }
 
 
@@ -172,15 +165,16 @@ void Enqueue (PrioQueue * Q, PQElType X, Waktu time)
     newInfo.Time = time;
     if (IsEmptyPQ(*Q)){
         Q->Tail = Q->Head = 0;
+        ReallocatePQ(Q,1);
     } else if (IsFullPQ(*Q)){
         oldCap = Q->Cap;
         newCap = oldCap*2;
         ReallocatePQ(Q,newCap);
-        if (!IsFullPQ(*Q)){
-            Q->Tail++;
-        } else {
+        if (Q->Cap == oldCap){
             printf("Gagal realokasi, enqueue dibatalkan...\n");
             return;
+        } else {
+            Q->Tail++;
         }
     } else {
         if (Q->Tail == Q->Cap-1){
@@ -209,14 +203,12 @@ void Dequeue (PrioQueue * Q, PQElType* X, Waktu *time)
     *time = GetHeadTime(*Q);
 
     if (LengthPQ(*Q) == 1){
-        Q->Head =  PQ_NIL;
-        Q->Tail =  PQ_NIL;
+        DeallocatePQ(Q);
+        CreateEmptyPQ(Q);
     } else {
         Q->Head++;
-        if (Q->Cap !=  PQ_DEF_SIZE && LengthPQ(*Q) <= Q->Cap/4){
-            oldCap = Q->Cap;
-            newCap = (Q->Cap/2 >  PQ_DEF_SIZE ? Q->Cap/2 :  PQ_DEF_SIZE);
-            ReallocatePQ(Q,newCap);
+        if (LengthPQ(*Q) <= Q->Cap/4){
+            ReallocatePQ(Q,Q->Cap/2);
         }
     }
 }
@@ -224,7 +216,7 @@ void Dequeue (PrioQueue * Q, PQElType* X, Waktu *time)
 void DeleteAtPQ (PrioQueue* Q, PQElType* X, Waktu *time, int idx)
 {
     // Kamus Lokal
-    int i,oldCap,newCap;
+    int i;
     PQInfoType* tmpTab;
     // Algoritma
     if (idx == 0){
@@ -235,10 +227,8 @@ void DeleteAtPQ (PrioQueue* Q, PQElType* X, Waktu *time, int idx)
             Q->Tab[i-1] = Q->Tab[i];
         }
         Q->Tail--;
-        if (Q->Cap !=  PQ_DEF_SIZE && LengthPQ(*Q) <= Q->Cap/4){
-            oldCap = Q->Cap;
-            newCap = (Q->Cap/2 >  PQ_DEF_SIZE ? Q->Cap/2 :  PQ_DEF_SIZE);
-           ReallocatePQ(Q,newCap);
+        if (LengthPQ(*Q) <= Q->Cap/4){
+           ReallocatePQ(Q,Q->Cap/2);
         }
     }
 }
@@ -250,10 +240,12 @@ void DeleteElmtPQ(PrioQueue* Q, PQElType X, Waktu time)
         Elemen dapat tidak ditemukan (tidak dilakukan apa-apa). Kapasitas Q akan direalokasikan menjadi setengahnya jika Q sepi,
         yaitu ketika length(Q) <= Q.cap div 4 */
 {
+    // Kamus Lokal
     int idx, length, temp;
     Waktu t;
     boolean found;
 
+    // Algoritma
     found = false;
     idx = Q->Head;
 
@@ -262,7 +254,7 @@ void DeleteElmtPQ(PrioQueue* Q, PQElType X, Waktu time)
         if (Q->Tab[idx].Info == X && Q->Tab[idx].Time == time)
         {
             found = true;
-            DeleteAtPQ(Q, &X, &t, idx);
+            DeleteAtPQ(Q, &X, &t, idx-Q->Head);
         }
 
         else
@@ -271,6 +263,20 @@ void DeleteElmtPQ(PrioQueue* Q, PQElType X, Waktu time)
         }
     }
 }
+
+void AssignPQ (PrioQueue A, PrioQueue* B)
+{
+    // Kamus Lokal
+    // Algoritma
+    DeallocatePQ(B);
+    CreateEmptyPQ(B);
+    if (!IsEmptyPQ(A)){
+        for (int i = A.Head;i <= A.Tail;i++){
+            Enqueue(B,A.Tab[i].Info,A.Tab[i].Time);
+        }
+    }
+}
+
 void DisplayInfoTypePQ(PQInfoType p){
     // Kamus Lokal
     // Algoritma

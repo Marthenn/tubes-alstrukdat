@@ -543,10 +543,10 @@ void UpdateInverse(Simulator simulator, Record inverseRecord, Stack *stack, Wakt
     newRecord.Time = timeRecord;
     newRecord.SimulatorLoc = locRecord;
 
-    newRecord.DeliveryAdd = inverseRecord.DeliveryDel;
-    newRecord.DeliveryDel = inverseRecord.DeliveryAdd;
-    newRecord.InventoryAdd = inverseRecord.InventoryDel;
-    newRecord.InventoryDel = inverseRecord.InventoryAdd;
+    AssignPQ(inverseRecord.DeliveryDel,&newRecord.DeliveryAdd);
+    AssignPQ(inverseRecord.DeliveryAdd,&newRecord.DeliveryDel);
+    AssignPQ(inverseRecord.InventoryDel,&newRecord.InventoryAdd);
+    AssignPQ(inverseRecord.InventoryAdd,&newRecord.InventoryDel);
 
     PushStack(stack, newRecord);
 

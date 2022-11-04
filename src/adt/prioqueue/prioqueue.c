@@ -98,10 +98,15 @@ void CreateEmptyPQ(PrioQueue* Q)
 {
     // Kamus Lokal
     // Algoritma
-    Q->Tab = NULL;
-    Q->Head =  PQ_NIL;
-    Q->Tail =  PQ_NIL;
-    Q->Cap = 0;
+    Q->Tab = (PQInfoType*) malloc (sizeof(PQInfoType)*PQ_MIN_CAP);
+    if (Q->Tab != NULL){
+        Q->Head =  PQ_NIL;
+        Q->Tail =  PQ_NIL;
+        Q->Cap = PQ_MIN_CAP;
+    } else {
+        printf("Alokasi EmptyPQ gagal!");
+        Q->Cap = 0;
+    }
 }
 
 
@@ -132,7 +137,7 @@ void ReallocatePQ(PrioQueue * Q, int newCap)
         Q->Cap = newCap;
     } else {
         free(Q->Tab);
-        printf("Gagal realokasi!\n");
+        printf("Gagal realokasi PQ!\n");
     }
 }
 
@@ -165,7 +170,6 @@ void Enqueue (PrioQueue * Q, PQElType X, Waktu time)
     newInfo.Time = time;
     if (IsEmptyPQ(*Q)){
         Q->Tail = Q->Head = 0;
-        ReallocatePQ(Q,1);
     } else if (IsFullPQ(*Q)){
         oldCap = Q->Cap;
         newCap = oldCap*2;
@@ -203,20 +207,21 @@ void Dequeue (PrioQueue * Q, PQElType* X, Waktu *time)
     *time = GetHeadTime(*Q);
 
     if (LengthPQ(*Q) == 1){
-        DeallocatePQ(Q);
-        CreateEmptyPQ(Q);
+        Q->Head = Q->Tail = PQ_NIL;
     } else {
         Q->Head++;
-        if (LengthPQ(*Q) <= Q->Cap/4){
-            ReallocatePQ(Q,Q->Cap/2);
-        }
+    }
+    if (Q->Cap != PQ_MIN_CAP && LengthPQ(*Q) <= Q->Cap/4){
+        oldCap = Q->Cap;
+        newCap = (Q->Cap/2 > PQ_MIN_CAP ? Q->Cap/2 : PQ_MIN_CAP);
+        ReallocatePQ(Q,newCap);
     }
 }
 
 void DeleteAtPQ (PrioQueue* Q, PQElType* X, Waktu *time, int idx)
 {
     // Kamus Lokal
-    int i;
+    int i,oldCap,newCap;
     PQInfoType* tmpTab;
     // Algoritma
     if (idx == 0){
@@ -227,8 +232,10 @@ void DeleteAtPQ (PrioQueue* Q, PQElType* X, Waktu *time, int idx)
             Q->Tab[i-1] = Q->Tab[i];
         }
         Q->Tail--;
-        if (LengthPQ(*Q) <= Q->Cap/4){
-           ReallocatePQ(Q,Q->Cap/2);
+        if (Q->Cap != PQ_MIN_CAP && LengthPQ(*Q) <= Q->Cap/4){
+            oldCap = Q->Cap;
+            newCap = (Q->Cap/2 > PQ_MIN_CAP ? Q->Cap/2 : PQ_MIN_CAP);
+            ReallocatePQ(Q,newCap);
         }
     }
 }
@@ -269,10 +276,10 @@ void AssignPQ (PrioQueue A, PrioQueue* B)
     // Kamus Lokal
     // Algoritma
     DeallocatePQ(B);
-    CreateEmptyPQ(B);
+    B->Tab = (PQInfoType*) malloc (sizeof(PQInfoType) * A.Cap);
     if (!IsEmptyPQ(A)){
         for (int i = A.Head;i <= A.Tail;i++){
-            Enqueue(B,A.Tab[i].Info,A.Tab[i].Time);
+            B->Tab[i] = A.Tab[i];
         }
     }
 }

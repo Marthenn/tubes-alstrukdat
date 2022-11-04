@@ -81,18 +81,25 @@ int main(){
     printf("****** Cek realokasi jika queue tidak muat ******\n");
     printf("Length : %d ; Capacity : %d\n",LengthPQ(Q),Q.Cap);
     Enqueue(&Q,0,0);
+    DisplayPQ(Q);
     printf("Length : %d ; Capacity : %d\n",LengthPQ(Q),Q.Cap);
-    for (i = 1;i <= 40;i++){
+    for (i = 1;i <= 2;i++){
+        Enqueue(&Q,i,i);    
+    }
+        DisplayPQ(Q);
+    printf("Length : %d ; Capacity : %d\n",LengthPQ(Q),Q.Cap);
+    for (i = 3;i <= 40;i++){
         Enqueue(&Q,i,i);    
     }
     printf("Length : %d ; Capacity : %d\n",LengthPQ(Q),Q.Cap);
+    
     printf("****** Cek realokasi jika queue sepi ******\n");
     printf("Length : %d ; Capacity : %d\n",LengthPQ(Q),Q.Cap);
     while (LengthPQ(Q) > 16){
         Dequeue(&Q,&tmp, &time);
     }
     printf("Length : %d ; Capacity : %d\n",LengthPQ(Q),Q.Cap);
-        while (LengthPQ(Q) > 1){
+        while (LengthPQ(Q) > 5){
         Dequeue(&Q,&tmp, &time);
     }
     printf("Length : %d ; Capacity : %d\n",LengthPQ(Q),Q.Cap);

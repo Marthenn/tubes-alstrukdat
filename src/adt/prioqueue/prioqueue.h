@@ -1,7 +1,7 @@
 /* File : prioqueue.h */
 /* Definisi Priority Queue versi 2 dengan list dinamik */
 /* Priority queue memiliki komponen Info berupa int dan Time berupa Waktu */
-/* Elemen akan terurut membesar berdasarkan Iime, apabila sama maka Info lebih kecil didahulukan */
+/* Elemen akan terurut membesar berdasarkan Time, apabila sama maka Info lebih kecil didahulukan */
 
 #ifndef prioqueue_H
 #define prioqueue_H
@@ -12,6 +12,7 @@
 #include "../eltype/eltype.h"
 
 #define PQ_NIL -1
+#define PQ_MIN_CAP 1
 #define PQ_IDX_UNDEF -1
 
 typedef int PQElType;
@@ -64,7 +65,7 @@ int LengthPQ (PrioQueue Q);
 void CreateEmptyPQ(PrioQueue * Q);
 /* Membuat Q kosong */
 /* I.S. sembarang */
-/* F.S. Sebuah Q kosong terbentuk dengan Q.cap = 0 dan Q.tab = NULL. 
+/* F.S. Sebuah Q kosong terbentuk dengan Q.cap = MIN_CAP. 
         Tidak dilakukan dealokasi memori Q.Tab lama */
 
 /* *** Destruktor *** */
@@ -76,7 +77,7 @@ void DeallocatePQ(PrioQueue * Q);
 /* *** Realokator *** */
 void ReallocatePQ(PrioQueue * Q, int newCap);
 /* Mengalokasi ulang kapasitas Q */
-/* I.S. Q terdefinisi. Jika newCap lebih kecil dari kapasitas sebelumnya, maka haruslah length(Q) <= newCap */
+/* I.S. Q, newCap terdefinisi. newCap != 0. Jika newCap lebih kecil dari kapasitas sebelumnya, maka haruslah length(Q) <= newCap */
 /* F.S  Kapasitas Q menjadi newCap. Jika pada saat penambahan kapasitas gagal, maka ukuran Q tidak berubah dan
         pesan kesalahan akan ditampilkan di layar. Pengurangan kapasitas tidak akan mengalami kegagalan. */
 
@@ -118,6 +119,7 @@ void DeleteElmtPQ(PrioQueue* Q, PQElType X, Waktu time);
 /* Operasi Tambahan */
 void AssignPQ (PrioQueue A, PrioQueue* B);
 /* Melakukan operasi B := A sehingga konten B akan sama menjadi A */
+/* A dan B harus terdefinisi agar dapat dilakukan pembebasan memori */
 
 void DisplayInfoTypePQ(PQInfoType p);
 /* Menampilkan info dari PQInfoType */

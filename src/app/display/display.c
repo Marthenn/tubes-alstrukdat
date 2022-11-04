@@ -19,7 +19,7 @@ Makanan GetMakananFromId(ListStatik foods, int id){
     else {
         CreatePoint(&p,0,0);
         // MARK SEBAGAI TIDAK ADA DENGAN ID -999
-        CreateMakanan(&m, -999, NewWord("Not Found", 9), 0, 0, EMPTY_WORD, p);
+        CreateMakanan(&m, -999, NewWord("Not Found", 9), 0, 0, EMPTY_WORD, p, 0, 0);
         return m;
     }
 }

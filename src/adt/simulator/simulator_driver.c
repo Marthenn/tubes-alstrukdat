@@ -36,7 +36,8 @@ int main() {
     DisplayPQ(sim.Inventory);
 
     puts("Sekarang waktu = 5 menit");
-    HapusMakananKedaluarsa(&sim, 5);
+    SetTime(&sim, 5);
+    HapusMakananKedaluarsa(&sim);
     DisplayPQ(sim.Inventory);
 
     puts("Hapus makanan dengan ID 3");

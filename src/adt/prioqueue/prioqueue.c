@@ -277,6 +277,8 @@ void AssignPQ (PrioQueue A, PrioQueue* B)
     // Algoritma
     DeallocatePQ(B);
     B->Tab = (PQInfoType*) malloc (sizeof(PQInfoType) * A.Cap);
+    B->Head = A.Head;
+    B->Tail = A.Tail;
     if (!IsEmptyPQ(A)){
         for (int i = A.Head;i <= A.Tail;i++){
             B->Tab[i] = A.Tab[i];

@@ -81,12 +81,10 @@ int main(){
     printf("****** Cek realokasi jika queue tidak muat ******\n");
     printf("Length : %d ; Capacity : %d\n",LengthPQ(Q),Q.Cap);
     Enqueue(&Q,0,0);
-    DisplayPQ(Q);
     printf("Length : %d ; Capacity : %d\n",LengthPQ(Q),Q.Cap);
     for (i = 1;i <= 2;i++){
         Enqueue(&Q,i,i);    
     }
-        DisplayPQ(Q);
     printf("Length : %d ; Capacity : %d\n",LengthPQ(Q),Q.Cap);
     for (i = 3;i <= 40;i++){
         Enqueue(&Q,i,i);    
@@ -99,14 +97,16 @@ int main(){
         Dequeue(&Q,&tmp, &time);
     }
     printf("Length : %d ; Capacity : %d\n",LengthPQ(Q),Q.Cap);
-        while (LengthPQ(Q) > 5){
+        while (LengthPQ(Q) > 4){
         Dequeue(&Q,&tmp, &time);
     }
     printf("Length : %d ; Capacity : %d\n",LengthPQ(Q),Q.Cap);
         printf("****** Uji Q ketika full ******\n");
+    tmp = LengthPQ(Q);
     printf("Mengisi queue hingga penuh...\n");
-    for (i = 0;i < Q.Cap-LengthPQ(Q);i++){
+    for (i = 0;i < Q.Cap-tmp;i++){
         Enqueue(&Q,i,i);    
     }
+    printf("Length : %d ; Capacity : %d\n",LengthPQ(Q),Q.Cap);    
     printf(strbol(IsFullPQ(Q)));
 }

@@ -222,17 +222,14 @@ int main(){
 				}
 			}
 			printf("end cicle\n");
-
-			deliveryRecord = simulator.Delivery;
-			inventoryRecord = simulator.Inventory;
+			AssignPQ(simulator.Delivery,&deliveryRecord);
+			AssignPQ(simulator.Inventory,&inventoryRecord);
 			timeRecord = GetTime(&simulator);
 			locationRecord = GetLokasi(&simulator);
 
 			simulator.Notification = EMPTY_NOTIF;
 			
 			success = false;
-			
-			// program crash kalau buy 1, buy 2, undo, redo, buy 1
 		}
     }
 	

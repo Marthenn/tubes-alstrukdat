@@ -12,7 +12,6 @@
 #include "../eltype/eltype.h"
 
 #define PQ_NIL -1
-#define PQ_DEF_SIZE 20
 #define PQ_IDX_UNDEF -1
 
 typedef int PQElType;
@@ -62,12 +61,11 @@ int LengthPQ (PrioQueue Q);
 /* Mengirimkan banyaknya elemen queue. Mengirimkan 0 jika Q kosong. */
 
 /* *** Kreator *** */
-void CreateEmptyPQ(PrioQueue* Q);
-/* Melakukan alokasi, membuat sebuah Q kosong */
+void CreateEmptyPQ(PrioQueue * Q);
+/* Membuat Q kosong */
 /* I.S. sembarang */
-/* F.S. Sebuah Q kosong terbentuk dan salah satu kondisi sbb: */
-/* Jika alokasi berhasil, Tabel memori dialokasi berukuran DEF_SIZE */
-/* atau : jika alokasi gagal, Q kosong dg MaxEl=0 */
+/* F.S. Sebuah Q kosong terbentuk dengan Q.cap = 0 dan Q.tab = NULL. 
+        Tidak dilakukan dealokasi memori Q.Tab lama */
 
 /* *** Destruktor *** */
 void DeallocatePQ(PrioQueue * Q);
@@ -118,6 +116,9 @@ void DeleteElmtPQ(PrioQueue* Q, PQElType X, Waktu time);
         yaitu ketika length(Q) <= Q.cap div 4 */
         
 /* Operasi Tambahan */
+void AssignPQ (PrioQueue A, PrioQueue* B);
+/* Melakukan operasi B := A sehingga konten B akan sama menjadi A */
+
 void DisplayInfoTypePQ(PQInfoType p);
 /* Menampilkan info dari PQInfoType */
 /* I.S. Q terdefinisi */

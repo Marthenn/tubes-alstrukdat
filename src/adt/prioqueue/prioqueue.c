@@ -72,7 +72,7 @@ boolean IsEmptyPQ (PrioQueue Q)
 {
     // Kamus Lokal
     // Algoritma
-    return Q.Head == PQ_NIL && Q.Tail == PQ_NIL;
+    return (Q.Head == PQ_NIL) && (Q.Tail == PQ_NIL);
 }
 
 boolean IsFullPQ (PrioQueue Q)

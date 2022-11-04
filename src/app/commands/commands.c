@@ -592,7 +592,6 @@ void GetQueueChanges(PrioQueue *addChanges, PrioQueue *delChanges, PrioQueue pre
             Enqueue(delChanges, val, t);
         }
     }
-
     
     while(!IsEmptyPQ(prevQueue))
     {

@@ -36,7 +36,8 @@ void MoveSimulator(Map *map, Point p)
     MAT_ELMT(TAB(*map), GetAbsis(p), GetOrdinat(p)) = 'S';
     MAT_ELMT(TAB(*map), GetAbsis(S(*map)), GetOrdinat(S(*map))) = temp;
 
-    S(*map) = p;
+    S(*map).x = GetAbsis(p);
+    S(*map).y = GetOrdinat(p);
 }
 
 void DisplayMap(Map map)

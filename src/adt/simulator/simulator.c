@@ -33,7 +33,8 @@ void SetLokasi(Simulator *sim, Point Lokasi)
 /* I.S. sim telah dibentuk, Lokasi terdefinisi */
 /* F.S. Mengubah Lokasi sim */
 {
-    sim->Lokasi = Lokasi;
+    sim->Lokasi.x = GetAbsis(Lokasi);
+     sim->Lokasi.y = GetOrdinat(Lokasi);
 }
 
 /* NamaPengguna dan Inventory tidak ada setter manual */
@@ -41,7 +42,11 @@ void SetLokasi(Simulator *sim, Point Lokasi)
 Point GetLokasi(const Simulator *sim)
 /* Mengembalikan Point berisi lokasi pengguna */
 {
-    return sim->Lokasi;
+    Point currentPoint;
+
+    currentPoint.x = GetAbsis(sim->Lokasi);
+    currentPoint.y = GetOrdinat(sim->Lokasi);
+    return currentPoint;
 }
 Word GetNamaPengguna(const Simulator *sim)
 /* Mengembalikan Word berisi NamaPengguna */

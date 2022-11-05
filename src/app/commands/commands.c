@@ -96,6 +96,7 @@ void Buy(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
 
 void Mix(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType mixFoods, Stack *undoRecord, boolean *success){
     Waktu time;
+    boolean end;
 
     if(!(IsAdjacent((*simulator).Lokasi,M(map)))){
         DisplayWord(GetNamaPengguna(simulator));
@@ -103,7 +104,8 @@ void Mix(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
     } else {
         MixMenu(mixFoods);
         int x;
-        while(!*success){
+        end = false;
+        while(!end && !*success){
             //handle input harus integer
             printf("Enter Command: ");
             STARTWORD();
@@ -113,7 +115,7 @@ void Mix(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
             } else {
                 x--;
                 if(x==-1){
-                    *success = true;
+                    end = true;
                 } else if (x>ListDinElTypeLength(mixFoods)-1){
                     printf("Input tidak valid!\n");
                 } else {
@@ -174,6 +176,7 @@ void Mix(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
 
 void Chop(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType chopFoods, Stack *undoRecord, boolean *success){
     Waktu time;
+    boolean end;
 
     if(!(IsAdjacent((*simulator).Lokasi,C(map)))){
         DisplayWord(GetNamaPengguna(simulator));
@@ -181,7 +184,7 @@ void Chop(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
     } else {
         MixMenu(chopFoods);
         int x;
-        while(!*success){
+        while(!end && !*success){
             //handle input harus integer
             printf("Enter Command: ");
             STARTWORD();
@@ -191,7 +194,7 @@ void Chop(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
             } else {
                 x--;
                 if(x==-1){
-                    *success = true;
+                    end = true;
                 } else if (x>ListDinElTypeLength(chopFoods)-1){
                     printf("Input tidak valid!\n");
                 } else {
@@ -252,14 +255,15 @@ void Chop(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
 
 void Fry(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType fryFoods, Stack *undoRecord, boolean *success){
     Waktu time;
-
+    boolean end;
     if(!(IsAdjacent((*simulator).Lokasi,F(map)))){
         DisplayWord(GetNamaPengguna(simulator));
         printf(" tidak berada di area frying!\n");
     } else {
         MixMenu(fryFoods);
         int x;
-        while(!*success){
+        end = false;
+        while(!end && !*success){
             //handle input harus integer
             printf("Enter Command: ");
             STARTWORD();
@@ -269,7 +273,7 @@ void Fry(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
             } else {
                 x--;
                 if(x==-1){
-                    *success = true;
+                    end = true;
                 } else if (x>ListDinElTypeLength(fryFoods)-1){
                     printf("Input tidak valid!\n");
                 } else {
@@ -330,12 +334,14 @@ void Fry(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
 
 void Boil(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType boilFoods, Stack *undoRecord, boolean *success){
     Waktu time;
+    boolean end;
 
     if(!(IsAdjacent((*simulator).Lokasi,B(map)))){
         DisplayWord(GetNamaPengguna(simulator));
         printf(" tidak berada di area mixing!\n");
     } else {
         MixMenu(boilFoods);
+        end = false;
         int x;
         while(!*success){
             //handle input harus integer
@@ -347,7 +353,7 @@ void Boil(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
             } else {
                 x--;
                 if(x==-1){
-                    *success = true;
+                    end = true;
                 } else if (x>ListDinElTypeLength(boilFoods)-1){
                     printf("Input tidak valid!\n");
                 } else {
@@ -460,37 +466,46 @@ void Move(Simulator *simulator, Map *map, int moveCode, ListStatik foods, boolea
 
 void resetState(Simulator* simulator, Record record, Map *map)
 {
-    PQElType id;
+    int id;
     Waktu time;
     PrioQueue p;
+
+    CreateEmptyPQ(&p);
 
     SetTime(simulator, record.Time);
     SetLokasi(simulator, record.SimulatorLoc);
     MoveSimulator(map, record.SimulatorLoc);
 
-    while(!IsEmptyPQ(record.DeliveryAdd))
+    AssignPQ(record.DeliveryAdd, &p);
+    while(!IsEmptyPQ(p))
     {
-        Dequeue(&record.DeliveryAdd, &id, &time);
+        Dequeue(&p, &id, &time);
         DeleteElmtPQ(&simulator->Delivery, id, time);
     }
 
-    while(!IsEmptyPQ(record.DeliveryDel))
+    AssignPQ(record.DeliveryDel, &p);
+    while(!IsEmptyPQ(p))
     {
-        Dequeue(&record.DeliveryDel, &id, &time);
+        Dequeue(&p, &id, &time);
         Enqueue(&simulator->Delivery, id, time);
     }
 
-    while(!IsEmptyPQ(record.InventoryAdd))
+    AssignPQ(record.InventoryAdd, &p);
+    while(!IsEmptyPQ(p))
     {
-        Dequeue(&record.InventoryAdd, &id, &time);
+        Dequeue(&p, &id, &time);
         DeleteElmtPQ(&simulator->Inventory, id, time);
     }
 
-    while(!IsEmptyPQ(record.InventoryDel))
+    AssignPQ(record.InventoryDel, &p);
+    while(!IsEmptyPQ(p))
     {
-        Dequeue(&record.InventoryDel, &id, &time);
+        Dequeue(&p, &id, &time);
+        printf("%d\n", id);
         Enqueue(&simulator->Inventory, id, time);
     }
+
+    DeallocatePQ(&p);
     
 }
 void Undo (Simulator* simulator, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *undoStack, Stack *redoStack, Waktu timeRecord, Point locRecord, Map *map)
@@ -526,12 +541,19 @@ void Redo (Simulator* simulator, PrioQueue inventoryRecord, PrioQueue deliveryRe
 void UpdateStack(Simulator simulator, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *stack, Waktu timeRecord, Point locRecord)
 {
     Record newRecord;
-
     newRecord.Time = timeRecord;
-    newRecord.SimulatorLoc = locRecord;
-    
+    newRecord.SimulatorLoc.x = GetAbsis(locRecord);
+    newRecord.SimulatorLoc.y = GetOrdinat(locRecord);
+
+    CreateEmptyPQ(&newRecord.DeliveryAdd);
+    CreateEmptyPQ(&newRecord.DeliveryDel);
+    CreateEmptyPQ(&newRecord.InventoryAdd);
+    CreateEmptyPQ(&newRecord.InventoryDel);
+
+
     GetQueueChanges(&newRecord.DeliveryAdd, &newRecord.DeliveryDel, deliveryRecord, simulator.Delivery);
     GetQueueChanges(&newRecord.InventoryAdd, &newRecord.InventoryDel, inventoryRecord, simulator.Inventory);
+
 
     PushStack(stack, newRecord);
 }
@@ -541,22 +563,52 @@ void UpdateInverse(Simulator simulator, Record inverseRecord, Stack *stack, Wakt
     Record newRecord;
 
     newRecord.Time = timeRecord;
-    newRecord.SimulatorLoc = locRecord;
+    newRecord.SimulatorLoc.x = GetAbsis(locRecord);
+    newRecord.SimulatorLoc.y = GetOrdinat(locRecord);
+    
+    CreateEmptyPQ(&newRecord.DeliveryAdd);
+    CreateEmptyPQ(&newRecord.DeliveryDel);
+    CreateEmptyPQ(&newRecord.InventoryAdd);
+    CreateEmptyPQ(&newRecord.InventoryDel);
+
+    printf("deli add :\n");
+    DisplayPQ(inverseRecord.DeliveryAdd);
+    printf("deli del :\n");
+    DisplayPQ(inverseRecord.DeliveryDel);
+    printf("inven add :\n");
+    DisplayPQ(inverseRecord.InventoryAdd);
+    printf("inven del :\n");
+    DisplayPQ(inverseRecord.InventoryDel);
 
     AssignPQ(inverseRecord.DeliveryDel,&newRecord.DeliveryAdd);
     AssignPQ(inverseRecord.DeliveryAdd,&newRecord.DeliveryDel);
     AssignPQ(inverseRecord.InventoryDel,&newRecord.InventoryAdd);
     AssignPQ(inverseRecord.InventoryAdd,&newRecord.InventoryDel);
 
+    printf("deli add :\n");
+    DisplayPQ(newRecord.DeliveryAdd);
+    printf("deli del :\n");
+    DisplayPQ(newRecord.DeliveryDel);
+    printf("inven add :\n");
+    DisplayPQ(newRecord.InventoryAdd);
+    printf("inven del :\n");
+    DisplayPQ(newRecord.InventoryDel);
+
     PushStack(stack, newRecord);
 
 }
 
-void GetQueueChanges(PrioQueue *addChanges, PrioQueue *delChanges, PrioQueue prevQueue, PrioQueue currentQueue)
+void GetQueueChanges(PrioQueue *addChanges, PrioQueue *delChanges, PrioQueue prevQueueRef, PrioQueue currentQueueRef)
 {
     int i;
-    PQElType val;
+    int val;
     Waktu t;
+    PrioQueue prevQueue, currentQueue;
+
+    CreateEmptyPQ(&prevQueue);
+    CreateEmptyPQ(&currentQueue);
+    AssignPQ(prevQueueRef, &prevQueue);
+    AssignPQ(currentQueueRef, &currentQueue);
 
     CreateEmptyPQ(addChanges);
     CreateEmptyPQ(delChanges);
@@ -604,4 +656,7 @@ void GetQueueChanges(PrioQueue *addChanges, PrioQueue *delChanges, PrioQueue pre
         Dequeue(&currentQueue, &val, &t);
         Enqueue(addChanges, val, t);
     }
+
+    DeallocatePQ(&prevQueue);
+    DeallocatePQ(&currentQueue);
 }

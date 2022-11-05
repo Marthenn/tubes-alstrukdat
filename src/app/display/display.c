@@ -296,7 +296,9 @@ void Catalog(ListStatik foods)
 void DisplayDelivery(ListStatik foods, Simulator simulator){
     int i, h, j, m;
     Waktu delta;
-    PrioQueue delivery = simulator.Delivery;
+    PrioQueue delivery;
+    CreateEmptyPQ(&delivery);
+    AssignPQ(simulator.Delivery,&delivery);
 
     printf("======LIST PESANAN======\n");
     if(IsEmptyPQ(delivery)){

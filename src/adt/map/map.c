@@ -4,7 +4,7 @@
 /* ADT */
 #include "../../boolean.h"
 #include "../eltype/eltype.h"
-#include "../matriks/Matriks.h"
+#include "../matriks/matriks.h"
 #include "map.h"
 #include "../../app/parser/parser.h"
 

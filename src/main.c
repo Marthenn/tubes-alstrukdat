@@ -45,6 +45,7 @@ int main(){
 
 				CreateEmptyPQ(&inventoryRecord);
 				CreateEmptyPQ(&deliveryRecord);
+
 				timeRecord = GetTime(&simulator);
 				locationRecord = GetLokasi(&simulator);
 
@@ -213,7 +214,7 @@ int main(){
 			}
 
 			else if (success) {
-				printf("end action\n");
+				
 				UpdateStack(simulator, inventoryRecord, deliveryRecord, &undoStack, timeRecord, locationRecord);
 
 				if (!IsStackEmpty(redoStack))
@@ -221,15 +222,18 @@ int main(){
 					CreateEmptyStack(&redoStack);
 				}
 			}
-			printf("end cicle\n");
-			AssignPQ(simulator.Delivery,&deliveryRecord);
-			AssignPQ(simulator.Inventory,&inventoryRecord);
+
+			AssignPQ(simulator.Delivery, &deliveryRecord);
+			AssignPQ(simulator.Inventory, &inventoryRecord);
+
 			timeRecord = GetTime(&simulator);
 			locationRecord = GetLokasi(&simulator);
 
 			simulator.Notification = EMPTY_NOTIF;
-			
+
 			success = false;
+			
+			DisplayPQ(simulator.Inventory);
 		}
     }
 	

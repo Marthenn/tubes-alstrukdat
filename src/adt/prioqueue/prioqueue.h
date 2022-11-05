@@ -15,10 +15,10 @@
 #define PQ_MIN_CAP 1
 #define PQ_IDX_UNDEF -1
 
-typedef int PQElType;
+
 typedef struct {
     Waktu Time;
-    PQElType Info;
+    int Info;
 } PQInfoType;
 
 typedef struct{
@@ -27,13 +27,13 @@ typedef struct{
 } PrioQueue;
 
 /* **** Getter & Setter **** */
-PQElType GetHeadInfo(PrioQueue Q);
+int GetHeadInfo(PrioQueue Q);
 /* Mengembalikan Info pada Head */
 
 Waktu GetHeadTime(PrioQueue Q);
 /* Mengembalikan Time pada Head */
 
-PQElType GetElmtInfo(PrioQueue Q,int idx);
+int GetElmtInfo(PrioQueue Q,int idx);
 /* Mengembalikan Info elemen indeks ke-idx secara logikal pada Q. idx = 0 adalah Head */
 /* idx berada pada rentang [0..length(Q)] */
 
@@ -82,12 +82,12 @@ void ReallocatePQ(PrioQueue * Q, int newCap);
         pesan kesalahan akan ditampilkan di layar. Pengurangan kapasitas tidak akan mengalami kegagalan. */
 
 /* *** Searching *** */
-int IndexOfPQ(PrioQueue Q, PQElType X);
+int IndexOfPQ(PrioQueue Q, int X);
 /* Mengembalikan indeks X pertama kali ditemukan di Q mulai dari depan. */
 /* Mengembalikan IDX_UNDEF jika tidak ada */
 
 /* *** Primitif Add/Delete *** */
-void Enqueue (PrioQueue * Q, PQElType X, Waktu time);
+void Enqueue (PrioQueue * Q, int X, Waktu time);
 /* Menambahkan X pada Q dengan aturan priority queue, terurut membesar berdasarkan time */
 /* I.S. Q terdefinisi dan mungkin kosong */
 /* F.S. X disisipkan pada posisi yang tepat sesuai dengan prioritas,
@@ -95,21 +95,21 @@ void Enqueue (PrioQueue * Q, PQElType X, Waktu time);
         Jika realokasi gagal, X tidak dimasukkan ke Q dan pesan kesalahan akan ditampilkan
         di layar. */
 
-void Dequeue (PrioQueue * Q, PQElType* X, Waktu* time);
+void Dequeue (PrioQueue * Q, int* X, Waktu* time);
 /* Proses: Menghapus X pada Q dengan aturan FIFO */
 /* I.S. Q tidak mungkin kosong */
 /* F.S. X = nilai elemen HEAD pd I.S., HEAD dimajukan. Q mungkin kosong. 
         Kapasitas Q akan direalokasikan menjadi setengahnya jika Q sepi,
         yaitu ketika length(Q) <= Q.cap div 4*/
 
-void DeleteAtPQ(PrioQueue* Q, PQElType* X, Waktu *time, int idx);
+void DeleteAtPQ(PrioQueue* Q, int* X, Waktu *time, int idx);
 /* Proses: Menghapus elemen ke-idx pada Q */
 /* I.S. Q tidak mungkin kosong. idx berada padas rentang [0..length(Q)-1]*/
 /* F.S. Elemen ke-idx dihapus, elemen sebelumnya akan dimajukan jika Q tidak menjadi kosong.
         X berisi elemen yang dihapus. Kapasitas Q akan direalokasikan menjadi setengahnya jika Q sepi,
         yaitu ketika length(Q) <= Q.cap div 4 */
 
-void DeleteElmtPQ(PrioQueue* Q, PQElType X, Waktu time);
+void DeleteElmtPQ(PrioQueue* Q, int X, Waktu time);
 /* Proses: Menghapus elemen pada Q yang memiliki nilai X dan waktu time */
 /* I.S. Q tidak mungkin kosong.*/
 /* F.S. Elemen dengan nilai X dan waktu time dihapus, elemen sebelumnya akan dimajukan jika Q tidak menjadi kosong.

@@ -9,7 +9,7 @@
 #include "prioqueue.h"
 
 
-PQElType GetHeadInfo(PrioQueue Q)
+int GetHeadInfo(PrioQueue Q)
 {
     // Kamus Lokal
     // Algoritma
@@ -23,7 +23,7 @@ Waktu GetHeadTime(PrioQueue Q)
     return Q.Tab[Q.Head].Time;
 }
 
-PQElType GetElmtInfo(PrioQueue Q,int idx)
+int GetElmtInfo(PrioQueue Q,int idx)
 {
     // Kamus Lokal
     // Algoritma
@@ -141,7 +141,7 @@ void ReallocatePQ(PrioQueue * Q, int newCap)
     }
 }
 
-int IndexOfPQ(PrioQueue Q, PQElType X)
+int IndexOfPQ(PrioQueue Q, int X)
 {
     // Kamus Lokal
     int i, idx;
@@ -160,7 +160,7 @@ int IndexOfPQ(PrioQueue Q, PQElType X)
     else return PQ_IDX_UNDEF;
 }
 
-void Enqueue (PrioQueue * Q, PQElType X, Waktu time)
+void Enqueue (PrioQueue * Q, int X, Waktu time)
 {
     // Kamus Lokal
     int i,oldCap,newCap,idx;
@@ -197,7 +197,7 @@ void Enqueue (PrioQueue * Q, PQElType X, Waktu time)
     }
     Q->Tab[idx] = newInfo;
 }
-void Dequeue (PrioQueue * Q, PQElType* X, Waktu *time)
+void Dequeue (PrioQueue * Q, int* X, Waktu *time)
 {
     // Kamus Lokal
     int i,oldCap,newCap;
@@ -207,18 +207,21 @@ void Dequeue (PrioQueue * Q, PQElType* X, Waktu *time)
     *time = GetHeadTime(*Q);
 
     if (LengthPQ(*Q) == 1){
-        Q->Head = Q->Tail = PQ_NIL;
+        Q->Head = PQ_NIL;
+        Q->Tail = PQ_NIL;
     } else {
         Q->Head++;
     }
-    if (Q->Cap != PQ_MIN_CAP && LengthPQ(*Q) <= Q->Cap/4){
-        oldCap = Q->Cap;
-        newCap = (Q->Cap/2 > PQ_MIN_CAP ? Q->Cap/2 : PQ_MIN_CAP);
-        ReallocatePQ(Q,newCap);
-    }
+
+    /* INI BELUM UPDATE HEAD TAILNYA !!!!!!!! */
+    // if (Q->Cap != PQ_MIN_CAP && LengthPQ(*Q) <= Q->Cap/4){
+    //     oldCap = Q->Cap;
+    //     newCap = (Q->Cap/2 > PQ_MIN_CAP ? Q->Cap/2 : PQ_MIN_CAP);
+    //     ReallocatePQ(Q,newCap);
+    // }
 }
 
-void DeleteAtPQ (PrioQueue* Q, PQElType* X, Waktu *time, int idx)
+void DeleteAtPQ (PrioQueue* Q, int* X, Waktu *time, int idx)
 {
     // Kamus Lokal
     int i,oldCap,newCap;
@@ -240,7 +243,7 @@ void DeleteAtPQ (PrioQueue* Q, PQElType* X, Waktu *time, int idx)
     }
 }
 
-void DeleteElmtPQ(PrioQueue* Q, PQElType X, Waktu time)
+void DeleteElmtPQ(PrioQueue* Q, int X, Waktu time)
 /* Proses: Menghapus elemen pada Q yang memiliki nilai X dan waktu time */
 /* I.S. Q tidak mungkin kosong.*/
 /* F.S. Elemen dengan nilai X dan waktu time dihapus, elemen sebelumnya akan dimajukan jika Q tidak menjadi kosong.
@@ -261,7 +264,8 @@ void DeleteElmtPQ(PrioQueue* Q, PQElType X, Waktu time)
         if (Q->Tab[idx].Info == X && Q->Tab[idx].Time == time)
         {
             found = true;
-            DeleteAtPQ(Q, &X, &t, idx-Q->Head);
+            printf("indeks saat delete : %d\n", idx-(Q->Head));
+            DeleteAtPQ(Q, &temp, &t, idx-(Q->Head));
         }
 
         else
@@ -275,13 +279,15 @@ void AssignPQ (PrioQueue A, PrioQueue* B)
 {
     // Kamus Lokal
     // Algoritma
-    DeallocatePQ(B);
-    B->Tab = (PQInfoType*) malloc (sizeof(PQInfoType) * A.Cap);
+    
+    B->Tab = realloc (B->Tab, sizeof(PQInfoType) * A.Cap);
     B->Head = A.Head;
     B->Tail = A.Tail;
+    
     if (!IsEmptyPQ(A)){
         for (int i = A.Head;i <= A.Tail;i++){
-            B->Tab[i] = A.Tab[i];
+            B->Tab[i].Info = A.Tab[i].Info;
+            B->Tab[i].Time = A.Tab[i].Time;
         }
     }
 }

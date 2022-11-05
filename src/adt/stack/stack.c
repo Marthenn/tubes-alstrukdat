@@ -43,6 +43,7 @@ void PushStack(Stack * S, Record X)
 /* F.S. X menjadi TOP yang baru,TOP bertambah 1 */
 {
 	//KAMUS LOKAL
+	Record *currentRecord;
 	//ALGORITMA
 	
 	StackTop(*S)++;
@@ -52,7 +53,21 @@ void PushStack(Stack * S, Record X)
 		ExpandStack(S);
 	}
 
-	StackTab(*S)[StackTop(*S)] = X;
+	currentRecord = &StackTab(*S)[StackTop(*S)];
+	currentRecord->Time = X.Time;
+	currentRecord->SimulatorLoc.x = GetAbsis(X.SimulatorLoc);
+	currentRecord->SimulatorLoc.y = GetOrdinat(X.SimulatorLoc);
+
+	CreateEmptyPQ(&currentRecord->DeliveryAdd);
+	CreateEmptyPQ(&currentRecord->DeliveryDel);
+	CreateEmptyPQ(&currentRecord->InventoryAdd);
+	CreateEmptyPQ(&currentRecord->InventoryDel);
+
+	AssignPQ(X.DeliveryAdd, &currentRecord->DeliveryAdd);
+	AssignPQ(X.DeliveryDel, &currentRecord->DeliveryDel);
+	AssignPQ(X.InventoryAdd, &currentRecord->InventoryAdd);
+	AssignPQ(X.InventoryDel, &currentRecord->InventoryDel);
+	
 }
 
 /* ************ Menghapus sebuah elemen Stack ************ */

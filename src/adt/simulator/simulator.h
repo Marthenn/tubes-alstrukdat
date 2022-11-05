@@ -82,8 +82,8 @@ void Wait(Simulator *sim, int Jam, int Menit, ListStatik foods);
 /* F.S. waktu bertambah selama x jam dan y menit
    Makanan kedaluarsa dihapus */
 
-void DisplayInventory(Simulator sim);
-/* Keluaran data inventory dengan ID Makanan
-   dan waktu expirednya */
+// void DisplayInventory(Simulator sim);
+// /* Keluaran data inventory dengan ID Makanan
+//    dan waktu expirednya */
 
 #endif

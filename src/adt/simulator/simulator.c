@@ -100,7 +100,7 @@ void InsertMakanan(Simulator *sim, int ID, Waktu kedaluarsa)
 /* I.S. sim terdefinisi. kedaluarsa = waktu sekarang + waktu kedaluarsa makanan */
 /* F.S. sim->Inventory ditambahkan makanan */
 {
-    Enqueue(&(sim->Inventory), ID, kedaluarsa);
+    Enqueue(&(sim->Inventory), ID, kedaluarsa+GetTime(sim));
 }
 
 void HapusDelivery(Simulator *sim, ListStatik foods)
@@ -161,27 +161,27 @@ void Wait(Simulator *sim, int Jam, int Menit, ListStatik foods){
     TakeTime(sim, 0, Jam, Menit, foods);
 }
 
-void DisplayInventory(Simulator sim){
-/* Keluaran data inventory dengan ID Makanan
-   dan waktu expirednya */
+// void DisplayInventory(Simulator sim){
+// /* Keluaran data inventory dengan ID Makanan
+//    dan waktu expirednya */
    
-    // Kamus Lokal
-    int i;
-    PQInfoType elmt;
-    Waktu currentTime;
+//     // Kamus Lokal
+//     int i;
+//     PQInfoType elmt;
+//     Waktu currentTime;
 
-    // ALGORITMA
-;
-    currentTime = GetTime(&sim);
-    printf("--------------\n");
-    if (!IsEmptyPQ(sim.Inventory)){
-        for (i = sim.Inventory.Head;i <= sim.Inventory.Tail;i++){
+//     // ALGORITMA
+// ;
+//     currentTime = GetTime(&sim);
+//     printf("--------------\n");
+//     if (!IsEmptyPQ(sim.Inventory)){
+//         for (i = sim.Inventory.Head;i <= sim.Inventory.Tail;i++){
             
-            elmt.Info = (sim.Inventory).Tab[i].Info;
-            elmt.Time = (sim.Inventory).Tab[i].Time - currentTime;
-            DisplayInfoTypePQ(elmt);
-            printf("\n");
-        }
-    }
-    printf("--------------\n");
-}
+//             elmt.Info = (sim.Inventory).Tab[i].Info;
+//             elmt.Time = (sim.Inventory).Tab[i].Time - currentTime;
+//             DisplayInfoTypePQ(elmt);
+//             printf("\n");
+//         }
+//     }
+//     printf("--------------\n");
+// }

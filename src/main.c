@@ -169,7 +169,7 @@ int main(){
 
 			else if(IsInputEqual(INVENTORY_WORD))
 			{
-				DisplayInventory(simulator);
+				DisplayInventory(foods, simulator);
 				stay = true;
 			}
 			

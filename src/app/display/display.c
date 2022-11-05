@@ -305,8 +305,9 @@ void DisplayDelivery(ListStatik foods, Simulator simulator){
         printf("Tidak ada pesanan yang sedang dalam perjalanan\n");
     } else {
         printf("(nama - sisa waktu)\n");
+        j=0;
         for(i=delivery.Head;i<=delivery.Tail;i++){
-            printf("%d. ",i+1);
+            printf("%d. ",j+1);
             DisplayWord(GetMakananFromId(foods,delivery.Tab[i].Info).Nama);
             printf(" - ");
 
@@ -314,6 +315,40 @@ void DisplayDelivery(ListStatik foods, Simulator simulator){
 
             CetakWaktuLengkap(delta);
             printf("\n");
+            j++;
         }
+    }
+}
+
+void DisplayInventory(ListStatik foods, Simulator simulator){
+    // Kamus Lokal
+    int i,j;
+    Word nama;
+    Waktu currentTime,kadaluwarsa;
+
+    //ALgoritma
+    currentTime = GetTime(&simulator);
+    printf("======INVENTORY======\n");
+    if(!IsEmptyPQ(simulator.Inventory)){
+        printf("(nama - kedaluwarsa)\n");
+        j=1;
+        for(i=simulator.Inventory.Head;i<=simulator.Inventory.Tail;i++){
+            nama = GetMakananFromId(foods,simulator.Inventory.Tab[i].Info).Nama;
+            kadaluwarsa = (simulator.Inventory).Tab[i].Time - currentTime;
+            printf("%d. ",j); DisplayWord(nama);printf(" - ");
+            if(GetHari(kadaluwarsa)>0){
+                printf("%d hari ",GetHari(kadaluwarsa));
+            }
+            if(GetJam(kadaluwarsa)>0){
+                printf("%d jam ",GetJam(kadaluwarsa));
+            }
+            if(GetMenit(kadaluwarsa)>0){
+                printf("%d menit ",GetMenit(kadaluwarsa));
+            }
+            printf("\n");
+            j++;
+        }
+    } else {
+        printf("Tidak ada makanan dalam inventory\n");
     }
 }

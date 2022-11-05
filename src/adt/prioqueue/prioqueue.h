@@ -12,7 +12,7 @@
 #include "../eltype/eltype.h"
 
 #define PQ_NIL -1
-#define PQ_MIN_CAP 1
+#define PQ_MIN_CAP 20
 #define PQ_IDX_UNDEF -1
 
 

@@ -103,8 +103,16 @@ void Catalog(ListStatik foods);
  * @brief Display the current status of foods in delivery
  * 
  * @param foods List of foods available
- * @param deliveryRecord Queue of foods in delivery
+ * @param simulator The simulator object
  */
 void DisplayDelivery(ListStatik foods, Simulator simulator);
+
+/**
+ * @brief Display the current inventory of the simulator
+ * 
+ * @param foods List of foods available
+ * @param simulator The simulator object
+ */
+void DisplayInventory(ListStatik foods, Simulator simulator);
 
 #endif

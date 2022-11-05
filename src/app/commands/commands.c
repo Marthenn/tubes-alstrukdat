@@ -69,7 +69,7 @@ void Buy(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
         int x;
         while(!*success){
             printf("Enter Command: ");
-            STARTWORD();
+            ADVWORD();
             x = WordToInt(currentWord);
             if((x/10)+1!=currentWord.Length){
                 printf("Input bukan integer\n");
@@ -108,7 +108,7 @@ void Mix(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
         while(!end && !*success){
             //handle input harus integer
             printf("Enter Command: ");
-            STARTWORD();
+            ADVWORD();
             x = WordToInt(currentWord);
             if((x/10)+1!=currentWord.Length){
                 printf("Input tidak valid!\n");
@@ -136,7 +136,7 @@ void Mix(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
                     for(i=0;i<needLength;i++){
                         //cek apakah ada di inventory
                         int j;
-                        for(j=0;j<LengthPQ((*simulator).Inventory);j++){
+                        for(j=simulator->Inventory.Head;j<=simulator->Inventory.Tail;j++){
                             if(need.buffer[i]==(*simulator).Inventory.Tab[j].Info){
                                 needCount++;
                                 //hapus dari needLeft jika ada
@@ -182,12 +182,12 @@ void Chop(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
         DisplayWord(GetNamaPengguna(simulator));
         printf(" tidak berada di area chopping!\n");
     } else {
-        MixMenu(chopFoods);
+        ChopMenu(chopFoods);
         int x;
         while(!end && !*success){
             //handle input harus integer
             printf("Enter Command: ");
-            STARTWORD();
+            ADVWORD();
             x = WordToInt(currentWord);
             if((x/10)+1!=currentWord.Length){
                 printf("Input tidak valid!\n");
@@ -215,7 +215,7 @@ void Chop(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
                     for(i=0;i<needLength;i++){
                         //cek apakah ada di inventory
                         int j;
-                        for(j=0;j<LengthPQ((*simulator).Inventory);j++){
+                        for(j=simulator->Inventory.Head;j<=simulator->Inventory.Tail;j++){
                             if(need.buffer[i]==(*simulator).Inventory.Tab[j].Info){
                                 needCount++;
                                 //hapus dari needLeft jika ada
@@ -260,13 +260,13 @@ void Fry(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
         DisplayWord(GetNamaPengguna(simulator));
         printf(" tidak berada di area frying!\n");
     } else {
-        MixMenu(fryFoods);
+        FryMenu(fryFoods);
         int x;
         end = false;
         while(!end && !*success){
             //handle input harus integer
             printf("Enter Command: ");
-            STARTWORD();
+            ADVWORD();
             x = WordToInt(currentWord);
             if((x/10)+1!=currentWord.Length){
                 printf("Input tidak valid!\n");
@@ -294,7 +294,7 @@ void Fry(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
                     for(i=0;i<needLength;i++){
                         //cek apakah ada di inventory
                         int j;
-                        for(j=0;j<LengthPQ((*simulator).Inventory);j++){
+                        for(j=simulator->Inventory.Head;j<=simulator->Inventory.Tail;j++){
                             if(need.buffer[i]==(*simulator).Inventory.Tab[j].Info){
                                 needCount++;
                                 //hapus dari needLeft jika ada
@@ -307,7 +307,9 @@ void Fry(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
                         *success = true;
                         //kurangi inventory
                         for(i=0;i<needLength;i++){
+                            DisplayWordLine(GetMakananFromId(foods,need.buffer[i]).Nama);
                             temp = DeleteMakanan(simulator, need.buffer[i]);
+                            if(temp)printf("berhasil dihapus\n");
                         }
                         //tambah ke inventory
                         InsertMakanan(simulator, dibuat.Id, dibuat.Kedaluarsa);
@@ -340,13 +342,13 @@ void Boil(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
         DisplayWord(GetNamaPengguna(simulator));
         printf(" tidak berada di area mixing!\n");
     } else {
-        MixMenu(boilFoods);
+        BoilMenu(boilFoods);
         end = false;
         int x;
         while(!*success){
             //handle input harus integer
             printf("Enter Command: ");
-            STARTWORD();
+            ADVWORD();
             x = WordToInt(currentWord);
             if((x/10)+1!=currentWord.Length){
                 printf("Input tidak valid!\n");
@@ -374,7 +376,7 @@ void Boil(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
                     for(i=0;i<needLength;i++){
                         //cek apakah ada di inventory
                         int j;
-                        for(j=0;j<LengthPQ((*simulator).Inventory);j++){
+                        for(j=simulator->Inventory.Head;j<=simulator->Inventory.Tail;j++){
                             if(need.buffer[i]==(*simulator).Inventory.Tab[j].Info){
                                 needCount++;
                                 //hapus dari needLeft jika ada

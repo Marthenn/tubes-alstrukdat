@@ -67,18 +67,20 @@ void Buy(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
     } else {
         BuyMenu(BuyFoods);
         int x;
-        while(!*success){
+        boolean end = false;
+        while(!*success&!end){
+            printf("Kirim 0 untuk exit\n");
             printf("Enter Command: ");
             ADVWORD();
             x = WordToInt(currentWord);
             if((x/10)+1!=currentWord.Length){
-                printf("Input bukan integer\n");
+                printf("Input tidak valid!\n");
             } else {    
                 x--;
                 if(x==-1){
-                    *success = true;
+                    end = true;
                 } else if (x>ListDinElTypeLength(BuyFoods)-1){
-                    printf("Out of range!\n");
+                    printf("Input tidak valid!\n");
                 } else {
                     //beli makanan disini
                     Enqueue(&simulator->Delivery, GetVal(BuyFoods.buffer[x]).m.Id, 
@@ -103,9 +105,13 @@ void Mix(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
         printf(" tidak berada di area mixing!\n");
     } else {
         MixMenu(mixFoods);
+        if(IsListDinElTypeEmpty(mixFoods)){
+            *success = true;
+        }
         int x;
         end = false;
-        while(!end && !*success){
+        while(!end && !*success){    
+            printf("Kirim 0 untuk exit\n");
             //handle input harus integer
             printf("Enter Command: ");
             ADVWORD();
@@ -183,8 +189,12 @@ void Chop(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
         printf(" tidak berada di area chopping!\n");
     } else {
         ChopMenu(chopFoods);
+        if(IsListDinElTypeEmpty(chopFoods)){
+            *success = true;
+        }
         int x;
-        while(!end && !*success){
+        while(!end && !*success){      
+            printf("Kirim 0 untuk exit\n");
             //handle input harus integer
             printf("Enter Command: ");
             ADVWORD();
@@ -261,9 +271,13 @@ void Fry(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
         printf(" tidak berada di area frying!\n");
     } else {
         FryMenu(fryFoods);
+        if(IsListDinElTypeEmpty(fryFoods)){
+            *success = true;
+        }
         int x;
         end = false;
-        while(!end && !*success){
+        while(!end && !*success){    
+            printf("Kirim 0 untuk exit\n");
             //handle input harus integer
             printf("Enter Command: ");
             ADVWORD();
@@ -341,9 +355,13 @@ void Boil(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
         printf(" tidak berada di area mixing!\n");
     } else {
         BoilMenu(boilFoods);
+        if(IsListDinElTypeEmpty(boilFoods)){
+            *success = true;
+        }
         end = false;
         int x;
-        while(!*success){
+        while(!*success && !end){
+            printf("Kirim 0 untuk exit\n");
             //handle input harus integer
             printf("Enter Command: ");
             ADVWORD();

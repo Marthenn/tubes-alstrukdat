@@ -16,7 +16,9 @@ void CreateNotif(Simulator *simulator, Word aksi, Word namaMakanan)
     ConcatWord(&notif, namaMakanan);
     ConcatWord(&notif, NewWord(" berhasil dibuat dan dimasukkan ke inventory", 44));
 
-    inverseNotif = aksi;
+    inverseNotif = NewWord("Aksi ", 5);
+    ConcatWord(&inverseNotif, aksi);
+    ConcatWord(&inverseNotif, BLANK_WORD);
     ConcatWord(&inverseNotif, namaMakanan);
     ConcatWord(&inverseNotif, NewWord(" dibatalkan", 11));
 
@@ -282,7 +284,7 @@ void Chop(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
                         }
 
                         // notifikasi
-                        CreateNotif(simulator, MIX_WORD, dibuat.Nama);
+                        CreateNotif(simulator, CHOP_WORD, dibuat.Nama);
 
                         //tambah ke inventory
                         InsertMakanan(simulator, dibuat.Id, dibuat.Kedaluarsa);
@@ -369,7 +371,7 @@ void Fry(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
                         }
 
                         // notifikasi
-                        CreateNotif(simulator, MIX_WORD, dibuat.Nama);
+                        CreateNotif(simulator, FRY_WORD, dibuat.Nama);
 
                         //tambah ke inventory
                         InsertMakanan(simulator, dibuat.Id, dibuat.Kedaluarsa);
@@ -458,7 +460,7 @@ void Boil(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
                         }
 
                         // notifikasi
-                        CreateNotif(simulator, MIX_WORD, dibuat.Nama);
+                        CreateNotif(simulator, BOIL_WORD, dibuat.Nama);
 
                         //tambah ke inventory
                         InsertMakanan(simulator, dibuat.Id, dibuat.Kedaluarsa);

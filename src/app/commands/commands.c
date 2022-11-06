@@ -307,9 +307,7 @@ void Fry(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
                         *success = true;
                         //kurangi inventory
                         for(i=0;i<needLength;i++){
-                            DisplayWordLine(GetMakananFromId(foods,need.buffer[i]).Nama);
                             temp = DeleteMakanan(simulator, need.buffer[i]);
-                            if(temp)printf("berhasil dihapus\n");
                         }
                         //tambah ke inventory
                         InsertMakanan(simulator, dibuat.Id, dibuat.Kedaluarsa);

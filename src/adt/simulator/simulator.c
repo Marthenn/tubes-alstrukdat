@@ -92,7 +92,7 @@ boolean DeleteMakanan(Simulator *sim, int ID)
     Waktu time;
     int idx = IndexOfPQ(sim->Inventory, ID);
     if(idx == -1) return false;
-    DeleteAtPQ(&(sim->Inventory), &tmp, &time, ID);
+    DeleteAtPQ(&(sim->Inventory), &tmp, &time, idx);
     return true;
 }
 

@@ -6,10 +6,13 @@ void CreateListDinElType(ListDinElType *L, int capacity){
     // KAMUS LOKAL
     int cap;
     // ALGORITMA
-    
-    cap = LISTDIN_ELTYPE_MIN_CAP > capacity? LISTDIN_ELTYPE_MIN_CAP : capacity;
-    L->buffer = (ElType*) malloc(cap * sizeof(ElType));
 
+    cap = LISTDIN_ELTYPE_MIN_CAP > capacity? LISTDIN_ELTYPE_MIN_CAP : capacity;
+    printf("bef");
+    free(L->buffer);
+    printf("mid\n");
+    L->buffer = (ElType*) malloc(cap * sizeof(ElType));
+    printf("after\n");
     L->capacity = cap;
     L->nEff = 0;
 }
@@ -159,4 +162,17 @@ void CompressListDinElType(ListDinElType *L){
     L->capacity =  newCap;
 
     L->buffer = (ElType*) realloc(L->buffer, newCap * sizeof(ElType));
+}
+
+void CopyListDinElType(ListDinElType listIn, ListDinElType *listOut)
+{
+    int i;
+
+    CreateListDinElType(listOut, 0);
+
+    for (i = 0; i < ListDinElTypeLength(listIn); i++)
+    {
+        InsertFirstListDinElType(listOut, listOut->buffer[i]);
+    }
+
 }

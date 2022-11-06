@@ -80,8 +80,8 @@ int main(){
 			CetakWaktuJJMM(GetTime(&simulator));
 			printf("\n");
 
-			printf("Notifikasi: ");
-			DisplayWordLine(GetNotif(&simulator));
+			printf("Notifikasi:\n");
+			DisplayNotif(simulator);
 
 			EnterCommand();
 
@@ -229,8 +229,9 @@ int main(){
 			timeRecord = GetTime(&simulator);
 			locationRecord = GetLokasi(&simulator);
 
-			simulator.Notification = EMPTY_NOTIF;
-
+			CreateListDinElType(&simulator.Notification, 0);
+			CreateListDinElType(&simulator.InverseNotif, 0);
+			
 			success = false;
 		}
     }

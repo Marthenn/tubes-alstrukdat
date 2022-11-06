@@ -10,6 +10,7 @@
 #include "../../boolean.h"
 #include "../waktu/waktu.h"
 #include "../liststatik/liststatik.h"
+#include "../listdineltype/listdineltype.h"
 
 typedef struct Simulator {
     Word NamaPengguna;
@@ -17,7 +18,9 @@ typedef struct Simulator {
     PrioQueue Inventory;
     PrioQueue Delivery;
     Waktu Time;
-    Word Notification;
+    ListDinElType Notification;
+    ListDinElType InverseNotif;
+    
 } Simulator;
 
 #define EMPTY_NOTIF NewWord("-", 1)
@@ -46,10 +49,10 @@ void SetTime(Simulator *sim, Waktu newTime);
 /* I.S. sim telah dibentuk, newTime terdefinisi */
 /* F.S. Mengubah waktu sim */
 
-Word GetNotif(const Simulator *sim);
+ListDinElType GetNotif(const Simulator *sim);
 /* Mengembalikan notifikasi saat ini*/
 
-void SetNotif(Simulator *sim, Word newNotification);
+void SetNotif(Simulator *sim, ListDinElType newNotification, ListDinElType inverseNotif);
 /* I.S. sim telah dibentuk, newNotification terdefinisi */
 /* F.S. Mengubah notifikasi sim */
 
@@ -68,7 +71,7 @@ void InsertMakanan(Simulator *sim, int ID, Waktu kedaluarsa);
 void HapusDelivery(Simulator *sim, ListStatik foods);
 /* I.S. sim terdefinisi */
 /* F.S. makanan dengan waktu delivery yang melewati waktu saat ini dimasukkan ke inventory */
-void HapusMakananKedaluarsa(Simulator *sim);
+void HapusMakananKedaluarsa(Simulator *sim, ListStatik foods);
 /* I.S. sim, now terdefinisi */
 /* F.S. seluruh isi inventory yang kedaluarsa dihapus */
 

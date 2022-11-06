@@ -9,6 +9,7 @@
 #include "../../boolean.h"
 #include "../point/point.h"
 #include "../prioqueue/prioqueue.h"
+#include "../listdineltype/listdineltype.h"
 #define STACK_NIL -1
 
 /* Nil adalah stack dengan elemen kosong . */
@@ -20,6 +21,8 @@ typedef struct {
   PrioQueue DeliveryAdd;
   PrioQueue InventoryDel;
   PrioQueue DeliveryDel;
+  ListDinElType Notification;
+  ListDinElType InverseNotification;
   Point SimulatorLoc;
   Waktu Time;
 } Record;

@@ -106,7 +106,6 @@ void BuyMenu(ListDinElType BuyFoods){
             printf("   %d. ",i);DisplayWordLine(GetVal(BuyFoods.buffer[i-1]).m.Nama);
         }
     }
-    printf("\nKirim 0 untuk exit\n\n");
 }
 
 void MixMenu(ListDinElType MixFoods){
@@ -122,7 +121,6 @@ void MixMenu(ListDinElType MixFoods){
             printf("   %d. ",i);DisplayWordLine(GetVal(MixFoods.buffer[i-1]).m.Nama);
         }
     }
-    printf("\nKirim 0 untuk exit\n\n");
 }
 
 void ChopMenu(ListDinElType ChopFoods){
@@ -138,7 +136,6 @@ void ChopMenu(ListDinElType ChopFoods){
             printf("   %d. ",i);DisplayWordLine(GetVal(ChopFoods.buffer[i-1]).m.Nama);
         }
     }
-    printf("\nKirim 0 untuk exit\n\n");
 }
 
 void FryMenu(ListDinElType FryFoods){
@@ -154,7 +151,6 @@ void FryMenu(ListDinElType FryFoods){
             printf("   %d. ",i);DisplayWordLine(GetVal(FryFoods.buffer[i-1]).m.Nama);
         }
     }
-    printf("\nKirim 0 untuk exit\n\n");
 }
 
 void BoilMenu(ListDinElType BoilFoods){
@@ -170,7 +166,6 @@ void BoilMenu(ListDinElType BoilFoods){
             printf("   %d. ",i);DisplayWordLine(GetVal(BoilFoods.buffer[i-1]).m.Nama);
         }
     }
-    printf("\nKirim 0 untuk exit\n\n");
 }
 
 void CookBook(ListStatik foods, ListStatik recipes, ListDinElType mixFoods, ListDinElType chopFoods, ListDinElType fryFoods, ListDinElType boilFoods){

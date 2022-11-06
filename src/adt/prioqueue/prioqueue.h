@@ -12,7 +12,7 @@
 #include "../eltype/eltype.h"
 
 #define PQ_NIL -1
-#define PQ_MIN_CAP 20
+#define PQ_MIN_CAP 1
 #define PQ_IDX_UNDEF -1
 
 
@@ -35,16 +35,16 @@ Waktu GetHeadTime(PrioQueue Q);
 
 int GetElmtInfo(PrioQueue Q,int idx);
 /* Mengembalikan Info elemen indeks ke-idx secara logikal pada Q. idx = 0 adalah Head */
-/* idx berada pada rentang [0..length(Q)] */
+/* idx berada pada rentang [0..length(Q)-1] */
 
 Waktu GetElmtTime(PrioQueue Q,int idx);
 /* Mengembalikan waktu dari elemen indeks ke-idx secara logikal pada Q. idx = 0 adalah Head */
-/* idx berada pada rentang [0..length(Q)] */
+/* idx berada pada rentang [0..length(Q)-1] */
 
 void SetElmtTime(PrioQueue *Q, int idx, Waktu newTime);
 /* Mengganti nilai waktu dari elemen indeks ke-idx secara logikal pada Q dan
-/* memposisikan ulang elemen tersebut. idx = 0 adahal Head */
-/* idx berada pada rentang [0..length(Q)] */
+/* memposisikan ulang elemen tersebut. idx = 0 adalah Head */
+/* idx berada pada rentang [0..length(Q)-1] */
 
 /* ********* Element Comparator ********* */
 boolean IsEarlier(PQInfoType a, PQInfoType b);
@@ -83,12 +83,12 @@ void ReallocatePQ(PrioQueue * Q, int newCap);
 
 /* *** Searching *** */
 int IndexOfPQ(PrioQueue Q, int X);
-/* Mengembalikan indeks X pertama kali ditemukan di Q mulai dari depan. */
+/* Mengembalikan indeks X pertama kali ditemukan di Q. */
 /* Mengembalikan IDX_UNDEF jika tidak ada */
 
 /* *** Primitif Add/Delete *** */
 void Enqueue (PrioQueue * Q, int X, Waktu time);
-/* Menambahkan X pada Q dengan aturan priority queue, terurut membesar berdasarkan time */
+/* Menambahkan X pada Q dengan aturan priority queue, terurut membesar berdasarkan time lalu info */
 /* I.S. Q terdefinisi dan mungkin kosong */
 /* F.S. X disisipkan pada posisi yang tepat sesuai dengan prioritas,
         Tail dimajukan. Kapasitas Q akan direalokasikan menjadi dua kalinya jika Q tidak muat. 

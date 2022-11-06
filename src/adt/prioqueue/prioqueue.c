@@ -124,7 +124,7 @@ void ReallocatePQ(PrioQueue * Q, int newCap)
     PQInfoType* tmp;
     int i;
     // Algoritma
-    if (newCap < Q->Cap){
+    if (!IsEmptyPQ(*Q) && newCap < Q->Cap){
         for (i = Q->Head;i <= Q->Tail;i++){
             Q->Tab[i-Q->Head] = Q->Tab[i];
         }
@@ -156,7 +156,7 @@ int IndexOfPQ(PrioQueue Q, int X)
             } else idx++;
         }
     }
-    if (found) return idx;
+    if (found) return idx-Q.Head;
     else return PQ_IDX_UNDEF;
 }
 
@@ -212,13 +212,12 @@ void Dequeue (PrioQueue * Q, int* X, Waktu *time)
     } else {
         Q->Head++;
     }
-
     /* INI BELUM UPDATE HEAD TAILNYA !!!!!!!! */
-    // if (Q->Cap != PQ_MIN_CAP && LengthPQ(*Q) <= Q->Cap/4){
-    //     oldCap = Q->Cap;
-    //     newCap = (Q->Cap/2 > PQ_MIN_CAP ? Q->Cap/2 : PQ_MIN_CAP);
-    //     ReallocatePQ(Q,newCap);
-    // }
+    if (Q->Cap != PQ_MIN_CAP && LengthPQ(*Q) <= Q->Cap/4){
+        oldCap = Q->Cap;
+        newCap = (Q->Cap/2 > PQ_MIN_CAP ? Q->Cap/2 : PQ_MIN_CAP);
+        ReallocatePQ(Q,newCap);
+    }
 }
 
 void DeleteAtPQ (PrioQueue* Q, int* X, Waktu *time, int idx)
@@ -231,6 +230,7 @@ void DeleteAtPQ (PrioQueue* Q, int* X, Waktu *time, int idx)
         Dequeue(Q, X, time);
     } else {
         *X = GetElmtInfo(*Q,idx);
+        *time = GetElmtTime(*Q,idx);
         for (i = idx+1+Q->Head;i <= Q->Tail;i++){
             Q->Tab[i-1] = Q->Tab[i];
         }
@@ -306,7 +306,9 @@ void DisplayPQ (PrioQueue Q)
     int i;
     // Algoritma
     printf("--------------\n");
-    if (!IsEmptyPQ(Q)){
+    if (Q.Cap == 0){
+        printf("UNDEFINED\n");
+    } else if (!IsEmptyPQ(Q)){
         for (i = Q.Head;i <= Q.Tail;i++){
             DisplayInfoTypePQ(Q.Tab[i]);
             printf("\n");

@@ -232,8 +232,6 @@ int main(){
 			simulator.Notification = EMPTY_NOTIF;
 
 			success = false;
-			
-			DisplayPQ(simulator.Inventory);
 		}
     }
 	

@@ -212,7 +212,7 @@ void Dequeue (PrioQueue * Q, int* X, Waktu *time)
     } else {
         Q->Head++;
     }
-    /* INI BELUM UPDATE HEAD TAILNYA !!!!!!!! */
+
     if (Q->Cap != PQ_MIN_CAP && LengthPQ(*Q) <= Q->Cap/4){
         oldCap = Q->Cap;
         newCap = (Q->Cap/2 > PQ_MIN_CAP ? Q->Cap/2 : PQ_MIN_CAP);
@@ -279,11 +279,11 @@ void AssignPQ (PrioQueue A, PrioQueue* B)
 {
     // Kamus Lokal
     // Algoritma
-    
-    B->Tab = realloc (B->Tab, sizeof(PQInfoType) * A.Cap);
+    DeallocatePQ(B);
+    B->Tab = (PQInfoType*) malloc(sizeof(PQInfoType) * A.Cap);
     B->Head = A.Head;
     B->Tail = A.Tail;
-    
+    B->Cap = A.Cap;
     if (!IsEmptyPQ(A)){
         for (int i = A.Head;i <= A.Tail;i++){
             B->Tab[i].Info = A.Tab[i].Info;

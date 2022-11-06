@@ -609,9 +609,6 @@ void GetQueueChanges(PrioQueue *addChanges, PrioQueue *delChanges, PrioQueue pre
     CreateEmptyPQ(&currentQueue);
     AssignPQ(prevQueueRef, &prevQueue);
     AssignPQ(currentQueueRef, &currentQueue);
-
-    CreateEmptyPQ(addChanges);
-    CreateEmptyPQ(delChanges);
     
     while (!IsEmptyPQ(prevQueue) && !IsEmptyPQ(currentQueue))
     {

@@ -571,28 +571,10 @@ void UpdateInverse(Simulator simulator, Record inverseRecord, Stack *stack, Wakt
     CreateEmptyPQ(&newRecord.InventoryAdd);
     CreateEmptyPQ(&newRecord.InventoryDel);
 
-    printf("deli add :\n");
-    DisplayPQ(inverseRecord.DeliveryAdd);
-    printf("deli del :\n");
-    DisplayPQ(inverseRecord.DeliveryDel);
-    printf("inven add :\n");
-    DisplayPQ(inverseRecord.InventoryAdd);
-    printf("inven del :\n");
-    DisplayPQ(inverseRecord.InventoryDel);
-
     AssignPQ(inverseRecord.DeliveryDel,&newRecord.DeliveryAdd);
     AssignPQ(inverseRecord.DeliveryAdd,&newRecord.DeliveryDel);
     AssignPQ(inverseRecord.InventoryDel,&newRecord.InventoryAdd);
     AssignPQ(inverseRecord.InventoryAdd,&newRecord.InventoryDel);
-
-    printf("deli add :\n");
-    DisplayPQ(newRecord.DeliveryAdd);
-    printf("deli del :\n");
-    DisplayPQ(newRecord.DeliveryDel);
-    printf("inven add :\n");
-    DisplayPQ(newRecord.InventoryAdd);
-    printf("inven del :\n");
-    DisplayPQ(newRecord.InventoryDel);
 
     PushStack(stack, newRecord);
 

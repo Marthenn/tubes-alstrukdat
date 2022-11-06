@@ -115,4 +115,5 @@ void DisplayDelivery(ListStatik foods, Simulator simulator);
  */
 void DisplayInventory(ListStatik foods, Simulator simulator);
 
+void DisplayNotif(Simulator simulator);
 #endif

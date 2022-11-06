@@ -115,4 +115,6 @@ void ShrinkListDinElType(ListDinElType *L);
  */
 void CompressListDinElType(ListDinElType *L);
 
+void CopyListDinElType(ListDinElType listIn, ListDinElType *listOut);
+
 #endif

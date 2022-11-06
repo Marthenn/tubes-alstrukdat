@@ -8,6 +8,24 @@
 /* APP */
 #include "commands.h"
 
+void CreateNotif(Simulator *simulator, Word aksi, Word namaMakanan)
+{
+    Word notif, inverseNotif;
+
+    notif = BLANK_WORD;
+    ConcatWord(&notif, NewWord(" Makanan ", 8));
+    ConcatWord(&notif, namaMakanan);
+    ConcatWord(&notif, NewWord(" berhasil dibuat dan dimasukkan ke inventory", 44));
+
+    inverseNotif = aksi;
+    ConcatWord(&notif, NewWord(" makanan ", 9));
+    ConcatWord(&notif, namaMakanan);
+    ConcatWord(&notif, NewWord(" dibatalkan", 11));
+
+    InsertFirstListDinElType(&simulator->Notification, NewElType(4, (union Data){.w = notif}));
+    InsertFirstListDinElType(&simulator->InverseNotif, NewElType(4, (union Data){.w = inverseNotif}));
+}
+
 void Start(Simulator* simulator, ListStatik* foods, ListStatik* recipes, Map* map, ListDinElType* buyFoods, ListDinElType* mixFoods, ListDinElType* chopFoods, ListDinElType* fryFoods, ListDinElType* boilFoods, Stack *undoRecord, Stack *redoRecord){
     ReadAllConfig(map, foods, recipes);
     int i;
@@ -51,16 +69,19 @@ void Start(Simulator* simulator, ListStatik* foods, ListStatik* recipes, Map* ma
 
     printf("Masukkan nama Anda: ");
     ADVWORD();
-    // CopyDefinedWord(&(*simulator).NamaPengguna, currentWord);
-    (*simulator).NamaPengguna = currentWord;
+    CopyDefinedWord(&(*simulator).NamaPengguna, currentWord);
+
+    CreateEmptySimulator(simulator, GetNamaPengguna(simulator));
 
     printf("Selamat datang ");
     DisplayWordLine(GetNamaPengguna(simulator));
-
-    CreateEmptySimulator(simulator, GetNamaPengguna(simulator));
 }
 
 void Buy(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType BuyFoods, Stack *undoRecord, boolean *success){
+
+    Word notif, inverseNotif; 
+    Makanan food;
+
     if(!(IsAdjacent((*simulator).Lokasi,T(map)))){
         DisplayWord(GetNamaPengguna(simulator));
         printf(" tidak berada di area telepon!\n");
@@ -83,9 +104,26 @@ void Buy(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
                     printf("Input tidak valid!\n");
                 } else {
                     //beli makanan disini
-                    Enqueue(&simulator->Delivery, GetVal(BuyFoods.buffer[x]).m.Id, 
-                        GetMakananFromId(foods,GetVal(BuyFoods.buffer[x]).m.Id).WaktuAksi + GetTime(simulator) + 1);
 
+                    food = GetMakananFromId(foods,GetVal(BuyFoods.buffer[x]).m.Id);
+                    Enqueue(&simulator->Delivery, GetVal(BuyFoods.buffer[x]).m.Id, 
+                        food.WaktuAksi + GetTime(simulator) + 1);
+
+
+
+                    // notifikasi
+                    notif = BLANK_WORD;
+                    ConcatWord(&notif, NewWord("Makanan ", 8));
+                    ConcatWord(&notif, food.Nama);
+                    ConcatWord(&notif, NewWord(" berhasil ditambahkan ke delivery", 33));
+
+                    inverseNotif = BLANK_WORD;
+                    ConcatWord(&notif, NewWord("Makanan ", 8));
+                    ConcatWord(&notif, food.Nama);
+                    ConcatWord(&notif, NewWord(" dibatalkan dari delivery", 25));
+
+                    InsertFirstListDinElType(&simulator->Notification, NewElType(4, (union Data){.w=notif}));
+                    InsertFirstListDinElType(&simulator->InverseNotif, NewElType(4, (union Data){.w=inverseNotif}));
                     // tambah waktu
                     TakeTime(simulator, 0, 0, 1, foods);
 
@@ -98,6 +136,7 @@ void Buy(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
 
 void Mix(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType mixFoods, Stack *undoRecord, boolean *success){
     Waktu time;
+    Word notif, inverseNotif; 
     boolean end;
 
     if(!(IsAdjacent((*simulator).Lokasi,M(map)))){
@@ -157,6 +196,10 @@ void Mix(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
                         for(i=0;i<needLength;i++){
                             temp = DeleteMakanan(simulator, need.buffer[i]);
                         }
+
+                        // notifikasi
+                        CreateNotif(simulator, MIX_WORD, dibuat.Nama);
+
                         //tambah ke inventory
                         InsertMakanan(simulator, dibuat.Id, dibuat.Kedaluarsa);
 
@@ -240,6 +283,10 @@ void Chop(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
                         for(i=0;i<needLength;i++){
                             temp = DeleteMakanan(simulator, need.buffer[i]);
                         }
+
+                        // notifikasi
+                        CreateNotif(simulator, MIX_WORD, dibuat.Nama);
+
                         //tambah ke inventory
                         InsertMakanan(simulator, dibuat.Id, dibuat.Kedaluarsa);
 
@@ -323,6 +370,10 @@ void Fry(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
                         for(i=0;i<needLength;i++){
                             temp = DeleteMakanan(simulator, need.buffer[i]);
                         }
+
+                        // notifikasi
+                        CreateNotif(simulator, MIX_WORD, dibuat.Nama);
+
                         //tambah ke inventory
                         InsertMakanan(simulator, dibuat.Id, dibuat.Kedaluarsa);
 
@@ -403,10 +454,15 @@ void Boil(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
                     }
                     if(needCount==needLength){
                         *success = true;
+
                         //kurangi inventory
                         for(i=0;i<needLength;i++){
                             temp = DeleteMakanan(simulator, need.buffer[i]);
                         }
+
+                        // notifikasi
+                        CreateNotif(simulator, MIX_WORD, dibuat.Nama);
+
                         //tambah ke inventory
                         InsertMakanan(simulator, dibuat.Id, dibuat.Kedaluarsa);
 
@@ -493,7 +549,7 @@ void resetState(Simulator* simulator, Record record, Map *map)
     SetTime(simulator, record.Time);
     SetLokasi(simulator, record.SimulatorLoc);
     MoveSimulator(map, record.SimulatorLoc);
-
+    SetNotif(simulator, record.InverseNotification, record.Notification);
     AssignPQ(record.DeliveryAdd, &p);
     while(!IsEmptyPQ(p))
     {
@@ -562,7 +618,9 @@ void UpdateStack(Simulator simulator, PrioQueue inventoryRecord, PrioQueue deliv
     newRecord.Time = timeRecord;
     newRecord.SimulatorLoc.x = GetAbsis(locRecord);
     newRecord.SimulatorLoc.y = GetOrdinat(locRecord);
-
+    CopyListDinElType(simulator.Notification, &newRecord.Notification);
+    CopyListDinElType(simulator.InverseNotif, &newRecord.InverseNotification);
+    
     CreateEmptyPQ(&newRecord.DeliveryAdd);
     CreateEmptyPQ(&newRecord.DeliveryDel);
     CreateEmptyPQ(&newRecord.InventoryAdd);
@@ -583,34 +641,18 @@ void UpdateInverse(Simulator simulator, Record inverseRecord, Stack *stack, Wakt
     newRecord.Time = timeRecord;
     newRecord.SimulatorLoc.x = GetAbsis(locRecord);
     newRecord.SimulatorLoc.y = GetOrdinat(locRecord);
+    CopyListDinElType(inverseRecord.InverseNotification, &newRecord.Notification);
+    CopyListDinElType(inverseRecord.Notification, &newRecord.InverseNotification);
     
     CreateEmptyPQ(&newRecord.DeliveryAdd);
     CreateEmptyPQ(&newRecord.DeliveryDel);
     CreateEmptyPQ(&newRecord.InventoryAdd);
     CreateEmptyPQ(&newRecord.InventoryDel);
 
-    printf("deli add :\n");
-    DisplayPQ(inverseRecord.DeliveryAdd);
-    printf("deli del :\n");
-    DisplayPQ(inverseRecord.DeliveryDel);
-    printf("inven add :\n");
-    DisplayPQ(inverseRecord.InventoryAdd);
-    printf("inven del :\n");
-    DisplayPQ(inverseRecord.InventoryDel);
-
     AssignPQ(inverseRecord.DeliveryDel,&newRecord.DeliveryAdd);
     AssignPQ(inverseRecord.DeliveryAdd,&newRecord.DeliveryDel);
     AssignPQ(inverseRecord.InventoryDel,&newRecord.InventoryAdd);
     AssignPQ(inverseRecord.InventoryAdd,&newRecord.InventoryDel);
-
-    printf("deli add :\n");
-    DisplayPQ(newRecord.DeliveryAdd);
-    printf("deli del :\n");
-    DisplayPQ(newRecord.DeliveryDel);
-    printf("inven add :\n");
-    DisplayPQ(newRecord.InventoryAdd);
-    printf("inven del :\n");
-    DisplayPQ(newRecord.InventoryDel);
 
     PushStack(stack, newRecord);
 

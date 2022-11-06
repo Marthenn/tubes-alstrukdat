@@ -24,8 +24,8 @@ void CreateEmptySimulator(Simulator *sim, Word NamaPengguna)
     CreateEmptyPQ(&(sim->Inventory));
     CreateEmptyPQ(&(sim->Delivery));
     SetTime(sim, newTime);
-
-    SetNotif(sim, EMPTY_NOTIF);
+    CreateListDinElType(&(sim->Notification), 0);
+    CreateListDinElType(&(sim->InverseNotif), 0);
 }
 
 /* *** SETTER / GETTER *** */
@@ -67,17 +67,29 @@ void SetTime(Simulator *sim, Waktu newTime)
     sim->Time = newTime;
 }
 
-Word GetNotif(const Simulator *sim)
+ListDinElType GetNotif(const Simulator *sim)
 /* Mengembalikan notifikasi saat ini*/
 {
-    return sim->Notification;
+    ListDinElType copiedNotif;
+
+    CopyListDinElType(sim->Notification, &copiedNotif);
+    return copiedNotif;
 }
 
-void SetNotif(Simulator *sim, Word newNotification)
+ListDinElType GetInverseNotif(const Simulator *sim)
+{
+    ListDinElType copiedNotif;
+
+    CopyListDinElType(sim->InverseNotif, &copiedNotif);
+    return copiedNotif;
+}
+
+void SetNotif(Simulator *sim, ListDinElType newNotification, ListDinElType inverseNotif)
 /* I.S. sim telah dibentuk, newNotification terdefinisi */
 /* F.S. Mengubah notifikasi sim */
 {
-    sim->Notification = newNotification;
+    CopyListDinElType(newNotification, &sim->Notification);
+    CopyListDinElType(inverseNotif, &sim->InverseNotif);
 }
 
 /* *** OPERASI TERHADAP LOKASI *** */
@@ -109,6 +121,8 @@ void HapusDelivery(Simulator *sim, ListStatik foods)
 {
     int id, idx;
     Waktu time, now;
+    Makanan food;
+    Word notif, inverseNotif;
 
     now = GetTime(sim);
 
@@ -116,23 +130,53 @@ void HapusDelivery(Simulator *sim, ListStatik foods)
         Dequeue(&(sim->Delivery), &id, &time);
         
         idx = ListIndexOf(foods, NewElType(0, (union Data){.i=id}));
+        food = GetVal(foods.contents[idx]).m;
 
-        Enqueue(&sim->Inventory, id, GetVal(foods.contents[idx]).m.Kedaluarsa + time);
+        notif = NewWord("Makanan ", 8);
+        inverseNotif = NewWord("Makanan ", 8);
+
+        ConcatWord(&notif, food.Nama);
+        ConcatWord(&notif, NewWord(" telah sampai dan ditambahkan ke inventory", 42));
+
+        ConcatWord(&inverseNotif, food.Nama);
+        ConcatWord(&notif, NewWord(" dihapus dari inventory dan dikembalikan ke delivery", 52));
+        
+        InsertFirstListDinElType(&sim->Notification, NewElType(4, (union Data){.w = notif}));
+        InsertFirstListDinElType(&sim->Notification, NewElType(4, (union Data){.w = inverseNotif}));
+
+        Enqueue(&sim->Inventory, id, food.Kedaluarsa + time);
     }
 
 }
 
-void HapusMakananKedaluarsa(Simulator *sim)
+void HapusMakananKedaluarsa(Simulator *sim, ListStatik foods)
 /* I.S. sim, now terdefinisi */
 /* F.S. seluruh isi inventory yang kedaluarsa dihapus */
 {
-    int tmp;
+    int id, idx;
     Waktu time, now;
+    Makanan food;
+    Word notif, inverseNotif;
 
     now = GetTime(sim);
 
     while(!(IsEmptyPQ(sim->Inventory)) && GetHeadTime(sim->Inventory) <= now) {
-        Dequeue(&(sim->Inventory), &tmp, &time);
+
+        Dequeue(&(sim->Inventory), &id, &time);
+        idx = ListIndexOf(foods, NewElType(0, (union Data){.i=id}));
+        food = GetVal(foods.contents[idx]).m;
+
+        notif = NewWord("Makanan ", 8);
+        inverseNotif = NewWord("Makanan ", 8);
+
+        ConcatWord(&notif, food.Nama);
+        ConcatWord(&notif, NewWord(" sudah kadaluarsa", 17));
+
+        ConcatWord(&inverseNotif, food.Nama);
+        ConcatWord(&notif, NewWord(" dikembalikan ke inventory", 26));
+        
+        InsertFirstListDinElType(&sim->Notification, NewElType(4, (union Data){.w = notif}));
+        InsertFirstListDinElType(&sim->Notification, NewElType(4, (union Data){.w = inverseNotif}));
     }
 }
 
@@ -148,7 +192,7 @@ void TakeTime(Simulator *sim, int Hari, int Jam, int Menit, ListStatik foods){
     TambahWaktu(&now, Hari, Jam, Menit);
     SetTime(sim, now);
     HapusDelivery(sim, foods);
-    HapusMakananKedaluarsa(sim);
+    HapusMakananKedaluarsa(sim, foods);
 }
 
 void Wait(Simulator *sim, int Jam, int Menit, ListStatik foods){

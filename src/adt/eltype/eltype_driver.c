@@ -63,9 +63,9 @@ int main(){
     s3.TabWord[0]='g'; s3.TabWord[1]='h'; s3.TabWord[2]='i'; s3.Length=3;
 
     Makanan m1,m2,m3; 
-    CreateMakanan(&m1, 1, s1, w1, w1, BUY_WORD, p1); 
-    CreateMakanan(&m2, 2, s2, w2, w2, BUY_WORD, p2);
-    CreateMakanan(&m3, 3, s3, w3, w3, BUY_WORD, p3);
+    CreateMakanan(&m1, 1, s1, w1, w1, BUY_WORD, p1, 1, 1); 
+    CreateMakanan(&m2, 2, s2, w2, w2, BUY_WORD, p2, 1, 1);
+    CreateMakanan(&m3, 3, s3, w3, w3, BUY_WORD, p3, 1, 1);
 
     a = NewElType(3, (union Data){.m=m1});
     b = NewElType(3, (union Data){.m=m2});

@@ -264,7 +264,6 @@ void DeleteElmtPQ(PrioQueue* Q, int X, Waktu time)
         if (Q->Tab[idx].Info == X && Q->Tab[idx].Time == time)
         {
             found = true;
-            printf("indeks saat delete : %d\n", idx-(Q->Head));
             DeleteAtPQ(Q, &temp, &t, idx-(Q->Head));
         }
 

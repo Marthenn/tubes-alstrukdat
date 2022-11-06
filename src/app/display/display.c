@@ -347,3 +347,14 @@ void DisplayInventory(ListStatik foods, Simulator simulator){
         printf("Tidak ada makanan dalam inventory\n");
     }
 }
+
+void DisplayNotif(Simulator simulator)
+{
+    int i;
+    for (i = 0; i < ListDinElTypeLength(simulator.Notification); i++)
+    {
+        printf("[%d]", i + 1);
+
+        DisplayWordLine(GetVal(simulator.Notification.buffer[i]).w);
+    }
+}

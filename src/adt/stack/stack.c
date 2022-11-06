@@ -16,7 +16,6 @@ void CreateEmptyStack(Stack *S)
 	
 	//ALGORITMA
 	StackTop(*S) = STACK_NIL;
-	free(StackTab(*S));
 	StackTab(*S) = (Record*) malloc(0);
 	StackCap(*S) = 0;
 }
@@ -67,6 +66,9 @@ void PushStack(Stack * S, Record X)
 	AssignPQ(X.DeliveryDel, &currentRecord->DeliveryDel);
 	AssignPQ(X.InventoryAdd, &currentRecord->InventoryAdd);
 	AssignPQ(X.InventoryDel, &currentRecord->InventoryDel);
+
+	CopyListDinElType(X.Notification, &currentRecord->Notification);
+	CopyListDinElType(X.InverseNotification, &currentRecord->InverseNotification);
 	
 }
 

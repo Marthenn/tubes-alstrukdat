@@ -83,6 +83,9 @@ int main(){
 			printf("Notifikasi:\n");
 			DisplayNotif(simulator);
 
+			CreateListDinElType(&simulator.Notification, 0);
+			CreateListDinElType(&simulator.InverseNotif, 0);
+			
 			EnterCommand();
 
 			wordList = SplitWord(currentWord, ' ');
@@ -214,7 +217,8 @@ int main(){
 			}
 
 			else if (success) {
-				
+				int i;
+
 				UpdateStack(simulator, inventoryRecord, deliveryRecord, &undoStack, timeRecord, locationRecord);
 
 				if (!IsStackEmpty(redoStack))
@@ -228,9 +232,6 @@ int main(){
 
 			timeRecord = GetTime(&simulator);
 			locationRecord = GetLokasi(&simulator);
-
-			CreateListDinElType(&simulator.Notification, 0);
-			CreateListDinElType(&simulator.InverseNotif, 0);
 			
 			success = false;
 		}

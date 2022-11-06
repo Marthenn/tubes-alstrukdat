@@ -8,11 +8,8 @@ void CreateListDinElType(ListDinElType *L, int capacity){
     // ALGORITMA
 
     cap = LISTDIN_ELTYPE_MIN_CAP > capacity? LISTDIN_ELTYPE_MIN_CAP : capacity;
-    printf("bef");
-    free(L->buffer);
-    printf("mid\n");
+
     L->buffer = (ElType*) malloc(cap * sizeof(ElType));
-    printf("after\n");
     L->capacity = cap;
     L->nEff = 0;
 }
@@ -76,7 +73,6 @@ void InsertFirstListDinElType(ListDinElType *L, ElType e){
     for(i = L->nEff; i > 0; i--){
         L->buffer[i] = L->buffer[i-1];
     }
-
     L->buffer[0] = e;
     L->nEff++;
     
@@ -167,12 +163,15 @@ void CompressListDinElType(ListDinElType *L){
 void CopyListDinElType(ListDinElType listIn, ListDinElType *listOut)
 {
     int i;
+    
+    CreateListDinElType(listOut, ListDinElTypeLength(listIn));
 
-    CreateListDinElType(listOut, 0);
 
     for (i = 0; i < ListDinElTypeLength(listIn); i++)
     {
-        InsertFirstListDinElType(listOut, listOut->buffer[i]);
+
+        InsertFirstListDinElType(listOut, listIn.buffer[i]);
+
     }
 
 }

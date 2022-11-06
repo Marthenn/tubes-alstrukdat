@@ -13,14 +13,12 @@ void CreateNotif(Simulator *simulator, Word aksi, Word namaMakanan)
     Word notif, inverseNotif;
 
     notif = BLANK_WORD;
-    ConcatWord(&notif, NewWord(" Makanan ", 8));
     ConcatWord(&notif, namaMakanan);
     ConcatWord(&notif, NewWord(" berhasil dibuat dan dimasukkan ke inventory", 44));
 
     inverseNotif = aksi;
-    ConcatWord(&notif, NewWord(" makanan ", 9));
-    ConcatWord(&notif, namaMakanan);
-    ConcatWord(&notif, NewWord(" dibatalkan", 11));
+    ConcatWord(&inverseNotif, namaMakanan);
+    ConcatWord(&inverseNotif, NewWord(" dibatalkan", 11));
 
     InsertFirstListDinElType(&simulator->Notification, NewElType(4, (union Data){.w = notif}));
     InsertFirstListDinElType(&simulator->InverseNotif, NewElType(4, (union Data){.w = inverseNotif}));
@@ -113,17 +111,16 @@ void Buy(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
 
                     // notifikasi
                     notif = BLANK_WORD;
-                    ConcatWord(&notif, NewWord("Makanan ", 8));
                     ConcatWord(&notif, food.Nama);
                     ConcatWord(&notif, NewWord(" berhasil ditambahkan ke delivery", 33));
 
                     inverseNotif = BLANK_WORD;
-                    ConcatWord(&notif, NewWord("Makanan ", 8));
-                    ConcatWord(&notif, food.Nama);
-                    ConcatWord(&notif, NewWord(" dibatalkan dari delivery", 25));
+                    ConcatWord(&inverseNotif, food.Nama);
+                    ConcatWord(&inverseNotif, NewWord(" dibatalkan dari delivery", 25));
 
                     InsertFirstListDinElType(&simulator->Notification, NewElType(4, (union Data){.w=notif}));
                     InsertFirstListDinElType(&simulator->InverseNotif, NewElType(4, (union Data){.w=inverseNotif}));
+         
                     // tambah waktu
                     TakeTime(simulator, 0, 0, 1, foods);
 
@@ -549,7 +546,10 @@ void resetState(Simulator* simulator, Record record, Map *map)
     SetTime(simulator, record.Time);
     SetLokasi(simulator, record.SimulatorLoc);
     MoveSimulator(map, record.SimulatorLoc);
+
+    
     SetNotif(simulator, record.InverseNotification, record.Notification);
+    printf("undo finished\n");
     AssignPQ(record.DeliveryAdd, &p);
     while(!IsEmptyPQ(p))
     {
@@ -575,7 +575,6 @@ void resetState(Simulator* simulator, Record record, Map *map)
     while(!IsEmptyPQ(p))
     {
         Dequeue(&p, &id, &time);
-        printf("%d\n", id);
         Enqueue(&simulator->Inventory, id, time);
     }
 
@@ -618,9 +617,10 @@ void UpdateStack(Simulator simulator, PrioQueue inventoryRecord, PrioQueue deliv
     newRecord.Time = timeRecord;
     newRecord.SimulatorLoc.x = GetAbsis(locRecord);
     newRecord.SimulatorLoc.y = GetOrdinat(locRecord);
+
     CopyListDinElType(simulator.Notification, &newRecord.Notification);
     CopyListDinElType(simulator.InverseNotif, &newRecord.InverseNotification);
-    
+
     CreateEmptyPQ(&newRecord.DeliveryAdd);
     CreateEmptyPQ(&newRecord.DeliveryDel);
     CreateEmptyPQ(&newRecord.InventoryAdd);
@@ -641,6 +641,7 @@ void UpdateInverse(Simulator simulator, Record inverseRecord, Stack *stack, Wakt
     newRecord.Time = timeRecord;
     newRecord.SimulatorLoc.x = GetAbsis(locRecord);
     newRecord.SimulatorLoc.y = GetOrdinat(locRecord);
+    
     CopyListDinElType(inverseRecord.InverseNotification, &newRecord.Notification);
     CopyListDinElType(inverseRecord.Notification, &newRecord.InverseNotification);
     

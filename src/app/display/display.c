@@ -351,10 +351,19 @@ void DisplayInventory(ListStatik foods, Simulator simulator){
 void DisplayNotif(Simulator simulator)
 {
     int i;
-    for (i = 0; i < ListDinElTypeLength(simulator.Notification); i++)
-    {
-        printf("[%d]", i + 1);
 
-        DisplayWordLine(GetVal(simulator.Notification.buffer[i]).w);
+    if (IsListDinElTypeEmpty(simulator.Notification))
+    {
+        printf("-\n");
     }
+
+    else {
+        for (i = 0; i < ListDinElTypeLength(simulator.Notification); i++)
+        {
+            printf("[%d]", i + 1);
+
+            DisplayWordLine(GetVal(simulator.Notification.buffer[i]).w);
+        }
+    }
+
 }

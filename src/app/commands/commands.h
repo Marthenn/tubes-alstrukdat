@@ -106,6 +106,18 @@ void Boil(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
 void Kulkas(Simulator* simulator, ListStatik foods, Map map, boolean *success);
 
 /**
+ * @brief Check if the food can be put into the kulkas at specific coordinate
+ * 
+ * @param sim Current simulator
+ * @param food The food to be put
+ * @param X Horizontal Coordinate
+ * @param Y Vertical Coordinate
+ * @param rotated Is the food rotated 90 degree
+ * @return boolean 
+ */
+boolean CheckSizeKulkas(Simulator sim, Makanan food, int X, int Y, boolean rotated);
+
+/**
  * @brief move simulator
  * 
  * @param simulator Current simulator

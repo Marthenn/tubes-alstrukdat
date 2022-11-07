@@ -220,46 +220,9 @@ void ClearAllIdKulkas(Simulator *sim, int id){
     }
 }
 
-boolean CheckSizeKulkas(Simulator sim, Makanan food, int X, int Y, boolean rotated){
-    if(rotated){
-        food.SizeX = food.SizeX ^ food.SizeY;
-        food.SizeY = food.SizeX ^ food.SizeY;
-        food.SizeX = food.SizeX ^ food.SizeY;
-    }
-    int endX = food.SizeX + X - 1;
-    int endY = food.SizeY + Y - 1;
-    if(endX>=sim.Kulkas.rowEff || endY>=sim.Kulkas.colEff){
-        return false;
-    }
+void PutFood(Simulator *sim, Makanan food, int X, int Y, boolean rotated, ListStatik foods, boolean *success){
     int i,j;
-    for(i=X-1;i<endX;i++){
-        for(j=Y-1;j<endY;j++){
-            if(MAT_ELMT(sim.Kulkas,i,j)!=0){
-                return false;
-            }
-        }
-    }
-    return true;
-}
-
-void PutFood(Simulator *sim, int idx, int X, int Y, boolean rotated, ListStatik foods, boolean *success){
-    int i,j;
-    Makanan food;
     Word notif, inverseNotif;
-    int foodId = GetElmtInfo(sim->Inventory, idx);
-    Waktu foodTime = GetElmtTime(sim->Inventory, idx);
-    for(i=0;i<ListLength(foods);i++){
-        if(GetVal(foods.contents[i]).m.Id==foodId){
-            food = GetVal(foods.contents[i]).m;
-            break;
-        }
-    }
-    foodTime -= GetTime(sim);
-    food.Kedaluarsa = foodTime;
-    if(!CheckSizeKulkas(*sim, food, X, Y, rotated)){
-        printf("Makanan tidak muat!\n");
-        return;
-    }
     if(rotated){
         food.SizeX = food.SizeX ^ food.SizeY;
         food.SizeY = food.SizeX ^ food.SizeY;
@@ -268,13 +231,20 @@ void PutFood(Simulator *sim, int idx, int X, int Y, boolean rotated, ListStatik 
     int endX = food.SizeX + X - 1;
     int endY = food.SizeY + Y - 1;
     int id = ListDinElTypeLength(sim->MakananKulkas)+1;
-    for(i=X;i<=endX;i++){
-        for(j=Y;j<=endY;j++){
+    for(i=Y;i<=endY;i++){
+        for(j=X;j<=endX;j++){
             MAT_ELMT(sim->Kulkas,i,j)=id;
         }
     }
-    InsertLastListDinElType(&sim->MakananKulkas, NewElType(3, (union Data){.m=food}));
-    DeleteElmtPQ(&(sim->Inventory), foodId, foodTime+GetTime(sim));
+    printf("\n");
+    Point p;
+    CreatePoint(&p, X, Y);
+    MakananKulkas put;
+    put.makanan = food;
+    put.rotated = rotated;
+    put.kiriAtas = p;
+    InsertLastListDinElType(&sim->MakananKulkas, NewElType(6, (union Data){.mk=put}));
+    DeleteElmtPQ(&(sim->Inventory), food.Id, food.Kedaluarsa+GetTime(sim));
 
     notif = EMPTY_WORD;
     inverseNotif = EMPTY_WORD;
@@ -296,7 +266,7 @@ void TakeFood(Simulator *sim, int id){
     ElType el;
     Word notif, inverseNotif;
     DeleteAtListDinElType(&sim->MakananKulkas, id-1, &el);
-    food = GetVal(el).m;
+    food = GetVal(el).mk.makanan;
     ClearAllIdKulkas(sim, id);
     Enqueue(&sim->Inventory, food.Id, food.Kedaluarsa + GetTime(sim));
 

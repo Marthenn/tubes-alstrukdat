@@ -6,6 +6,12 @@
 #include "../makanan/makanan.h"
 #include "../tree/tree.h"
 
+typedef struct MakananKulkas{
+    Makanan makanan;
+    Point kiriAtas;
+    boolean rotated;
+} MakananKulkas;
+
 union Data{
     /*type 0*/ int i;
     /*type 1*/ float f;
@@ -13,6 +19,7 @@ union Data{
     /*type 3*/ Makanan m;
     /*type 4*/ Word w;
     /*type 5*/ Tree t;
+    /*type 6*/ MakananKulkas mk;
 };
 
 typedef struct ElType{

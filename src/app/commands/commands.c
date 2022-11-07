@@ -721,6 +721,28 @@ void GetQueueChanges(PrioQueue *addChanges, PrioQueue *delChanges, PrioQueue pre
     DeallocatePQ(&currentQueue);
 }
 
+boolean CheckSizeKulkas(Simulator sim, Makanan food, int X, int Y, boolean rotated){
+    if(rotated){
+        food.SizeX = food.SizeX ^ food.SizeY;
+        food.SizeY = food.SizeX ^ food.SizeY;
+        food.SizeX = food.SizeX ^ food.SizeY;
+    }
+    int endX = food.SizeX + X - 1;
+    int endY = food.SizeY + Y - 1;
+    if(endX>GetLastIdxCol(sim.Kulkas) || endY>GetLastIdxRow(sim.Kulkas)){
+        return false;
+    }
+    int i,j;
+    for(i=X;i<=endX;i++){
+        for(j=Y;j<=endY;j++){
+            if(MAT_ELMT(sim.Kulkas,j,i)!=0){
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
 void Kulkas(Simulator *simulator, ListStatik foods, Map map, boolean *success){
     boolean end;
     Waktu time;
@@ -746,7 +768,13 @@ void Kulkas(Simulator *simulator, ListStatik foods, Map map, boolean *success){
                     end = true;
                 } else {
                     if(x==0){
+                        // Handling bila inventory kosong
+                        if(IsEmptyPQ(simulator->Inventory)){
+                            printf("Inventory kosong!\n");
+                            return;
+                        }
                         boolean berhasil;
+                        // Pilih Makanan yang ingin Dimasukkan
                         printf("Makanan di inventory:\n");
                         printf("( Makanan - Kedaluwarsa - Ukuran(X,Y) )\n");
                         for(i=0;i<LengthPQ(simulator->Inventory);i++){
@@ -780,10 +808,12 @@ void Kulkas(Simulator *simulator, ListStatik foods, Map map, boolean *success){
                             }
                         }
                         x--;
+                        // Pilih posisi makanan di kulkas (koordinat kiri atas)
                         int a,b;
                         berhasil = false;
                         while(!berhasil){
-                            printf("Koordinat atas kiri adalah (1,1)\n");
+                            printf("Koordinat atas kiri adalah (0,0)\n");
+                            printf("Koordinat kiri atas makanan yang ingin diletakkan\n");
                             printf("Masukkan koordinat X yang ingin ditempati: ");
                             ADVWORD();
                             a = WordToInt(currentWord);
@@ -823,7 +853,14 @@ void Kulkas(Simulator *simulator, ListStatik foods, Map map, boolean *success){
                                 printf("Input tidak valid!\n");
                             }
                         }
-                        PutFood(simulator, x, a, b, putar, foods, success);
+                        Makanan makanan = GetMakananFromId(foods,GetElmtInfo(simulator->Inventory,x));
+                        makanan.Kedaluarsa  = GetElmtTime(simulator->Inventory,x) - GetTime(simulator);
+                        if(CheckSizeKulkas(*simulator, makanan, a, b, putar)){
+                            PutFood(simulator, makanan, a, b, putar, foods, success);
+                            end = true;
+                        } else{
+                            printf("Makanan tidak muat!\n");
+                        }
                     } else{
                         if(IsKulkasEmpty(*simulator)){
                             printf("Kulkas kosong!\n");
@@ -838,8 +875,8 @@ void Kulkas(Simulator *simulator, ListStatik foods, Map map, boolean *success){
                                 *success = true;
                             }
                         }
+                        end = true;
                     }
-                    end = true;
                 }
             }
         }

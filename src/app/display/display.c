@@ -373,13 +373,16 @@ void DisplayNotif(Simulator simulator)
 void DisplayKulkas(ListStatik foods, Simulator simulator){
     printf("======KULKAS======\n");
     int i,j;
-    for(i=0;i<simulator.Kulkas.rowEff+2;i++){
-        for(j=0;j<simulator.Kulkas.colEff+2;j++){
-            if(i==0||i==simulator.Kulkas.rowEff+1||j==0||j==simulator.Kulkas.colEff+1){
+    for(i=-1;i<=GetLastIdxRow(simulator.Kulkas)+1;i++){
+        for(j=-1;j<=GetLastIdxCol(simulator.Kulkas)+1;j++){
+            if(i==-1||i==GetLastIdxRow(simulator.Kulkas)+1||j==-1||j==GetLastIdxCol(simulator.Kulkas)+1){
                 printf("X");
             } else if(MAT_ELMT(simulator.Kulkas,i,j)!=0){
                 printf("%d",MAT_ELMT(simulator.Kulkas,i,j));
             } else{
+                printf(" ");
+            }
+            if(j!=GetLastIdxCol(simulator.Kulkas)+1){
                 printf(" ");
             }
         }

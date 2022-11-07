@@ -89,7 +89,7 @@ void Buy(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
         BuyMenu(BuyFoods);
         int x;
         boolean end = false;
-        while(!*success&!end){
+        while(!*success && !end){
             printf("Kirim 0 untuk exit\n");
             printf("Enter Command: ");
             ADVWORD();
@@ -724,6 +724,7 @@ void GetQueueChanges(PrioQueue *addChanges, PrioQueue *delChanges, PrioQueue pre
 void Kulkas(Simulator *simulator, ListStatik foods, Map map, boolean *success){
     boolean end;
     Waktu time;
+    Word notif, inverseNotif;
 
     if(!(IsAdjacent(simulator->Lokasi,K(map)))){
         DisplayWord(GetNamaPengguna(simulator));
@@ -822,7 +823,7 @@ void Kulkas(Simulator *simulator, ListStatik foods, Map map, boolean *success){
                                 printf("Input tidak valid!\n");
                             }
                         }
-                        PutFood(simulator, x, a, b, putar, foods);
+                        PutFood(simulator, x, a, b, putar, foods, success);
                     } else{
                         if(IsKulkasEmpty(*simulator)){
                             printf("Kulkas kosong!\n");
@@ -834,6 +835,7 @@ void Kulkas(Simulator *simulator, ListStatik foods, Map map, boolean *success){
                                 printf("Input tidak valid!\n");
                             } else{
                                 TakeFood(simulator, x);
+                                *success = true;
                             }
                         }
                     }

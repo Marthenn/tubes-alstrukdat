@@ -242,9 +242,10 @@ boolean CheckSizeKulkas(Simulator sim, Makanan food, int X, int Y, boolean rotat
     return true;
 }
 
-void PutFood(Simulator *sim, int idx, int X, int Y, boolean rotated, ListStatik foods){
-    int i,j;Makanan food;
-
+void PutFood(Simulator *sim, int idx, int X, int Y, boolean rotated, ListStatik foods, boolean *success){
+    int i,j;
+    Makanan food;
+    Word notif, inverseNotif;
     int foodId = GetElmtInfo(sim->Inventory, idx);
     Waktu foodTime = GetElmtTime(sim->Inventory, idx);
     for(i=0;i<ListLength(foods);i++){
@@ -274,15 +275,42 @@ void PutFood(Simulator *sim, int idx, int X, int Y, boolean rotated, ListStatik 
     }
     InsertLastListDinElType(&sim->MakananKulkas, NewElType(3, (union Data){.m=food}));
     DeleteElmtPQ(&(sim->Inventory), foodId, foodTime+GetTime(sim));
+
+    notif = EMPTY_WORD;
+    inverseNotif = EMPTY_WORD;
+
+    ConcatWord(&notif, food.Nama);
+    ConcatWord(&notif, NewWord(" dimasukkan ke kulkas", 21));
+
+    ConcatWord(&inverseNotif, food.Nama);
+    ConcatWord(&inverseNotif, NewWord(" dikeluarkan dari kulkas", 24));
+    
+    InsertFirstListDinElType(&(sim->Notification), NewElType(4, (union Data){.w = notif}));
+    InsertFirstListDinElType(&(sim->InverseNotif), NewElType(4, (union Data){.w = inverseNotif}));
+
+    *success = true;
 }
 
 void TakeFood(Simulator *sim, int id){
     Makanan food;
     ElType el;
+    Word notif, inverseNotif;
     DeleteAtListDinElType(&sim->MakananKulkas, id-1, &el);
     food = GetVal(el).m;
     ClearAllIdKulkas(sim, id);
     Enqueue(&sim->Inventory, food.Id, food.Kedaluarsa + GetTime(sim));
+
+    notif = EMPTY_WORD;
+    inverseNotif = EMPTY_WORD;
+
+    ConcatWord(&notif, food.Nama);
+    ConcatWord(&notif, NewWord(" dikeluarkan dari kulkas", 24));
+
+    ConcatWord(&inverseNotif, food.Nama);
+    ConcatWord(&inverseNotif, NewWord(" dimasukkan ke kulkas", 21));
+    
+    InsertFirstListDinElType(&(sim->Notification), NewElType(4, (union Data){.w = notif}));
+    InsertFirstListDinElType(&(sim->InverseNotif), NewElType(4, (union Data){.w = inverseNotif}));
 }
 
 boolean IsKulkasEmpty(Simulator sim){

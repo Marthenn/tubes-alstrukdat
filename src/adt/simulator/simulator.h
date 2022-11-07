@@ -96,7 +96,7 @@ boolean CheckSizeKulkas(Simulator sim, Makanan food, int X, int Y, boolean rotat
 /* I.S. sim terdefinisi dengan kulkas */
 /* F.S. mengembalikan apakah makanan muat di kulkas pada posisi (X,Y) */
 
-void PutFood(Simulator *sim, int idx, int X, int Y, boolean rotated, ListStatik foods);
+void PutFood(Simulator *sim, int idx, int X, int Y, boolean rotated, ListStatik foods, boolean *success);
 /* I.S. sim terdefinisi */
 /* F.S. apabila makanan muat pada koordinat (X,Y), maka akan masuk ke kulkas */
 

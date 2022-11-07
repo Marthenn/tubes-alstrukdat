@@ -11,6 +11,8 @@
 #include "../waktu/waktu.h"
 #include "../liststatik/liststatik.h"
 #include "../listdineltype/listdineltype.h"
+#include "../matriks/matriks.h"
+#include "../makanan/makanan.h"
 
 typedef struct Simulator {
     Word NamaPengguna;
@@ -20,7 +22,8 @@ typedef struct Simulator {
     Waktu Time;
     ListDinElType Notification;
     ListDinElType InverseNotif;
-    
+    ListDinElType MakananKulkas;
+    Matriks Kulkas;
 } Simulator;
 
 #define EMPTY_NOTIF NewWord("-", 1)
@@ -85,8 +88,24 @@ void Wait(Simulator *sim, int Jam, int Menit, ListStatik foods);
 /* F.S. waktu bertambah selama x jam dan y menit
    Makanan kedaluarsa dihapus */
 
-// void DisplayInventory(Simulator sim);
-// /* Keluaran data inventory dengan ID Makanan
-//    dan waktu expirednya */
+void ClearAllIdKulkas(Simulator *sim, int id);
+/* I.S. sim terdefinisi, id bisa tidak ada di kulkas */
+/* F.S> semua elemen dengan nilai id pada kulkas akan menjadi nol */
+
+boolean CheckSizeKulkas(Simulator sim, Makanan food, int X, int Y, boolean rotated);
+/* I.S. sim terdefinisi dengan kulkas */
+/* F.S. mengembalikan apakah makanan muat di kulkas pada posisi (X,Y) */
+
+void PutFood(Simulator *sim, int idx, int X, int Y, boolean rotated, ListStatik foods);
+/* I.S. sim terdefinisi */
+/* F.S. apabila makanan muat pada koordinat (X,Y), maka akan masuk ke kulkas */
+
+void TakeFood(Simulator *sim, int id);
+/* I.S. sim terdefinisi, id pasti ada di kulkas */
+/* F.S. bila ada pada kulkas ada makanan dengan IdMakananKulkas maka diambil */
+
+boolean IsKulkasEmpty(Simulator sim);
+/* I.S. sim terdefinisi */
+/* F.S. mengembalikan apakah kulkas kosong */
 
 #endif

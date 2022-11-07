@@ -265,6 +265,10 @@ void ReadMapConfig(Map *map)
             {
                 CreatePoint(&B(*map), i, j);
             }
+            else if (cc =='K' || cc == 'k')
+            {
+                CreatePoint(&K(*map), i, j);
+            }
         }
     }
 }

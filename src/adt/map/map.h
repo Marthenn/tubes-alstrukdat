@@ -7,7 +7,7 @@
 
 typedef struct{
     Matriks tab;
-    Point S, T, M, C, F, B, X;
+    Point S, T, M, C, F, B, X, K;
 } Map;
 
 /* *** Selektor *** */
@@ -21,6 +21,7 @@ typedef struct{
 #define C(map) (map).C
 #define F(map) (map).F
 #define B(map) (map).B
+#define K(map) (map).K
 #define CREATE_POINT_UNDEF(point) CreatePoint(&(point), -1, -1)
 #define WALL_MAP_CHAR 'X'
 #define SPACE_MAP_CHAR '#'

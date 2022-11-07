@@ -110,6 +110,26 @@ void DeleteFirstListDinElType(ListDinElType *L, ElType *e)
     }
 }
 
+void DeleteAtListDinElType(ListDinElType *L, int index, ElType *e)
+{
+
+    int i;
+
+    *e = L->buffer[index];
+
+    for (i = index; i < ListDinElTypeLength(*L) - 1; i++)
+    {
+        L->buffer[i] = L->buffer[i+1];
+    }
+
+    L->nEff--;
+
+    if (ListDinElTypeLength(*L) <= L->capacity / 4)
+    {
+        ShrinkListDinElType(L);
+    }
+}
+
 void DeleteLastListDinElType(ListDinElType *L, ElType *e)
 {
 

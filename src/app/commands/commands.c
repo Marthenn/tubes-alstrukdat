@@ -720,3 +720,126 @@ void GetQueueChanges(PrioQueue *addChanges, PrioQueue *delChanges, PrioQueue pre
     DeallocatePQ(&prevQueue);
     DeallocatePQ(&currentQueue);
 }
+
+void Kulkas(Simulator *simulator, ListStatik foods, Map map, boolean *success){
+    boolean end;
+    Waktu time;
+
+    if(!(IsAdjacent(simulator->Lokasi,K(map)))){
+        DisplayWord(GetNamaPengguna(simulator));
+        printf(" tidak berada di area kulkas!\n");
+    } else {
+        DisplayKulkas(foods, *simulator);
+        end = false;
+        int x,i;
+        while(!end){
+            printf("Kirim 0 untuk exit\n");
+            printf("Enter Command: ");
+            ADVWORD();
+            x = WordToInt(currentWord);
+            if((x/10)+1!=currentWord.Length){
+                printf("Input tidak valid!\n");
+            } else{
+                x--;
+                if(x==-1){
+                    end = true;
+                } else {
+                    if(x==0){
+                        boolean berhasil;
+                        printf("Makanan di inventory:\n");
+                        printf("( Makanan - Kedaluwarsa - Ukuran(X,Y) )\n");
+                        for(i=0;i<LengthPQ(simulator->Inventory);i++){
+                            printf(" %d. ",i+1);
+                            time = GetElmtTime(simulator->Inventory,i) - GetTime(simulator);
+                            DisplayWord(GetNama(GetMakananFromId(foods,GetElmtInfo(simulator->Inventory,i))));
+                            printf(" - ");
+                            if(GetHari(time)!=0){
+                                printf("%d hari ",GetHari(time));
+                            }
+                            if(GetJam(time)!=0){
+                                printf("%d jam ",GetJam(time));
+                            }
+                            if(GetMenit(time)!=0){
+                                printf("%d menit ",GetMenit(time));
+                            }
+                            printf(" - ");
+                            printf("(%d,%d)\n",GetSizeX(GetMakananFromId(foods,GetElmtInfo(simulator->Inventory,i))),GetSizeY(GetMakananFromId(foods,GetElmtInfo(simulator->Inventory,i))));
+                        }
+                        berhasil = false;
+                        while(!berhasil){
+                            printf("Masukkan nomor makanan yang ingin diletakkan: ");
+                            ADVWORD();
+                            x = WordToInt(currentWord);
+                            if((x/10)+1!=currentWord.Length){
+                                printf("Input tidak valid!\n");
+                            } else if (x>LengthPQ(simulator->Inventory) || x<1){
+                                printf("Input tidak valid!\n");
+                            } else {
+                                berhasil = true;
+                            }
+                        }
+                        x--;
+                        int a,b;
+                        berhasil = false;
+                        while(!berhasil){
+                            printf("Koordinat atas kiri adalah (1,1)\n");
+                            printf("Masukkan koordinat X yang ingin ditempati: ");
+                            ADVWORD();
+                            a = WordToInt(currentWord);
+                            if((a/10)+1!=currentWord.Length){
+                                printf("Input tidak valid!\n");
+                            } else if(a>19 || a<0){
+                                printf("Input tidak valid!\n");
+                            } else{
+                                printf("Masukkan koordinat Y yang ingin ditempati: ");
+                                ADVWORD();
+                                b = WordToInt(currentWord);
+                                if((b/10)+1!=currentWord.Length){
+                                    printf("Input tidak valid!\n");
+                                } else if (b>9 || b<0){
+                                    printf("Input tidak valid!\n");
+                                } else{
+                                    berhasil = true;
+                                }
+                            }
+                        }
+                        boolean putar;
+                        berhasil = false;
+                        while(!berhasil){
+                            printf("Putar? (y/n): ");
+                            ADVWORD();
+                            if(currentWord.Length==1){
+                                if(currentWord.TabWord[0]=='y'){
+                                    putar = true;
+                                    berhasil = true;
+                                } else if (currentWord.TabWord[0]=='n'){
+                                    putar = false;
+                                    berhasil = true;
+                                } else {
+                                    printf("Input tidak valid!\n");
+                                }
+                            } else {
+                                printf("Input tidak valid!\n");
+                            }
+                        }
+                        PutFood(simulator, x, a, b, putar, foods);
+                    } else{
+                        if(IsKulkasEmpty(*simulator)){
+                            printf("Kulkas kosong!\n");
+                        } else {
+                            printf("Masukkan id dari makanan yang ingin diambil: ");
+                            ADVWORD();
+                            x = WordToInt(currentWord);
+                            if((x/10)+1!=currentWord.Length){
+                                printf("Input tidak valid!\n");
+                            } else{
+                                TakeFood(simulator, x);
+                            }
+                        }
+                    }
+                    end = true;
+                }
+            }
+        }
+    }
+}

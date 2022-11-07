@@ -94,6 +94,8 @@ void InsertLastListDinElType(ListDinElType *L, ElType e);
 
 void DeleteFirstListDinElType(ListDinElType *L, ElType *e);
 
+void DeleteAtListDinElType(ListDinElType *L, int index, ElType *e);
+
 /**
  * @brief delete element at last index
  */

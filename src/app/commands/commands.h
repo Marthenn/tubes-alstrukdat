@@ -96,6 +96,16 @@ void Fry(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
 void Boil(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType boilFoods, Stack *undoRecord, boolean *success);
 
 /**
+ * @brief Go into the kulkas submenu if possible
+ * 
+ * @param simulator Current simulator
+ * @param foods List of foods available
+ * @param map The map of the simulator
+ * @param success 
+ */
+void Kulkas(Simulator* simulator, ListStatik foods, Map map, boolean *success);
+
+/**
  * @brief move simulator
  * 
  * @param simulator Current simulator

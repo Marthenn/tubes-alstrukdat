@@ -115,5 +115,13 @@ void DisplayDelivery(ListStatik foods, Simulator simulator);
  */
 void DisplayInventory(ListStatik foods, Simulator simulator);
 
+/**
+ * @brief Display the current status of simulator's kulkas
+ * 
+ * @param foods List of foods available
+ * @param simulator The simulator object
+ */
+void DisplayKulkas(ListStatik foods, Simulator simulator);
+
 void DisplayNotif(Simulator simulator);
 #endif

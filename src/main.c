@@ -199,6 +199,11 @@ int main(){
 				return 0;
 			}
 
+			else if(IsInputEqual(KULKAS_WORD))
+			{
+				Kulkas(&simulator, foods, map, &success);
+			}
+
 			else {
 				printf("Command tidak valid!\n");
 				printf("(Masukkan command 'help' untuk melihat semua perintah yang valid)\n");

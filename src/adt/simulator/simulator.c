@@ -26,7 +26,8 @@ void CreateEmptySimulator(Simulator *sim, Word NamaPengguna)
     SetTime(sim, newTime);
     CreateListDinElType(&(sim->Notification), 0);
     CreateListDinElType(&(sim->InverseNotif), 0);
-    
+    CreateListDinElType(&(sim->MakananKulkas), 0);
+    CreateMatriks(10,20,&(sim->Kulkas));
 }
 
 /* *** SETTER / GETTER *** */
@@ -208,27 +209,90 @@ void Wait(Simulator *sim, int Jam, int Menit, ListStatik foods){
     TakeTime(sim, 0, Jam, Menit, foods);
 }
 
-// void DisplayInventory(Simulator sim){
-// /* Keluaran data inventory dengan ID Makanan
-//    dan waktu expirednya */
-   
-//     // Kamus Lokal
-//     int i;
-//     PQInfoType elmt;
-//     Waktu currentTime;
+void ClearAllIdKulkas(Simulator *sim, int id){
+    int i,j;
+    for(i=0;i<sim->Kulkas.rowEff;i++){
+        for(j=0;j<sim->Kulkas.colEff;j++){
+            if(MAT_ELMT(sim->Kulkas,i,j)==id){
+                MAT_ELMT(sim->Kulkas,i,j)=0;
+            }
+        }
+    }
+}
 
-//     // ALGORITMA
-// ;
-//     currentTime = GetTime(&sim);
-//     printf("--------------\n");
-//     if (!IsEmptyPQ(sim.Inventory)){
-//         for (i = sim.Inventory.Head;i <= sim.Inventory.Tail;i++){
-            
-//             elmt.Info = (sim.Inventory).Tab[i].Info;
-//             elmt.Time = (sim.Inventory).Tab[i].Time - currentTime;
-//             DisplayInfoTypePQ(elmt);
-//             printf("\n");
-//         }
-//     }
-//     printf("--------------\n");
-// }
+boolean CheckSizeKulkas(Simulator sim, Makanan food, int X, int Y, boolean rotated){
+    if(rotated){
+        food.SizeX = food.SizeX ^ food.SizeY;
+        food.SizeY = food.SizeX ^ food.SizeY;
+        food.SizeX = food.SizeX ^ food.SizeY;
+    }
+    int endX = food.SizeX + X - 1;
+    int endY = food.SizeY + Y - 1;
+    if(endX>=sim.Kulkas.rowEff || endY>=sim.Kulkas.colEff){
+        return false;
+    }
+    int i,j;
+    for(i=X-1;i<endX;i++){
+        for(j=Y-1;j<endY;j++){
+            if(MAT_ELMT(sim.Kulkas,i,j)!=0){
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+void PutFood(Simulator *sim, int idx, int X, int Y, boolean rotated, ListStatik foods){
+    int i,j;Makanan food;
+
+    int foodId = GetElmtInfo(sim->Inventory, idx);
+    Waktu foodTime = GetElmtTime(sim->Inventory, idx);
+    for(i=0;i<ListLength(foods);i++){
+        if(GetVal(foods.contents[i]).m.Id==foodId){
+            food = GetVal(foods.contents[i]).m;
+            break;
+        }
+    }
+    foodTime -= GetTime(sim);
+    food.Kedaluarsa = foodTime;
+    if(!CheckSizeKulkas(*sim, food, X, Y, rotated)){
+        printf("Makanan tidak muat!\n");
+        return;
+    }
+    if(rotated){
+        food.SizeX = food.SizeX ^ food.SizeY;
+        food.SizeY = food.SizeX ^ food.SizeY;
+        food.SizeX = food.SizeX ^ food.SizeY;
+    }
+    int endX = food.SizeX + X - 1;
+    int endY = food.SizeY + Y - 1;
+    int id = ListDinElTypeLength(sim->MakananKulkas)+1;
+    for(i=X;i<=endX;i++){
+        for(j=Y;j<=endY;j++){
+            MAT_ELMT(sim->Kulkas,i,j)=id;
+        }
+    }
+    InsertLastListDinElType(&sim->MakananKulkas, NewElType(3, (union Data){.m=food}));
+    DeleteElmtPQ(&(sim->Inventory), foodId, foodTime+GetTime(sim));
+}
+
+void TakeFood(Simulator *sim, int id){
+    Makanan food;
+    ElType el;
+    DeleteAtListDinElType(&sim->MakananKulkas, id-1, &el);
+    food = GetVal(el).m;
+    ClearAllIdKulkas(sim, id);
+    Enqueue(&sim->Inventory, food.Id, food.Kedaluarsa + GetTime(sim));
+}
+
+boolean IsKulkasEmpty(Simulator sim){
+    int i,j;
+    for(i=0;i<sim.Kulkas.rowEff;i++){
+        for(j=0;j<sim.Kulkas.colEff;j++){
+            if(MAT_ELMT(sim.Kulkas,i,j)!=0){
+                return false;
+            }
+        }
+    }
+    return true;
+}

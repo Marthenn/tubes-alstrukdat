@@ -12,7 +12,7 @@ int main(){
     Map map;
     ListStatik foods, recipes; 
     Word n;
-    ListDinElType buyFoods,mixFoods,chopFoods,fryFoods,boilFoods, wordList;
+    ListDinElType buyFoods,mixFoods,chopFoods,fryFoods,boilFoods, wordList, kulkasRecord;
     Stack undoStack, redoStack;
 	Waktu timeRecord;
 	Point locationRecord;
@@ -45,6 +45,7 @@ int main(){
 
 				CreateEmptyPQ(&inventoryRecord);
 				CreateEmptyPQ(&deliveryRecord);
+				CreateListDinElType(&kulkasRecord, 0);
 
 				timeRecord = GetTime(&simulator);
 				locationRecord = GetLokasi(&simulator);
@@ -143,13 +144,13 @@ int main(){
 			else if (IsInputEqual(UNDO_WORD))
 			{
 				isUndo = true;
-				Undo(&simulator, inventoryRecord, deliveryRecord, &undoStack, &redoStack, timeRecord, locationRecord, &map);
+				Undo(&simulator, inventoryRecord, deliveryRecord, &undoStack, &redoStack, timeRecord, locationRecord, &map, foods);
 			}
 			
 			else if (IsInputEqual(REDO_WORD))
 			{
 				isRedo = true;
-				Redo(&simulator, inventoryRecord, deliveryRecord, &undoStack, &redoStack, timeRecord, locationRecord, &map);
+				Redo(&simulator, inventoryRecord, deliveryRecord, &undoStack, &redoStack, timeRecord, locationRecord, &map, foods);
 			}
 			
 			else if (IsInputEqual(CATALOG_WORD))
@@ -224,7 +225,7 @@ int main(){
 			else if (success) {
 				int i;
 
-				UpdateStack(simulator, inventoryRecord, deliveryRecord, &undoStack, timeRecord, locationRecord);
+				UpdateStack(simulator, inventoryRecord, deliveryRecord, &undoStack, timeRecord, locationRecord, kulkasRecord);
 
 				if (!IsStackEmpty(redoStack))
 				{
@@ -234,6 +235,8 @@ int main(){
 
 			AssignPQ(simulator.Delivery, &deliveryRecord);
 			AssignPQ(simulator.Inventory, &inventoryRecord);
+
+			CopyListDinElType(simulator.MakananKulkas, &kulkasRecord);
 
 			timeRecord = GetTime(&simulator);
 			locationRecord = GetLokasi(&simulator);

@@ -10,6 +10,7 @@ typedef struct MakananKulkas{
     Makanan makanan;
     Point kiriAtas;
     boolean rotated;
+    int idx;
 } MakananKulkas;
 
 union Data{

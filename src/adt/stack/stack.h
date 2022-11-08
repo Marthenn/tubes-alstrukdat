@@ -21,6 +21,8 @@ typedef struct {
   PrioQueue DeliveryAdd;
   PrioQueue InventoryDel;
   PrioQueue DeliveryDel;
+  ListDinElType KulkasAdd;
+  ListDinElType KulkasDel;
   ListDinElType Notification;
   ListDinElType InverseNotification;
   Point SimulatorLoc;

@@ -69,6 +69,9 @@ void PushStack(Stack * S, Record X)
 
 	CopyListDinElType(X.Notification, &currentRecord->Notification);
 	CopyListDinElType(X.InverseNotification, &currentRecord->InverseNotification);
+
+	CopyListDinElType(X.KulkasAdd, &currentRecord->KulkasAdd);
+	CopyListDinElType(X.KulkasDel, &currentRecord->KulkasDel);
 	
 }
 

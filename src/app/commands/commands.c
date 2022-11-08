@@ -590,13 +590,13 @@ void resetState(Simulator* simulator, Record record, Map *map, ListStatik foods)
     for(i = ListDinElTypeLength(l) - 1; i >= 0; i--)
     {
         printf("idx : %d\n", l.buffer[i].val.mk.idx);
-        TakeFood(simulator, l.buffer[i].val.mk.idx + 1);
+        TakeFood(simulator, l.buffer[i].val.mk.idx + 1, false);
     }
 
     CopyListDinElType(record.KulkasDel, &l);
     for(i = 0; i < ListDinElTypeLength(l); i++)
     {
-        PutFood(simulator, l.buffer[i].val.mk.makanan, l.buffer[i].val.mk.kiriAtas.x, l.buffer[i].val.mk.kiriAtas.y, l.buffer[i].val.mk.rotated, foods);
+        PutFood(simulator, l.buffer[i].val.mk.makanan, l.buffer[i].val.mk.kiriAtas.x, l.buffer[i].val.mk.kiriAtas.y, l.buffer[i].val.mk.rotated, foods, false);
     }
     
 }
@@ -928,7 +928,7 @@ void Kulkas(Simulator *simulator, ListStatik foods, Map map, boolean *success){
                         Makanan makanan = GetMakananFromId(foods,GetElmtInfo(simulator->Inventory,x));
                         makanan.Kedaluarsa  = GetElmtTime(simulator->Inventory,x) - GetTime(simulator);
                         if(CheckSizeKulkas(*simulator, makanan, a, b, putar)){
-                            PutFood(simulator, makanan, a, b, putar, foods);
+                            PutFood(simulator, makanan, a, b, putar, foods, true);
                             end = true;
                             *success = true;
                         } else{
@@ -944,7 +944,7 @@ void Kulkas(Simulator *simulator, ListStatik foods, Map map, boolean *success){
                             if((x/10)+1!=currentWord.Length){
                                 printf("Input tidak valid!\n");
                             } else{
-                                TakeFood(simulator, x);
+                                TakeFood(simulator, x, true);
                                 *success = true;
                             }
                         }

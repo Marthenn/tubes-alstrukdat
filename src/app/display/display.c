@@ -70,6 +70,8 @@ void Help(){
     printf("    Menggoreng satu atau lebih bahan makanan\n");
     printf("10. BOIL\n");
     printf("    Merebus suatu bahan makanan\n");
+    printf("11. KULKAS\n");
+    printf("    Mengakses kulkas\n");
     printf("11. WAIT x y\n");
     printf("    Menunggu selama x jam dan y menit\n");
     printf("12. UNDO\n");
@@ -366,4 +368,45 @@ void DisplayNotif(Simulator simulator)
         }
     }
 
+}
+
+void DisplayKulkas(ListStatik foods, Simulator simulator){
+    printf("======KULKAS======\n");
+    int i,j;
+    for(i=-1;i<=GetLastIdxRow(simulator.Kulkas)+1;i++){
+        for(j=-1;j<=GetLastIdxCol(simulator.Kulkas)+1;j++){
+            if(i==-1||i==GetLastIdxRow(simulator.Kulkas)+1||j==-1||j==GetLastIdxCol(simulator.Kulkas)+1){
+                printf("X");
+            } else if(MAT_ELMT(simulator.Kulkas,i,j)!=0){
+                printf("%d",MAT_ELMT(simulator.Kulkas,i,j));
+            } else{
+                printf(" ");
+            }
+            if(j!=GetLastIdxCol(simulator.Kulkas)+1){
+                printf(" ");
+            }
+        }
+        printf("\n");
+    }
+    if(!IsKulkasEmpty(simulator)){
+        printf("Id Makanan di Kulkas:\n");
+        for(i=0;i<ListDinElTypeLength(simulator.MakananKulkas);i++){
+            printf(" %d. ",i+1);DisplayWord(GetVal(simulator.MakananKulkas.buffer[i]).m.Nama);
+            printf(" - ");
+            Waktu time = GetVal(simulator.MakananKulkas.buffer[i]).m.Kedaluarsa;
+            if(GetHari(time)>0){
+                printf("%d hari ",GetHari(time));
+            }
+            if(GetJam(time)>0){
+                printf("%d jam ",GetJam(time));
+            }
+            if(GetMenit(time)>0){
+                printf("%d menit ",GetMenit(time));
+            }
+            printf("\n");
+        }
+    }
+    printf("Command:\n");
+    printf("1. Masukkan makanan ke kulkas\n");
+    printf("2. Ambil makanan dari kulkas\n");
 }

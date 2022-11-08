@@ -46,7 +46,7 @@ boolean IsMatIdxEff(Matriks m, IdxType i, IdxType j);
 void CopyMatriks(Matriks mIn, Matriks *mOut);
 /* Melakukan assignment mOut <- mIn */
 
-void DisplayMatriks(Matriks m);
+void DisplayIntMatriks(Matriks m);
 /* I.S. m terdefinisi */
 /* F.S. Nilai m(i,j) ditulis ke layar per baris per kolom, masing-masing elemen per baris 
    dipisahkan sebuah spasi. Baris terakhir tidak diakhiri dengan newline */

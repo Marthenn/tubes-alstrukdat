@@ -89,7 +89,7 @@ void Buy(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
         BuyMenu(BuyFoods);
         int x;
         boolean end = false;
-        while(!*success&!end){
+        while(!*success && !end){
             printf("Kirim 0 untuk exit\n");
             printf("Enter Command: ");
             ADVWORD();
@@ -537,11 +537,13 @@ void Move(Simulator *simulator, Map *map, int moveCode, ListStatik foods, boolea
     }
 }
 
-void resetState(Simulator* simulator, Record record, Map *map)
+void resetState(Simulator* simulator, Record record, Map *map, ListStatik foods)
 {
-    int id;
+    int id, i;
     Waktu time;
     PrioQueue p;
+    ListDinElType l;
+    ElType val;
 
     CreateEmptyPQ(&p);
 
@@ -551,7 +553,7 @@ void resetState(Simulator* simulator, Record record, Map *map)
 
     
     SetNotif(simulator, record.InverseNotification, record.Notification);
-    printf("undo finished\n");
+
     AssignPQ(record.DeliveryAdd, &p);
     while(!IsEmptyPQ(p))
     {
@@ -581,9 +583,24 @@ void resetState(Simulator* simulator, Record record, Map *map)
     }
 
     DeallocatePQ(&p);
+
+    CopyListDinElType(record.KulkasAdd, &l);
+    
+    // HANYA SALAH SATU YANG DAPAT TERJADI, YAITU ANTARA BEBERAPA MAKANAN DIKELUARKAN ATAU DIMASUKKAN KE DALAM KULKAS
+    for(i = ListDinElTypeLength(l) - 1; i >= 0; i--)
+    {
+        printf("idx : %d\n", l.buffer[i].val.mk.idx);
+        TakeFood(simulator, l.buffer[i].val.mk.idx + 1);
+    }
+
+    CopyListDinElType(record.KulkasDel, &l);
+    for(i = 0; i < ListDinElTypeLength(l); i++)
+    {
+        PutFood(simulator, l.buffer[i].val.mk.makanan, l.buffer[i].val.mk.kiriAtas.x, l.buffer[i].val.mk.kiriAtas.y, l.buffer[i].val.mk.rotated, foods);
+    }
     
 }
-void Undo (Simulator* simulator, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *undoStack, Stack *redoStack, Waktu timeRecord, Point locRecord, Map *map)
+void Undo (Simulator* simulator, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *undoStack, Stack *redoStack, Waktu timeRecord, Point locRecord, Map *map, ListStatik foods)
 {
     Record undoRecord;
 
@@ -591,13 +608,13 @@ void Undo (Simulator* simulator, PrioQueue inventoryRecord, PrioQueue deliveryRe
     {
         PopStack(undoStack, &undoRecord);
 
-        resetState(simulator, undoRecord, map);
+        resetState(simulator, undoRecord, map, foods);
 
         UpdateInverse(*simulator, undoRecord, redoStack, timeRecord, locRecord);
     }
 }
 
-void Redo (Simulator* simulator, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *undoStack, Stack *redoStack, Waktu timeRecord, Point locRecord, Map *map)
+void Redo (Simulator* simulator, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *undoStack, Stack *redoStack, Waktu timeRecord, Point locRecord, Map *map, ListStatik foods)
 {   
     Record prevRecord, redoRecord;
 
@@ -606,14 +623,14 @@ void Redo (Simulator* simulator, PrioQueue inventoryRecord, PrioQueue deliveryRe
 
         PopStack(redoStack, &redoRecord);
 
-        resetState(simulator, redoRecord, map);
+        resetState(simulator, redoRecord, map, foods);
 
         UpdateInverse(*simulator, redoRecord, undoStack, timeRecord, locRecord);
 
     }
 }
 
-void UpdateStack(Simulator simulator, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *stack, Waktu timeRecord, Point locRecord)
+void UpdateStack(Simulator simulator, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *stack, Waktu timeRecord, Point locRecord, ListDinElType kulkasRecord)
 {
     Record newRecord;
     newRecord.Time = timeRecord;
@@ -628,10 +645,10 @@ void UpdateStack(Simulator simulator, PrioQueue inventoryRecord, PrioQueue deliv
     CreateEmptyPQ(&newRecord.InventoryAdd);
     CreateEmptyPQ(&newRecord.InventoryDel);
 
-
     GetQueueChanges(&newRecord.DeliveryAdd, &newRecord.DeliveryDel, deliveryRecord, simulator.Delivery);
     GetQueueChanges(&newRecord.InventoryAdd, &newRecord.InventoryDel, inventoryRecord, simulator.Inventory);
 
+    GetListChanges(&newRecord.KulkasAdd, &newRecord.KulkasDel, kulkasRecord, simulator.MakananKulkas);
 
     PushStack(stack, newRecord);
 }
@@ -657,8 +674,63 @@ void UpdateInverse(Simulator simulator, Record inverseRecord, Stack *stack, Wakt
     AssignPQ(inverseRecord.InventoryDel,&newRecord.InventoryAdd);
     AssignPQ(inverseRecord.InventoryAdd,&newRecord.InventoryDel);
 
+    CopyListDinElType(inverseRecord.KulkasAdd, &newRecord.KulkasDel);
+    CopyListDinElType(inverseRecord.KulkasDel, &newRecord.KulkasAdd);
+
     PushStack(stack, newRecord);
 
+}
+
+void GetListChanges(ListDinElType *addChanges, ListDinElType *delChanges, ListDinElType prevListRef, ListDinElType currentListRef)
+{
+    int i, count, length;
+
+    boolean found;
+    ElType val;
+
+    if (ListDinElTypeLength(prevListRef) > ListDinElTypeLength(currentListRef))
+    {
+        length = ListDinElTypeLength(prevListRef) - ListDinElTypeLength(currentListRef);
+        CreateListDinElType(addChanges, 0);
+        CreateListDinElType(delChanges, length);
+
+        found = false;
+
+        for (count = 0; count < length; count++)
+        {
+            i = 0;
+            while(i < ListDinElTypeLength(currentListRef) && !found)
+            {
+                if (prevListRef.buffer[i].val.mk.idx != currentListRef.buffer[i].val.mk.idx)
+                {
+                    found = true;
+                }
+
+                else
+                {
+                    i++;
+                }
+            }
+
+            val =  prevListRef.buffer[i];
+            val.val.mk.idx = i;
+            InsertLastListDinElType(delChanges, val);
+        }
+    }
+
+    else if (ListDinElTypeLength(prevListRef) < ListDinElTypeLength(currentListRef))
+    {
+        length = ListDinElTypeLength(currentListRef) - ListDinElTypeLength(prevListRef);
+        CreateListDinElType(addChanges, length);
+        CreateListDinElType(delChanges, 0);
+
+        for(i = ListDinElTypeLength(prevListRef); i < ListDinElTypeLength(currentListRef); i++)
+        {
+            val = currentListRef.buffer[i];
+            val.val.mk.idx = i;
+            InsertLastListDinElType(addChanges, val);
+        }
+    }
 }
 
 void GetQueueChanges(PrioQueue *addChanges, PrioQueue *delChanges, PrioQueue prevQueueRef, PrioQueue currentQueueRef)
@@ -719,4 +791,167 @@ void GetQueueChanges(PrioQueue *addChanges, PrioQueue *delChanges, PrioQueue pre
 
     DeallocatePQ(&prevQueue);
     DeallocatePQ(&currentQueue);
+}
+
+boolean CheckSizeKulkas(Simulator sim, Makanan food, int X, int Y, boolean rotated){
+    if(rotated){
+        food.SizeX = food.SizeX ^ food.SizeY;
+        food.SizeY = food.SizeX ^ food.SizeY;
+        food.SizeX = food.SizeX ^ food.SizeY;
+    }
+    int endX = food.SizeX + X - 1;
+    int endY = food.SizeY + Y - 1;
+    if(endX>GetLastIdxCol(sim.Kulkas) || endY>GetLastIdxRow(sim.Kulkas)){
+        return false;
+    }
+    int i,j;
+    for(i=X;i<=endX;i++){
+        for(j=Y;j<=endY;j++){
+            if(MAT_ELMT(sim.Kulkas,j,i)!=0){
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+void Kulkas(Simulator *simulator, ListStatik foods, Map map, boolean *success){
+    boolean end;
+    Waktu time;
+    Word notif, inverseNotif;
+
+    if(!(IsAdjacent(simulator->Lokasi,K(map)))){
+        DisplayWord(GetNamaPengguna(simulator));
+        printf(" tidak berada di area kulkas!\n");
+    } else {
+        DisplayKulkas(foods, *simulator);
+        end = false;
+        int x,i;
+        while(!end){
+            printf("Kirim 0 untuk exit\n");
+            printf("Enter Command: ");
+            ADVWORD();
+            x = WordToInt(currentWord);
+            if((x/10)+1!=currentWord.Length){
+                printf("Input tidak valid!\n");
+            } else{
+                x--;
+                if(x==-1){
+                    end = true;
+                } else {
+                    if(x==0){
+                        // Handling bila inventory kosong
+                        if(IsEmptyPQ(simulator->Inventory)){
+                            printf("Inventory kosong!\n");
+                            return;
+                        }
+                        boolean berhasil;
+                        // Pilih Makanan yang ingin Dimasukkan
+                        printf("Makanan di inventory:\n");
+                        printf("( Makanan - Kedaluwarsa - Ukuran(X,Y) )\n");
+                        for(i=0;i<LengthPQ(simulator->Inventory);i++){
+                            printf(" %d. ",i+1);
+                            time = GetElmtTime(simulator->Inventory,i) - GetTime(simulator);
+                            DisplayWord(GetNama(GetMakananFromId(foods,GetElmtInfo(simulator->Inventory,i))));
+                            printf(" - ");
+                            if(GetHari(time)!=0){
+                                printf("%d hari ",GetHari(time));
+                            }
+                            if(GetJam(time)!=0){
+                                printf("%d jam ",GetJam(time));
+                            }
+                            if(GetMenit(time)!=0){
+                                printf("%d menit ",GetMenit(time));
+                            }
+                            printf(" - ");
+                            printf("(%d,%d)\n",GetSizeX(GetMakananFromId(foods,GetElmtInfo(simulator->Inventory,i))),GetSizeY(GetMakananFromId(foods,GetElmtInfo(simulator->Inventory,i))));
+                        }
+                        berhasil = false;
+                        while(!berhasil){
+                            printf("Masukkan nomor makanan yang ingin diletakkan: ");
+                            ADVWORD();
+                            x = WordToInt(currentWord);
+                            if((x/10)+1!=currentWord.Length){
+                                printf("Input tidak valid!\n");
+                            } else if (x>LengthPQ(simulator->Inventory) || x<1){
+                                printf("Input tidak valid!\n");
+                            } else {
+                                berhasil = true;
+                            }
+                        }
+                        x--;
+                        // Pilih posisi makanan di kulkas (koordinat kiri atas)
+                        int a,b;
+                        berhasil = false;
+                        while(!berhasil){
+                            printf("Koordinat atas kiri adalah (0,0)\n");
+                            printf("Koordinat kiri atas makanan yang ingin diletakkan\n");
+                            printf("Masukkan koordinat X yang ingin ditempati: ");
+                            ADVWORD();
+                            a = WordToInt(currentWord);
+                            if((a/10)+1!=currentWord.Length){
+                                printf("Input tidak valid!\n");
+                            } else if(a>19 || a<0){
+                                printf("Input tidak valid!\n");
+                            } else{
+                                printf("Masukkan koordinat Y yang ingin ditempati: ");
+                                ADVWORD();
+                                b = WordToInt(currentWord);
+                                if((b/10)+1!=currentWord.Length){
+                                    printf("Input tidak valid!\n");
+                                } else if (b>9 || b<0){
+                                    printf("Input tidak valid!\n");
+                                } else{
+                                    berhasil = true;
+                                }
+                            }
+                        }
+                        boolean putar;
+                        berhasil = false;
+                        while(!berhasil){
+                            printf("Putar? (y/n): ");
+                            ADVWORD();
+                            if(currentWord.Length==1){
+                                if(currentWord.TabWord[0]=='y'){
+                                    putar = true;
+                                    berhasil = true;
+                                } else if (currentWord.TabWord[0]=='n'){
+                                    putar = false;
+                                    berhasil = true;
+                                } else {
+                                    printf("Input tidak valid!\n");
+                                }
+                            } else {
+                                printf("Input tidak valid!\n");
+                            }
+                        }
+                        Makanan makanan = GetMakananFromId(foods,GetElmtInfo(simulator->Inventory,x));
+                        makanan.Kedaluarsa  = GetElmtTime(simulator->Inventory,x) - GetTime(simulator);
+                        if(CheckSizeKulkas(*simulator, makanan, a, b, putar)){
+                            PutFood(simulator, makanan, a, b, putar, foods);
+                            end = true;
+                            *success = true;
+                        } else{
+                            printf("Makanan tidak muat!\n");
+                        }
+                    } else{
+                        if(IsKulkasEmpty(*simulator)){
+                            printf("Kulkas kosong!\n");
+                        } else {
+                            printf("Masukkan id dari makanan yang ingin diambil: ");
+                            ADVWORD();
+                            x = WordToInt(currentWord);
+                            if((x/10)+1!=currentWord.Length){
+                                printf("Input tidak valid!\n");
+                            } else{
+                                TakeFood(simulator, x);
+                                *success = true;
+                            }
+                        }
+                        end = true;
+                    }
+                }
+            }
+        }
+    }
 }

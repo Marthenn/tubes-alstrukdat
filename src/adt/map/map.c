@@ -21,6 +21,7 @@ void CreateMap(Map *map, int row, int col)
     CREATE_POINT_UNDEF(C(*map));
     CREATE_POINT_UNDEF(F(*map));
     CREATE_POINT_UNDEF(B(*map));
+    CREATE_POINT_UNDEF(K(*map));
 }
 
 void MoveSimulator(Map *map, Point p)

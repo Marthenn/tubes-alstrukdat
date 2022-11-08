@@ -96,6 +96,28 @@ void Fry(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
 void Boil(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, ListDinElType boilFoods, Stack *undoRecord, boolean *success);
 
 /**
+ * @brief Go into the kulkas submenu if possible
+ * 
+ * @param simulator Current simulator
+ * @param foods List of foods available
+ * @param map The map of the simulator
+ * @param success 
+ */
+void Kulkas(Simulator* simulator, ListStatik foods, Map map, boolean *success);
+
+/**
+ * @brief Check if the food can be put into the kulkas at specific coordinate
+ * 
+ * @param sim Current simulator
+ * @param food The food to be put
+ * @param X Horizontal Coordinate
+ * @param Y Vertical Coordinate
+ * @param rotated Is the food rotated 90 degree
+ * @return boolean 
+ */
+boolean CheckSizeKulkas(Simulator sim, Makanan food, int X, int Y, boolean rotated);
+
+/**
  * @brief move simulator
  * 
  * @param simulator Current simulator
@@ -107,15 +129,17 @@ void Boil(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
 
 void Move(Simulator *simulator, Map *map, int moveCode, ListStatik foods, boolean *success);
 
-void resetState(Simulator* simulator, Record record, Map *map);
+void resetState(Simulator* simulator, Record record, Map *map, ListStatik foods);
 
-void Undo (Simulator* simulator, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *undoStack, Stack *redoStack, Waktu timeRecord, Point locRecord, Map *map);
+void Undo (Simulator* simulator, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *undoStack, Stack *redoStack, Waktu timeRecord, Point locRecord, Map *map, ListStatik foods);
 
-void Redo (Simulator* simulator, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *undoStack, Stack *redoStack, Waktu timeRecord, Point locRecord, Map *map);
+void Redo (Simulator* simulator, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *undoStack, Stack *redoStack, Waktu timeRecord, Point locRecord, Map *map, ListStatik foods);
+
+void GetListChanges(ListDinElType *addChanges, ListDinElType *delChanges, ListDinElType prevListRef, ListDinElType currentListRef);
 
 void GetQueueChanges(PrioQueue *addChanges, PrioQueue *delChanges, PrioQueue prevQueue, PrioQueue currentQueue);
 
-void UpdateStack(Simulator simulator, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *stack, Waktu timeRecord, Point locRecord);
+void UpdateStack(Simulator simulator, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *stack, Waktu timeRecord, Point locRecord, ListDinElType kulkasRecord);
 
 void UpdateInverse(Simulator simulator, Record inverseRecord, Stack *stack, Waktu timeRecord, Point locRecord);
 #endif

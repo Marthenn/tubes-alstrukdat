@@ -52,6 +52,8 @@ boolean Compare(ElType a, ElType b){
                 return IsWordEqual(a.val.w, b.val.w);
             case 5:
                 return (a.val.t == b.val.t);
+            case 6:
+                return (GetIDMakanan(a.val.mk.makanan) == GetIDMakanan(b.val.mk.makanan)) && (IsEqualPoint(a.val.mk.kiriAtas, b.val.mk.kiriAtas)) && (a.val.mk.rotated == b.val.mk.rotated);
         }
 
     }else{
@@ -105,6 +107,17 @@ void PrintElType(ElType a){
             break;
         case 5:
             PrintTree(a.val.t);
+            break;
+        case 6:
+            DisplayMakanan(a.val.mk.makanan);
+            printf(" ");
+            CetakPoint(a.val.mk.kiriAtas);
+            printf(" ");
+            if(a.val.mk.rotated){
+                printf("true");
+            }else{
+                printf("false");
+            }
             break;
         default:
             printf("undefined");

@@ -832,7 +832,7 @@ void Kulkas(Simulator *simulator, ListStatik foods, Map map, boolean *success){
             printf("Enter Command: ");
             ADVWORD();
             x = WordToInt(currentWord);
-            if((x/10)+1!=currentWord.Length){
+            if((x/10)+1!=currentWord.Length || x<0 || x>2){
                 printf("Input tidak valid!\n");
             } else{
                 x--;

@@ -220,9 +220,9 @@ void ClearAllIdKulkas(Simulator *sim, int id){
     }
 }
 
-void PutFood(Simulator *sim, Makanan food, int X, int Y, boolean rotated, ListStatik foods){
+void PutFood(Simulator *sim, Makanan food, int X, int Y, boolean rotated, ListStatik foods, boolean isNotif){
     int i,j;
-    Word notif;
+    Word notif, inverseNotif;
     if(rotated){
         food.SizeX = food.SizeX ^ food.SizeY;
         food.SizeY = food.SizeX ^ food.SizeY;
@@ -247,30 +247,48 @@ void PutFood(Simulator *sim, Makanan food, int X, int Y, boolean rotated, ListSt
     InsertLastListDinElType(&sim->MakananKulkas, NewElType(6, (union Data){.mk=put}));
     DeleteElmtPQ(&(sim->Inventory), food.Id, food.Kedaluarsa+GetTime(sim));
 
-    notif = EMPTY_WORD;
+    if (isNotif)
+    {
+        notif = EMPTY_WORD;
 
-    ConcatWord(&notif, food.Nama);
-    ConcatWord(&notif, NewWord(" dimasukkan ke kulkas", 21));
-    
-    InsertFirstListDinElType(&(sim->Notification), NewElType(4, (union Data){.w = notif}));
+        ConcatWord(&notif, food.Nama);
+        ConcatWord(&notif, NewWord(" dimasukkan ke kulkas", 21));
+
+        inverseNotif = EMPTY_WORD;
+
+        ConcatWord(&inverseNotif, food.Nama);
+        ConcatWord(&inverseNotif, NewWord(" dikeluarkan dari kulkas", 24));
+        
+        InsertFirstListDinElType(&(sim->Notification), NewElType(4, (union Data){.w = notif}));
+        InsertFirstListDinElType(&(sim->InverseNotif), NewElType(4, (union Data){.w = inverseNotif}));
+    }
+
 }
 
-void TakeFood(Simulator *sim, int id){
+void TakeFood(Simulator *sim, int id, boolean isNotif){
     Makanan food;
     ElType el;
-    Word notif;
+    Word notif, inverseNotif;
     DeleteAtListDinElType(&sim->MakananKulkas, id-1, &el);
     food = GetVal(el).mk.makanan;
     ClearAllIdKulkas(sim, id);
     Enqueue(&sim->Inventory, food.Id, food.Kedaluarsa + GetTime(sim));
 
-    notif = EMPTY_WORD;
+    if (isNotif)
+    {
+        notif = EMPTY_WORD;
 
-    ConcatWord(&notif, food.Nama);
-    ConcatWord(&notif, NewWord(" dikeluarkan dari kulkas", 24));
+        ConcatWord(&notif, food.Nama);
+        ConcatWord(&notif, NewWord(" dikeluarkan dari kulkas", 24));
 
-    
-    InsertFirstListDinElType(&(sim->Notification), NewElType(4, (union Data){.w = notif}));
+        inverseNotif = EMPTY_WORD;
+
+        ConcatWord(&inverseNotif, food.Nama);
+        ConcatWord(&inverseNotif, NewWord(" dimasukkan ke kulkas", 21));
+        
+        InsertFirstListDinElType(&(sim->Notification), NewElType(4, (union Data){.w = notif}));
+        InsertFirstListDinElType(&(sim->InverseNotif), NewElType(4, (union Data){.w = inverseNotif}));
+    }
 }
 
 boolean IsKulkasEmpty(Simulator sim){

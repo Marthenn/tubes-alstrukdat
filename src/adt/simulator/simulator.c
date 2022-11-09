@@ -273,6 +273,17 @@ void TakeFood(Simulator *sim, int id, boolean isNotif){
     food = GetVal(el).mk.makanan;
     ClearAllIdKulkas(sim, id);
     Enqueue(&sim->Inventory, food.Id, food.Kedaluarsa + GetTime(sim));
+    int i,j;
+    for(i=0;i<ListDinElTypeLength(sim->MakananKulkas);i++){
+        sim->MakananKulkas.buffer->val.mk.idx--;
+    }
+    for(i=0;i<sim->Kulkas.rowEff;i++){
+        for(j=0;j<sim->Kulkas.colEff;j++){
+            if(MAT_ELMT(sim->Kulkas,i,j)!=0 && MAT_ELMT(sim->Kulkas,i,j)>id){
+                sim->Kulkas.mem[i][j]--;
+            }
+        }
+    }
 
     if (isNotif)
     {

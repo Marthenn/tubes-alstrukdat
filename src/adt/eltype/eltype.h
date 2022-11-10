@@ -5,6 +5,7 @@
 #include "../../boolean.h"
 #include "../makanan/makanan.h"
 #include "../tree/tree.h"
+#include "../set/set.h"
 
 typedef struct MakananKulkas{
     Makanan makanan;
@@ -21,6 +22,7 @@ union Data{
     /*type 4*/ Word w;
     /*type 5*/ Tree t;
     /*type 6*/ MakananKulkas mk;
+    /*type 7*/ Set s;
 };
 
 typedef struct ElType{

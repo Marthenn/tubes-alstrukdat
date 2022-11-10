@@ -3,11 +3,12 @@
 
 /* ADT */
 #include "../../boolean.h"
-#include "../eltype/eltype.h"
+#include "../wordmachine/wordmachine.h"
 
 typedef struct{
-    ElType data[100];
+    int data[100];
     int length;
+    Word name;
 } Set;
 
 /**
@@ -48,7 +49,7 @@ int Length(Set s);
  * @param e Element to be checked
  * @return Is e in s
  */
-boolean IsMember(Set s, ElType e);
+boolean IsMember(Set s, int e);
 
 /**
  * @brief Add an element to the set if set is not full
@@ -56,7 +57,7 @@ boolean IsMember(Set s, ElType e);
  * @param s The set to be modified
  * @param e Element to be added
  */
-void SetAdd(Set *s, ElType e);
+void SetAdd(Set *s, int e);
 
 /**
  * @brief Remove an element from the set
@@ -64,7 +65,7 @@ void SetAdd(Set *s, ElType e);
  * @param s The set to be modified
  * @param e Element to be removed
  */
-void RemoveSet(Set *s, ElType e);
+void RemoveSet(Set *s, int e);
 
 /**
  * 
@@ -109,5 +110,21 @@ boolean IsSubset(Set s1, Set s2);
  * @brief Copy a set (s2) to another set (s1)
  */
 void CopySet(Set *s1, Set s2);
+
+/**
+ * @brief Set the Name object
+ * 
+ * @param s 
+ * @param name 
+ */
+void SetName(Set *s, Word name);
+
+/**
+ * @brief Get the Set Name object
+ * 
+ * @param s 
+ * @return Word 
+ */
+Word GetSetName(Set s);
 
 #endif

@@ -8,7 +8,7 @@
 typedef struct{
     int data[100];
     int length;
-    Word name;
+    int id;
 } Set;
 
 /**

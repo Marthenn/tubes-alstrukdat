@@ -119,10 +119,10 @@ void CopySet(Set *s1, Set s2){
     }
 }
 
-void SetName(Set *s, Word name){
-    (*s).name = name;
+void SetId(Set *s, int id){
+    (*s).id = id;
 }
 
-Word GetSetName(Set s){
-    return s.name;
+int GetSetId(Set s){
+    return s.id;
 }

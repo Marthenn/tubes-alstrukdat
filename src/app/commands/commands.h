@@ -141,5 +141,5 @@ void GetQueueChanges(PrioQueue *addChanges, PrioQueue *delChanges, PrioQueue pre
 
 void UpdateStack(Simulator *simulator, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *stack, Waktu timeRecord, Point locRecord, ListDinElType kulkasRecord);
 
-void UpdateInverse(Simulator simulator, Record inverseRecord, Stack *stack, Waktu timeRecord, Point locRecord);
+void UpdateInverse(Simulator *simulator, Record inverseRecord, Stack *stack, Waktu timeRecord, Point locRecord);
 #endif

@@ -206,7 +206,7 @@ void CopyListDinElType(ListDinElType listIn, ListDinElType *listOut)
     for (i = 0; i < ListDinElTypeLength(listIn); i++)
     {
 
-        InsertFirstListDinElType(listOut, listIn.buffer[i]);
+        InsertLastListDinElType(listOut, listIn.buffer[i]);
 
     }
 

@@ -589,13 +589,13 @@ void resetState(Simulator* simulator, Record record, Map *map, ListStatik foods)
     // HANYA SALAH SATU YANG DAPAT TERJADI, YAITU ANTARA BEBERAPA MAKANAN DIKELUARKAN ATAU DIMASUKKAN KE DALAM KULKAS
     for(i = ListDinElTypeLength(l) - 1; i >= 0; i--)
     {
-        printf("idx : %d\n", l.buffer[i].val.mk.idx);
         TakeFood(simulator, l.buffer[i].val.mk.idx + 1, false);
     }
 
     CopyListDinElType(record.KulkasDel, &l);
     for(i = 0; i < ListDinElTypeLength(l); i++)
     {
+        printf("undo idx : %d", l.buffer[i].val.mk.idx);
         PutFood(simulator, l.buffer[i].val.mk.makanan, l.buffer[i].val.mk.kiriAtas.x, l.buffer[i].val.mk.kiriAtas.y, false, foods, false, l.buffer[i].val.mk.idx);
     }
     
@@ -610,7 +610,7 @@ void Undo (Simulator* simulator, PrioQueue inventoryRecord, PrioQueue deliveryRe
 
         resetState(simulator, undoRecord, map, foods);
 
-        UpdateInverse(*simulator, undoRecord, redoStack, timeRecord, locRecord);
+        UpdateInverse(simulator, undoRecord, redoStack, timeRecord, locRecord);
     }
 }
 
@@ -625,7 +625,7 @@ void Redo (Simulator* simulator, PrioQueue inventoryRecord, PrioQueue deliveryRe
 
         resetState(simulator, redoRecord, map, foods);
 
-        UpdateInverse(*simulator, redoRecord, undoStack, timeRecord, locRecord);
+        UpdateInverse(simulator, redoRecord, undoStack, timeRecord, locRecord);
 
     }
 }
@@ -653,9 +653,10 @@ void UpdateStack(Simulator *simulator, PrioQueue inventoryRecord, PrioQueue deli
     PushStack(stack, newRecord);
 }
 
-void UpdateInverse(Simulator simulator, Record inverseRecord, Stack *stack, Waktu timeRecord, Point locRecord)
+void UpdateInverse(Simulator *simulator, Record inverseRecord, Stack *stack, Waktu timeRecord, Point locRecord)
 {
     Record newRecord;
+    int i;
 
     newRecord.Time = timeRecord;
     newRecord.SimulatorLoc.x = GetAbsis(locRecord);
@@ -679,6 +680,11 @@ void UpdateInverse(Simulator simulator, Record inverseRecord, Stack *stack, Wakt
 
     PushStack(stack, newRecord);
 
+    for(i=0; i<ListDinElTypeLength(simulator->MakananKulkas); i++)
+    {
+        simulator->MakananKulkas.buffer[i].val.mk.idx = i;
+    }
+
 }
 
 void GetListChanges (Simulator *simulator, ListDinElType *addChanges, ListDinElType *delChanges, ListDinElType prevListRef, ListDinElType currentListRef)
@@ -694,15 +700,15 @@ void GetListChanges (Simulator *simulator, ListDinElType *addChanges, ListDinElT
         CreateListDinElType(addChanges, 0);
         CreateListDinElType(delChanges, length);
 
-        found = false;
-
         for (count = 0; count < length; count++)
         {
             i = 0;
+            found = false;
             while(i < ListDinElTypeLength(currentListRef) && !found)
             {
                 if (prevListRef.buffer[i].val.mk.idx != currentListRef.buffer[i].val.mk.idx)
                 {
+                    printf("idx saat found :%d\n", prevListRef.buffer[i].val.mk.idx);
                     found = true;
                 }
 
@@ -713,13 +719,9 @@ void GetListChanges (Simulator *simulator, ListDinElType *addChanges, ListDinElT
             }
 
             val =  prevListRef.buffer[i];
-
+            printf("idx undo now :%d\n", val.val.mk.idx);
             InsertLastListDinElType(delChanges, val);
-        }
-
-        for(i=0; i<ListDinElTypeLength(simulator->MakananKulkas); i++)
-        {
-            simulator->MakananKulkas.buffer->val.mk.idx = i;
+            
         }
     }
 
@@ -732,10 +734,10 @@ void GetListChanges (Simulator *simulator, ListDinElType *addChanges, ListDinElT
         for(i = ListDinElTypeLength(prevListRef); i < ListDinElTypeLength(currentListRef); i++)
         {
             val = currentListRef.buffer[i];
-            val.val.mk.idx = i;
             InsertLastListDinElType(addChanges, val);
         }
     }
+
 }
 
 void GetQueueChanges(PrioQueue *addChanges, PrioQueue *delChanges, PrioQueue prevQueueRef, PrioQueue currentQueueRef)

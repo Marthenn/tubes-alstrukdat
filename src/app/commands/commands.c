@@ -938,6 +938,7 @@ void Kulkas(Simulator *simulator, ListStatik foods, Map map, boolean *success){
                             PutFood(simulator, makanan, a, b, putar, foods, true, -1);
                             end = true;
                             *success = true;
+                            TakeTime(simulator, 0, 0, 1, foods);
                         } else{
                             printf("Makanan tidak muat!\n");
                         }
@@ -953,6 +954,7 @@ void Kulkas(Simulator *simulator, ListStatik foods, Map map, boolean *success){
                             } else{
                                 TakeFood(simulator, x, true);
                                 *success = true;
+                                TakeTime(simulator, 0, 0, 1, foods);
                             }
                         }
                         end = true;

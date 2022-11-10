@@ -92,7 +92,7 @@ void ClearAllIdKulkas(Simulator *sim, int id);
 /* I.S. sim terdefinisi, id bisa tidak ada di kulkas */
 /* F.S> semua elemen dengan nilai id pada kulkas akan menjadi nol */
 
-void PutFood(Simulator *sim, Makanan food, int X, int Y, boolean rotated, ListStatik foods, boolean isNotif);
+void PutFood(Simulator *sim, Makanan food, int X, int Y, boolean rotated, ListStatik foods, boolean isNotif, int idx);
 /* I.S. sim terdefinisi */
 /* F.S. apabila makanan muat pada koordinat (X,Y), maka akan masuk ke kulkas */
 

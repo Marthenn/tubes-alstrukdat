@@ -78,6 +78,22 @@ void InsertFirstListDinElType(ListDinElType *L, ElType e){
     
 }
 
+void InsertAtListDinElType(ListDinElType *L, ElType e, int idx){
+    int i;
+
+    if (IsListDinElTypeFull(*L))
+    {
+        ExpandListDinElType(L);
+    }
+    
+    for(i = L->nEff; i > idx; i--){
+        L->buffer[i] = L->buffer[i-1];
+    }
+    L->buffer[idx] = e;
+    L->nEff++;
+    
+}
+
 void InsertLastListDinElType(ListDinElType *L, ElType e){
 
     if (IsListDinElTypeFull(*L))

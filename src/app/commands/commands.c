@@ -596,7 +596,7 @@ void resetState(Simulator* simulator, Record record, Map *map, ListStatik foods)
     CopyListDinElType(record.KulkasDel, &l);
     for(i = 0; i < ListDinElTypeLength(l); i++)
     {
-        PutFood(simulator, l.buffer[i].val.mk.makanan, l.buffer[i].val.mk.kiriAtas.x, l.buffer[i].val.mk.kiriAtas.y, l.buffer[i].val.mk.rotated, foods, false);
+        PutFood(simulator, l.buffer[i].val.mk.makanan, l.buffer[i].val.mk.kiriAtas.x, l.buffer[i].val.mk.kiriAtas.y, false, foods, false, l.buffer[i].val.mk.idx);
     }
     
 }
@@ -630,25 +630,25 @@ void Redo (Simulator* simulator, PrioQueue inventoryRecord, PrioQueue deliveryRe
     }
 }
 
-void UpdateStack(Simulator simulator, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *stack, Waktu timeRecord, Point locRecord, ListDinElType kulkasRecord)
+void UpdateStack(Simulator *simulator, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *stack, Waktu timeRecord, Point locRecord, ListDinElType kulkasRecord)
 {
     Record newRecord;
     newRecord.Time = timeRecord;
     newRecord.SimulatorLoc.x = GetAbsis(locRecord);
     newRecord.SimulatorLoc.y = GetOrdinat(locRecord);
 
-    CopyListDinElType(simulator.Notification, &newRecord.Notification);
-    CopyListDinElType(simulator.InverseNotif, &newRecord.InverseNotification);
+    CopyListDinElType(simulator->Notification, &newRecord.Notification);
+    CopyListDinElType(simulator->InverseNotif, &newRecord.InverseNotification);
 
     CreateEmptyPQ(&newRecord.DeliveryAdd);
     CreateEmptyPQ(&newRecord.DeliveryDel);
     CreateEmptyPQ(&newRecord.InventoryAdd);
     CreateEmptyPQ(&newRecord.InventoryDel);
 
-    GetQueueChanges(&newRecord.DeliveryAdd, &newRecord.DeliveryDel, deliveryRecord, simulator.Delivery);
-    GetQueueChanges(&newRecord.InventoryAdd, &newRecord.InventoryDel, inventoryRecord, simulator.Inventory);
+    GetQueueChanges(&newRecord.DeliveryAdd, &newRecord.DeliveryDel, deliveryRecord, simulator->Delivery);
+    GetQueueChanges(&newRecord.InventoryAdd, &newRecord.InventoryDel, inventoryRecord, simulator->Inventory);
 
-    GetListChanges(&newRecord.KulkasAdd, &newRecord.KulkasDel, kulkasRecord, simulator.MakananKulkas);
+    GetListChanges(simulator, &newRecord.KulkasAdd, &newRecord.KulkasDel, kulkasRecord, simulator->MakananKulkas);
 
     PushStack(stack, newRecord);
 }
@@ -681,7 +681,7 @@ void UpdateInverse(Simulator simulator, Record inverseRecord, Stack *stack, Wakt
 
 }
 
-void GetListChanges(ListDinElType *addChanges, ListDinElType *delChanges, ListDinElType prevListRef, ListDinElType currentListRef)
+void GetListChanges (Simulator *simulator, ListDinElType *addChanges, ListDinElType *delChanges, ListDinElType prevListRef, ListDinElType currentListRef)
 {
     int i, count, length;
 
@@ -713,8 +713,13 @@ void GetListChanges(ListDinElType *addChanges, ListDinElType *delChanges, ListDi
             }
 
             val =  prevListRef.buffer[i];
-            val.val.mk.idx = i;
+
             InsertLastListDinElType(delChanges, val);
+        }
+
+        for(i=0; i<ListDinElTypeLength(simulator->MakananKulkas); i++)
+        {
+            simulator->MakananKulkas.buffer->val.mk.idx = i;
         }
     }
 
@@ -928,7 +933,7 @@ void Kulkas(Simulator *simulator, ListStatik foods, Map map, boolean *success){
                         Makanan makanan = GetMakananFromId(foods,GetElmtInfo(simulator->Inventory,x));
                         makanan.Kedaluarsa  = GetElmtTime(simulator->Inventory,x) - GetTime(simulator);
                         if(CheckSizeKulkas(*simulator, makanan, a, b, putar)){
-                            PutFood(simulator, makanan, a, b, putar, foods, true);
+                            PutFood(simulator, makanan, a, b, putar, foods, true, -1);
                             end = true;
                             *success = true;
                         } else{

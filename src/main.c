@@ -225,7 +225,7 @@ int main(){
 			else if (success) {
 				int i;
 
-				UpdateStack(simulator, inventoryRecord, deliveryRecord, &undoStack, timeRecord, locationRecord, kulkasRecord);
+				UpdateStack(&simulator, inventoryRecord, deliveryRecord, &undoStack, timeRecord, locationRecord, kulkasRecord);
 
 				if (!IsStackEmpty(redoStack))
 				{

@@ -78,6 +78,22 @@ void InsertFirstListDinElType(ListDinElType *L, ElType e){
     
 }
 
+void InsertAtListDinElType(ListDinElType *L, ElType e, int idx){
+    int i;
+
+    if (IsListDinElTypeFull(*L))
+    {
+        ExpandListDinElType(L);
+    }
+    
+    for(i = L->nEff; i > idx; i--){
+        L->buffer[i] = L->buffer[i-1];
+    }
+    L->buffer[idx] = e;
+    L->nEff++;
+    
+}
+
 void InsertLastListDinElType(ListDinElType *L, ElType e){
 
     if (IsListDinElTypeFull(*L))
@@ -190,7 +206,7 @@ void CopyListDinElType(ListDinElType listIn, ListDinElType *listOut)
     for (i = 0; i < ListDinElTypeLength(listIn); i++)
     {
 
-        InsertFirstListDinElType(listOut, listIn.buffer[i]);
+        InsertLastListDinElType(listOut, listIn.buffer[i]);
 
     }
 

@@ -16,6 +16,7 @@ int main(){
     Stack undoStack, redoStack;
 	Waktu timeRecord;
 	Point locationRecord;
+	int i;
 
 	// NOTE : inventoryRecord dan deliveryRecord BUKAN inventory dan delivery yang di ada di dalam simulator
 	PrioQueue inventoryRecord, deliveryRecord;
@@ -223,13 +224,18 @@ int main(){
 			}
 
 			else if (success) {
-				int i;
 
-				UpdateStack(simulator, inventoryRecord, deliveryRecord, &undoStack, timeRecord, locationRecord, kulkasRecord);
+				UpdateStack(&simulator, inventoryRecord, deliveryRecord, &undoStack, timeRecord, locationRecord, kulkasRecord);
 
 				if (!IsStackEmpty(redoStack))
 				{
 					CreateEmptyStack(&redoStack);
+				}
+
+				// FOR UNDO REDO DATA ACCURACY
+				for(i=0; i<ListDinElTypeLength(simulator.MakananKulkas); i++)
+				{
+					simulator.MakananKulkas.buffer[i].val.mk.idx = i;
 				}
 			}
 
@@ -240,8 +246,8 @@ int main(){
 
 			timeRecord = GetTime(&simulator);
 			locationRecord = GetLokasi(&simulator);
-			
 			success = false;
+			
 		}
     }
 	

@@ -50,10 +50,16 @@ boolean Compare(ElType a, ElType b){
                 break;
             case 4:
                 return IsWordEqual(a.val.w, b.val.w);
+                break;
             case 5:
                 return (a.val.t == b.val.t);
+                break;
             case 6:
                 return (GetIDMakanan(a.val.mk.makanan) == GetIDMakanan(b.val.mk.makanan)) && (IsEqualPoint(a.val.mk.kiriAtas, b.val.mk.kiriAtas)) && (a.val.mk.rotated == b.val.mk.rotated);
+                break;
+            case 7:
+                return IsSubset(a.val.s, b.val.s) && IsSubset(b.val.s, a.val.s);
+                break;
         }
 
     }else{
@@ -118,6 +124,9 @@ void PrintElType(ElType a){
             }else{
                 printf("false");
             }
+            break;
+        case 7:
+            PrintSet(a.val.s);
             break;
         default:
             printf("undefined");

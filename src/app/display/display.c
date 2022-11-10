@@ -391,7 +391,7 @@ void DisplayKulkas(ListStatik foods, Simulator simulator){
     if(!IsKulkasEmpty(simulator)){
         printf("Id Makanan di Kulkas:\n");
         for(i=0;i<ListDinElTypeLength(simulator.MakananKulkas);i++){
-            printf(" %d. ",i+1);DisplayWord(GetVal(simulator.MakananKulkas.buffer[i]).m.Nama);
+            printf(" %d. ",i+1);DisplayWord(GetVal(simulator.MakananKulkas.buffer[i]).mk.makanan.Nama);
             printf(" - ");
             Waktu time = GetVal(simulator.MakananKulkas.buffer[i]).m.Kedaluarsa;
             if(GetHari(time)>0){

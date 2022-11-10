@@ -16,11 +16,11 @@ boolean IsSetFull(Set s){
     return s.length == 100;
 }
 
-boolean IsMember(Set s, ElType e){
+boolean IsMember(Set s, int e){
     int i = 0;
     boolean found = false;
     while(i < s.length && !found){
-        if(Compare(s.data[i], e)){
+        if(s.data[i]== e){
             found = true;
         }
         i++;
@@ -28,7 +28,7 @@ boolean IsMember(Set s, ElType e){
     return found;
 }
 
-void SetAdd(Set *s, ElType e){
+void SetAdd(Set *s, int e){
     if(IsSetFull(*s)){
         printf("Set penuh!\n");
     }
@@ -38,12 +38,12 @@ void SetAdd(Set *s, ElType e){
     }
 }
 
-void RemoveSet(Set *s, ElType e){
+void RemoveSet(Set *s, int e){
     if(IsMember(*s,e)){
         int i = 0;
         boolean found = false;
         while(i < (*s).length && !found){
-            if(Compare((*s).data[i], e)){
+            if((*s).data[i] == e){
                 found = true;
             }
             i++;
@@ -58,7 +58,7 @@ void RemoveSet(Set *s, ElType e){
 void PrintSet(Set s){
     printf("{");
     for(int i = 0; i < s.length; i++){
-        PrintElType(s.data[i]);
+        printf("%d",s.data[i]);
         if(i != s.length-1){
             printf(", ");
         }
@@ -117,4 +117,12 @@ void CopySet(Set *s1, Set s2){
     for(int i = 0; i < s2.length; i++){
         SetAdd(s1, s2.data[i]);
     }
+}
+
+void SetName(Set *s, Word name){
+    (*s).name = name;
+}
+
+Word GetSetName(Set s){
+    return s.name;
 }

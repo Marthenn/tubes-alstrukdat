@@ -86,6 +86,9 @@ void InsertFirstListDinElType(ListDinElType *L, ElType e);
 /**
  * @brief Insert e to the ListDinElType at last index
  */
+
+void InsertAtListDinElType(ListDinElType *L, ElType e, int idx);
+
 void InsertLastListDinElType(ListDinElType *L, ElType e);
 
 /**

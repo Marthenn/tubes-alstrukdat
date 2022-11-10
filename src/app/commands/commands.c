@@ -26,9 +26,23 @@ void CreateNotif(Simulator *simulator, Word aksi, Word namaMakanan)
     InsertFirstListDinElType(&simulator->InverseNotif, NewElType(4, (union Data){.w = inverseNotif}));
 }
 
-void Start(Simulator* simulator, ListStatik* foods, ListStatik* recipes, Map* map, ListDinElType* buyFoods, ListDinElType* mixFoods, ListDinElType* chopFoods, ListDinElType* fryFoods, ListDinElType* boilFoods, Stack *undoRecord, Stack *redoRecord){
+void Start(Simulator* simulator, ListStatik* foods, ListStatik* recipes, Map* map, ListDinElType* ingredients, ListDinElType* buyFoods, ListDinElType* mixFoods, ListDinElType* chopFoods, ListDinElType* fryFoods, ListDinElType* boilFoods, Stack *undoRecord, Stack *redoRecord){
     ReadAllConfig(map, foods, recipes);
-    int i;
+    int i,j;
+    ListDin children;
+    Set foodIngred;
+    CreateListDinElType(ingredients, 0);
+    for (i = 0;i <= GetLastListIdx(*recipes);i++){
+        if (NumberChildren(GetVal(LIST_ELMT(*recipes,i)).t) > 0){
+            children = GetChildren(GetVal(LIST_ELMT(*recipes,i)).t);
+            CreateSet(&foodIngred);
+            for (j = 0;j <= GetListDinLastIdx(children);j++){
+                SetAdd(&foodIngred,LISTDIN_ELMT(children,j));
+            }
+            foodIngred.id = GetVal(LIST_ELMT(*recipes,i)).t->info;
+            InsertLastListDinElType(ingredients,NewElType(7,(union Data){.s=foodIngred}));
+        }
+    }
 
     CreateListDinElType(buyFoods, 0);
     CreateListDinElType(mixFoods, 0);

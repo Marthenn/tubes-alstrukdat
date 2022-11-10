@@ -410,3 +410,32 @@ void DisplayKulkas(ListStatik foods, Simulator simulator){
     printf("1. Masukkan makanan ke kulkas\n");
     printf("2. Ambil makanan dari kulkas\n");
 }
+
+void DisplayRekomendasi(Simulator simulator, ListDinElType ingredients, ListStatik foods)
+{
+    int i,cnt;
+    Set inventorySet,ingredientSet;
+    CreateSet(&inventorySet);
+    for (i = 0;i < LengthPQ(simulator.Inventory);i++){
+        SetAdd(&inventorySet,GetElmtInfo(simulator.Inventory,i));
+    }
+    printf("=======================\n");
+    printf("= REKOMENDASI MAKANAN =\n");
+    printf("=======================\n");
+    cnt = 0;
+    for (i = 0;i < ingredients.nEff;i++){
+        ingredientSet = GetVal(ingredients.buffer[i]).s;
+        if (IsSubset(ingredientSet,inventorySet)){
+            cnt++;
+            printf("[%d] ",cnt);
+            DisplayWord(GetMakananFromId(foods,ingredientSet.id).Nama);
+            printf(" ");
+            printf("("); DisplayWord(GetMakananFromId(foods,ingredientSet.id).Aksi); printf(")");
+            printf("\n");
+        }
+    }
+    if (cnt == 0){
+        printf("Belum ada makanan yang bisa dibuat!\n");
+    }
+    printf("=======================\n");
+}

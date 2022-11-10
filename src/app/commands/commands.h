@@ -27,7 +27,7 @@
  * @param undoRecord Stack of action that is done
  * @param redoRecord Stack of action that is undone
  */
-void Start(Simulator* simulator, ListStatik* foods, ListStatik* recipes, Map* map, ListDinElType* buyFoods, ListDinElType* mixFoods, ListDinElType* chopFoods, ListDinElType* fryFoods, ListDinElType* boilFoods, Stack *undoRecord, Stack *redoRecord);
+void Start(Simulator* simulator, ListStatik* foods, ListStatik* recipes, Map* map, ListDinElType* ingredients, ListDinElType* buyFoods, ListDinElType* mixFoods, ListDinElType* chopFoods, ListDinElType* fryFoods, ListDinElType* boilFoods, Stack *undoRecord, Stack *redoRecord);
 
 /**
  * @brief Go into the buy submenu if possible
@@ -36,6 +36,7 @@ void Start(Simulator* simulator, ListStatik* foods, ListStatik* recipes, Map* ma
  * @param foods List of foods available
  * @param recipes List of recipes available
  * @param map The map of the simulator
+ * @param ingredients set of needed ingredients for all foods
  * @param buyFoods List of foods that can be get from buying
  * @param undoRecord Stack of action that is done
  * @param redoRecord Stack of action that is undone

@@ -32,6 +32,7 @@
 #define BLANK_WORD NewWord(" ", 1)
 #define HELP_WORD NewWord("HELP", 4)
 #define KULKAS_WORD NewWord("KULKAS", 6)
+#define REKOMENDASI_WORD NewWord("REKOMENDASI",11)
 
 #define NUM_CHAR_MIN '0'
 #define NUM_CHAR_MAX '9'

@@ -124,4 +124,14 @@ void DisplayInventory(ListStatik foods, Simulator simulator);
 void DisplayKulkas(ListStatik foods, Simulator simulator);
 
 void DisplayNotif(Simulator simulator);
+
+/**
+ * @brief Display recommended foods to the screen
+ * 
+ * @param simulator The simulator object
+ * @param ingredients The ingredient needed for all foods
+ * @param foods List of foods
+ */
+void DisplayRekomendasi(Simulator simulator, ListDinElType ingredients, ListStatik foods);
+
 #endif

@@ -626,6 +626,10 @@ void Undo (Simulator* simulator, PrioQueue inventoryRecord, PrioQueue deliveryRe
 
         UpdateInverse(simulator, undoRecord, redoStack, timeRecord, locRecord);
     }
+
+    else{
+        printf("Tidak ada aksi yang dapat di undo!\n");
+    }
 }
 
 void Redo (Simulator* simulator, PrioQueue inventoryRecord, PrioQueue deliveryRecord, Stack *undoStack, Stack *redoStack, Waktu timeRecord, Point locRecord, Map *map, ListStatik foods)
@@ -641,6 +645,10 @@ void Redo (Simulator* simulator, PrioQueue inventoryRecord, PrioQueue deliveryRe
 
         UpdateInverse(simulator, redoRecord, undoStack, timeRecord, locRecord);
 
+    }
+
+    else{
+        printf("Tidak ada aksi yang dapat di redo!\n");
     }
 }
 

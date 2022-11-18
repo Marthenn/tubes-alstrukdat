@@ -38,6 +38,8 @@ int main(){
 
     while(true)
     {
+		printf("\n");
+
 		if (isStarted == false)
 		{	
 			if (IsInputEqual(START_WORD))
@@ -72,6 +74,8 @@ int main(){
 			success = false;
 
 			DisplayMap(map);
+
+			printf("\n");
 			
 			printf("BNMO di posisi: ");
 			CetakPoint(GetLokasi(&simulator));
@@ -84,12 +88,16 @@ int main(){
 			printf("Notifikasi:\n");
 			DisplayNotif(simulator);
 
+			printf("\n");
+
 			CreateListDinElType(&simulator.Notification, 0);
 			CreateListDinElType(&simulator.InverseNotif, 0);
 			
 			EnterCommand();
 
 			wordList = SplitWord(currentWord, ' ');
+
+			printf("\n");
 
 			if (IsInputEqual(BUY_WORD))
 			{
@@ -186,6 +194,7 @@ int main(){
 				{
 					Wait(&simulator, x, y, foods);
 					success = true;
+
 				}
 
 				else {

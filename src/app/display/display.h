@@ -126,12 +126,29 @@ void DisplayKulkas(ListStatik foods, Simulator simulator);
 void DisplayNotif(Simulator simulator);
 
 /**
+ * @brief Get the union recipes set of food's descendants and siblings if it isn't exists in inventory. Return set of itself otherwise.
+ * 
+ * @param simulator The simulator object
+ * @param food
+ */
+Set getUnionRecipesChildSibling(Simulator simulator, Tree food);
+
+/**
+ * @brief Get the union recipes set of food's descendants if it isn't exists in inventory. Return set of itself otherwise.
+ * 
+ * @param simulator The simulator object
+ * @param now List of all foods
+ * @param isChildRequired true if food requires its children
+ */
+Set getResepBertingkat(Simulator simulator, Tree food, boolean* isChildRequired);
+
+/**
  * @brief Display recommended foods to the screen
  * 
  * @param simulator The simulator object
- * @param ingredients The ingredient needed for all foods
- * @param foods List of foods
+ * @param foods List of all foods
+ * @param recipes List of all recipes
  */
-void DisplayRekomendasi(Simulator simulator, ListDinElType ingredients, ListStatik foods);
+void DisplayRekomendasi(Simulator simulator, ListStatik foods, ListStatik recipes);
 
 #endif

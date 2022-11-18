@@ -12,7 +12,7 @@ int main(){
     Map map;
     ListStatik foods, recipes; 
     Word n;
-    ListDinElType buyFoods,mixFoods,chopFoods,fryFoods,boilFoods, wordList, kulkasRecord, ingredients;
+    ListDinElType buyFoods,mixFoods,chopFoods,fryFoods,boilFoods, wordList, kulkasRecord;
     Stack undoStack, redoStack;
 	Waktu timeRecord;
 	Point locationRecord;
@@ -42,7 +42,7 @@ int main(){
 		{	
 			if (IsInputEqual(START_WORD))
 			{
-				Start(&simulator, &foods, &recipes, &map, &ingredients, &buyFoods, &mixFoods, &chopFoods, &fryFoods, &boilFoods, &undoStack, &redoStack);
+				Start(&simulator, &foods, &recipes, &map, &buyFoods, &mixFoods, &chopFoods, &fryFoods, &boilFoods, &undoStack, &redoStack);
 				CreateEmptyPQ(&inventoryRecord);
 				CreateEmptyPQ(&deliveryRecord);
 				CreateListDinElType(&kulkasRecord, 0);
@@ -207,7 +207,7 @@ int main(){
 
 			else if(IsInputEqual(REKOMENDASI_WORD))
 			{
-				DisplayRekomendasi(simulator, ingredients, foods);
+				DisplayRekomendasi(simulator, foods, recipes);
 			}
 			else {
 				printf("Command tidak valid!\n");

@@ -296,6 +296,7 @@ void ReadRecipeConfig(ListStatik *recipes)
         if (parentIdx == LISTSTATIK_IDX_UNDEF)
         {
             parent = NewTree(id);
+            ListInsertLast(recipes, NewElType(5, (union Data){.t=parent}));
         }
 
         else
@@ -308,7 +309,7 @@ void ReadRecipeConfig(ListStatik *recipes)
         {
             ReadInt(&id);
 
-            childIdx = ListIndexOf(*recipes, NewElType(1, (union Data){.i=id}));
+            childIdx = ListIndexOf(*recipes, NewElType(0, (union Data){.i=id}));
 
             if (childIdx == LISTSTATIK_IDX_UNDEF)
             {
@@ -320,15 +321,9 @@ void ReadRecipeConfig(ListStatik *recipes)
                 AddChildNode(&parent, GetVal(LIST_ELMT(*recipes, childIdx)).t);
             }
         }
-
-        // insert new recipe tree if parent is not found
-        if (parentIdx == LISTSTATIK_IDX_UNDEF)
-        {
-            ListInsertLast(recipes, NewElType(5, (union Data){.t=parent}));
-        }   
-        
         // should be end of line in the file
         NextLine();
+        
     }
 
 }

@@ -5,8 +5,15 @@
 #include "../../boolean.h"
 #include "../wordmachine/wordmachine.h"
 
+#define IDX_UNDEF -1
+
 typedef struct{
-    int data[100];
+    int val;
+    int cnt;
+} SetElmt;
+
+typedef struct{
+    SetElmt data[100];
     int length;
     int id;
 } Set;
@@ -52,20 +59,30 @@ int Length(Set s);
 boolean IsMember(Set s, int e);
 
 /**
- * @brief Add an element to the set if set is not full
+ * @brief Get the index of element e, return IDX_UNDEF if not found
+ * 
+ * @param s The set to be searched
+ * @param e Element to be searched
+ */
+int SetGetIdx(Set s, int e);
+
+/**
+ * @brief Add cnt elements to the set. Add new if e isn't found and set is not full
  * 
  * @param s The set to be modified
  * @param e Element to be added
+ * @param cnt How many elements to be added
  */
-void SetAdd(Set *s, int e);
+void SetAdd(Set *s, int e, int cnt);
 
 /**
- * @brief Remove an element from the set
+ * @brief Remove cnt elements from the set if found. If the count of e isn't more than 1 after subtracted, the element will be removed from the set.
  * 
  * @param s The set to be modified
  * @param e Element to be removed
+ * @param e How many elements to be removed
  */
-void RemoveSet(Set *s, int e);
+void RemoveSet(Set *s, int e, int cnt);
 
 /**
  * 

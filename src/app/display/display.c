@@ -411,29 +411,77 @@ void DisplayKulkas(ListStatik foods, Simulator simulator){
     printf("2. Ambil makanan dari kulkas\n");
 }
 
-void DisplayRekomendasi(Simulator simulator, ListDinElType ingredients, ListStatik foods)
+Set getUnionRecipesChildSibling(Simulator simulator, Tree food){
+    Set res;
+    CreateSet(&res);
+    if (IndexOfPQ(simulator.Inventory,food->info) != PQ_IDX_UNDEF){
+        SetAdd(&res,food->info,1);
+    } else {
+        if (food->firstChild != NULL) res = UnionSet(res, getUnionRecipesChildSibling(simulator,food->firstChild));
+        else SetAdd(&res,food->info,1);
+        if (food->nextSibling != NULL) res = UnionSet(res,getUnionRecipesChildSibling(simulator,food->nextSibling));
+
+    }
+    return res;
+}
+
+Set getResepBertingkat(Simulator simulator, Tree food, boolean* isChildRequired){
+    Set res;
+    CreateSet(&res);
+    if (IndexOfPQ(simulator.Inventory,food->info) != PQ_IDX_UNDEF || food->firstChild == NULL){
+        SetAdd(&res,food->info,1);
+        *isChildRequired = false;
+    } else {
+        res = UnionSet(res,getUnionRecipesChildSibling(simulator,food->firstChild));
+        *isChildRequired = true;
+        
+    }
+    return res;
+}
+
+void DisplayRekomendasi(Simulator simulator, ListStatik foods, ListStatik recipes)
 {
     int i,cnt;
-    Set inventorySet,ingredientSet;
+    Set inventorySet;
     CreateSet(&inventorySet);
     for (i = 0;i < LengthPQ(simulator.Inventory);i++){
-        SetAdd(&inventorySet,GetElmtInfo(simulator.Inventory,i));
+        SetAdd(&inventorySet,GetElmtInfo(simulator.Inventory,i),1);
     }
     printf("=======================\n");
     printf("= REKOMENDASI MAKANAN =\n");
     printf("=======================\n");
     cnt = 0;
-    for (i = 0;i < ingredients.nEff;i++){
-        ingredientSet = GetVal(ingredients.buffer[i]).s;
-        if (IsSubset(ingredientSet,inventorySet)){
+    for (int i = 0;i < ListLength(recipes);i++){
+        Tree foodNow = foodNow = GetVal(LIST_ELMT(recipes,i)).t;
+        if (foodNow->firstChild == NULL) continue;
+        boolean isChildRequired;
+        Set resepTotal = getResepBertingkat(simulator,foodNow,&isChildRequired);
+        if (IsSubset(resepTotal,inventorySet)){
             cnt++;
             printf("[%d] ",cnt);
-            DisplayWord(GetMakananFromId(foods,ingredientSet.id).Nama);
+            DisplayWord(GetMakananFromId(foods,foodNow->info).Nama);
             printf(" ");
-            printf("("); DisplayWord(GetMakananFromId(foods,ingredientSet.id).Aksi); printf(")");
+            printf("("); DisplayWord(GetMakananFromId(foods,foodNow->info).Aksi); printf(")");
             printf("\n");
+            if (isChildRequired){
+                printf("    Membutuhkan :\n");
+                ListDin child = GetChildren(foodNow);
+                int cnt2 = 1;
+                for (int j = 0;j <= GetListDinLastIdx(child);j++){
+                    printf("    ");
+                    printf("- ");
+                    DisplayWord(GetMakananFromId(foods,LISTDIN_ELMT(child, j)).Nama);
+                    if (IndexOfPQ(simulator.Inventory,LISTDIN_ELMT(child, j)) == PQ_IDX_UNDEF){
+                        printf(" (missing)");
+                    } else {
+                        printf(" (ok)");
+                    }
+                    printf("\n");
+                }
+            }
         }
     }
+
     if (cnt == 0){
         printf("Belum ada makanan yang bisa dibuat!\n");
     }

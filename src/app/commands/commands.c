@@ -105,9 +105,12 @@ void Buy(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
                 } else {
                     //beli makanan disini
 
+                    // tambah waktu
+                    TakeTime(simulator, 0, 0, 1, foods);
+
                     food = GetMakananFromId(foods,GetVal(BuyFoods.buffer[x]).m.Id);
                     Enqueue(&simulator->Delivery, GetVal(BuyFoods.buffer[x]).m.Id, 
-                        food.WaktuAksi + GetTime(simulator) + 1);
+                        food.WaktuAksi + GetTime(simulator));
 
 
 
@@ -122,9 +125,6 @@ void Buy(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
 
                     InsertFirstListDinElType(&simulator->Notification, NewElType(4, (union Data){.w=notif}));
                     InsertFirstListDinElType(&simulator->InverseNotif, NewElType(4, (union Data){.w=inverseNotif}));
-         
-                    // tambah waktu
-                    TakeTime(simulator, 0, 0, 1, foods);
 
                     *success = true;
                 }
@@ -199,11 +199,11 @@ void Mix(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
                         // notifikasi
                         CreateNotif(simulator, MIX_WORD, dibuat.Nama);
 
-                        //tambah ke inventory
-                        InsertMakanan(simulator, dibuat.Id, dibuat.Kedaluarsa);
-
                         // tambah waktu
                         TakeTime(simulator, GetHari(dibuat.WaktuAksi), GetJam(dibuat.WaktuAksi), GetMenit(dibuat.WaktuAksi), foods);
+                        
+                        //tambah ke inventory
+                        InsertMakanan(simulator, dibuat.Id, dibuat.Kedaluarsa);
 
                     } else {
                         printf("Gagal membuat ");
@@ -286,11 +286,11 @@ void Chop(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
                         // notifikasi
                         CreateNotif(simulator, CHOP_WORD, dibuat.Nama);
 
-                        //tambah ke inventory
-                        InsertMakanan(simulator, dibuat.Id, dibuat.Kedaluarsa);
-
                         // tambah waktu
                         TakeTime(simulator, GetHari(dibuat.WaktuAksi), GetJam(dibuat.WaktuAksi), GetMenit(dibuat.WaktuAksi), foods);
+
+                        //tambah ke inventory
+                        InsertMakanan(simulator, dibuat.Id, dibuat.Kedaluarsa);
 
                     } else {
                         printf("Gagal membuat ");
@@ -373,11 +373,12 @@ void Fry(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, Li
                         // notifikasi
                         CreateNotif(simulator, FRY_WORD, dibuat.Nama);
 
+                        // tambah waktu
+                        TakeTime(simulator, GetHari(dibuat.WaktuAksi), GetJam(dibuat.WaktuAksi), GetMenit(dibuat.WaktuAksi), foods);
+
                         //tambah ke inventory
                         InsertMakanan(simulator, dibuat.Id, dibuat.Kedaluarsa);
 
-                        // tambah waktu
-                        TakeTime(simulator, GetHari(dibuat.WaktuAksi), GetJam(dibuat.WaktuAksi), GetMenit(dibuat.WaktuAksi), foods);
 
                     } else {
                         printf("Gagal membuat ");
@@ -462,11 +463,11 @@ void Boil(Simulator* simulator, ListStatik foods, ListStatik recipes, Map map, L
                         // notifikasi
                         CreateNotif(simulator, BOIL_WORD, dibuat.Nama);
 
-                        //tambah ke inventory
-                        InsertMakanan(simulator, dibuat.Id, dibuat.Kedaluarsa);
-
                         // tambah waktu
                         TakeTime(simulator, GetHari(dibuat.WaktuAksi), GetJam(dibuat.WaktuAksi), GetMenit(dibuat.WaktuAksi), foods);
+
+                        //tambah ke inventory
+                        InsertMakanan(simulator, dibuat.Id, dibuat.Kedaluarsa);
                         
                     } else {
                         printf("Gagal membuat ");

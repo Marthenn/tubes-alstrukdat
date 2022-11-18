@@ -129,19 +129,19 @@ boolean IsSubset(Set s1, Set s2);
 void CopySet(Set *s1, Set s2);
 
 /**
- * @brief Set the Name object
+ * @brief Set the set id
  * 
  * @param s 
- * @param name 
+ * @param id 
  */
-void SetName(Set *s, Word name);
+void SetId(Set *s, int id);
 
 /**
- * @brief Get the Set Name object
+ * @brief Get the set id
  * 
  * @param s 
- * @return Word 
+ * @return int 
  */
-Word GetSetName(Set s);
+int GetSetId(Set s);
 
 #endif

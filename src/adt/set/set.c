@@ -16,6 +16,10 @@ boolean IsSetFull(Set s){
     return s.length == 100;
 }
 
+int Length(Set s){
+    return s.length;
+}
+
 boolean IsMember(Set s, int e){
     int i = 0;
     boolean found = false;

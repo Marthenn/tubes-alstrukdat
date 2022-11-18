@@ -411,30 +411,20 @@ void DisplayKulkas(ListStatik foods, Simulator simulator){
     printf("2. Ambil makanan dari kulkas\n");
 }
 
-Set getUnionRecipesChildSibling(Simulator simulator, Tree food){
-    Set res;
-    CreateSet(&res);
-    if (IndexOfPQ(simulator.Inventory,food->info) != PQ_IDX_UNDEF){
-        SetAdd(&res,food->info,1);
-    } else {
-        if (food->firstChild != NULL) res = UnionSet(res, getUnionRecipesChildSibling(simulator,food->firstChild));
-        else SetAdd(&res,food->info,1);
-        if (food->nextSibling != NULL) res = UnionSet(res,getUnionRecipesChildSibling(simulator,food->nextSibling));
-
-    }
-    return res;
-}
-
 Set getResepBertingkat(Simulator simulator, Tree food, boolean* isChildRequired){
     Set res;
+    Tree child;
     CreateSet(&res);
     if (IndexOfPQ(simulator.Inventory,food->info) != PQ_IDX_UNDEF || food->firstChild == NULL){
         SetAdd(&res,food->info,1);
         *isChildRequired = false;
     } else {
-        res = UnionSet(res,getUnionRecipesChildSibling(simulator,food->firstChild));
+        child = food->firstChild;
+        while (child != NULL){
+            res = UnionSet(res,getResepBertingkat(simulator,child,isChildRequired));
+            child = child->nextSibling;
+        }
         *isChildRequired = true;
-        
     }
     return res;
 }
@@ -453,7 +443,7 @@ void DisplayRekomendasi(Simulator simulator, ListStatik foods, ListStatik recipe
     cnt = 0;
     for (int i = 0;i < ListLength(recipes);i++){
         Tree foodNow = foodNow = GetVal(LIST_ELMT(recipes,i)).t;
-        if (foodNow->firstChild == NULL) continue;
+        if (foodNow->firstChild == NULL || IndexOfPQ(simulator.Inventory,foodNow->info) != PQ_IDX_UNDEF) continue;
         boolean isChildRequired;
         Set resepTotal = getResepBertingkat(simulator,foodNow,&isChildRequired);
         if (IsSubset(resepTotal,inventorySet)){

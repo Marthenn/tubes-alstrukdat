@@ -67,7 +67,7 @@ void Start(Simulator* simulator, ListStatik* foods, ListStatik* recipes, Map* ma
     CreateEmptyStack(undoRecord);
     CreateEmptyStack(redoRecord);
 
-    printf("Masukkan nama Anda: ");
+    printf("\nMasukkan nama Anda: ");
     ADVWORD();
     CopyDefinedWord(&(*simulator).NamaPengguna, currentWord);
 

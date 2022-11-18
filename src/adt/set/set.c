@@ -61,7 +61,6 @@ void RemoveSet(Set *s, int e, int cnt){
     int idx;
     if(IsMember(*s,e)){
         idx = SetGetIdx(*s,e);
-        printf("%d %d %d\n", idx, (*s).data[idx].val,cnt);
         if ((*s).data[idx].cnt > cnt){
             (*s).data[idx].cnt -= cnt;
         } else {

@@ -11,12 +11,14 @@ int main()
     Point currentPoint;
 
     ReadMapConfig(&map);
-    START_INPUT();
+    DisplayMap(map);
+    printf("ASUMSI INPUT MOVE VALID TANPA PERLU VALIDASI\n");
+    STARTWORD();
+
     while(true)
     {
         currentPoint = S(map);
 
-        DisplayMap(map);
         if (IsInputEqual(MOVE_EAST_WORD))
         {
             MovePointEast(&currentPoint);
@@ -41,9 +43,13 @@ int main()
             MoveSimulator(&map, currentPoint);
         }
 
-        else {
+        else{
             break;
         }
+
+        DisplayMap(map);
+        ADVWORD();
+
     }
 
     

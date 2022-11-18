@@ -126,14 +126,6 @@ void DisplayKulkas(ListStatik foods, Simulator simulator);
 void DisplayNotif(Simulator simulator);
 
 /**
- * @brief Get the union recipes set of food's descendants and siblings if it isn't exists in inventory. Return set of itself otherwise.
- * 
- * @param simulator The simulator object
- * @param food
- */
-Set getUnionRecipesChildSibling(Simulator simulator, Tree food);
-
-/**
  * @brief Get the union recipes set of food's descendants if it isn't exists in inventory. Return set of itself otherwise.
  * 
  * @param simulator The simulator object

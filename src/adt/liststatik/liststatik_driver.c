@@ -19,28 +19,28 @@ int main(){
     CreateListStatik(&l1);
     CreateListStatik(&l2);
 
-    InsertFirst(&l1, e1);
-    InsertFirst(&l1, e2);
-    InsertLast(&l1, e3);
-    InsertLast(&l1, e4);
-    InsertAt(&l1, e5, 1);
-    InsertLast(&l1, e6);
-    InsertAt(&l1, e7, 3);
-    InsertFirst(&l1, e2);
+    ListInsertFirst(&l1, e1);
+    ListInsertFirst(&l1, e2);
+    ListInsertLast(&l1, e3);
+    ListInsertLast(&l1, e4);
+    ListInsertAt(&l1, e5, 1);
+    ListInsertLast(&l1, e6);
+    ListInsertAt(&l1, e7, 3);
+    ListInsertFirst(&l1, e2);
     printf("List : ");
     DisplayList(l1);
 
     printf("\nLength : %d", ListLength(l1));
-    printf("\nIndex of e2 : %d", IndexOf(l1, e2));
-    printf("\nIndex of e7 : %d", IndexOf(l1, e7));
+    printf("\nIndex of e2 : %d", ListIndexOf(l1, e2));
+    printf("\nIndex of e7 : %d", ListIndexOf(l1, e7));
 
     CopyList(l1, &l2);
     printf("\nCopied List : ");
     DisplayList(l2);
     
-    DeleteAt(&l2, &del, 3);
-    DeleteFirst(&l2, &del);
-    DeleteLast(&l2, &del);
+    ListDeleteAt(&l2, &del, 3);
+    ListDeleteFirst(&l2, &del);
+    ListDeleteLast(&l2, &del);
     printf("\nCopy of original list with deleted element : ");
     DisplayList(l2);
 

@@ -17,24 +17,25 @@
 int main(){
     Matriks m1, m2;
 
-    MAT_ELMT(m1, 0, 0) = 2;
-    MAT_ELMT(m1, 0, 1) = 5;
-    MAT_ELMT(m1, 0, 2) = 10;
-    MAT_ELMT(m1, 1, 0) = -2;
-    MAT_ELMT(m1, 1, 1) = 100;
-    MAT_ELMT(m1, 1, 2) = 7;
-    MAT_ELMT(m1, 2, 0) = 69;
-    MAT_ELMT(m1, 2, 1) = 42;
-    MAT_ELMT(m1, 2, 2) = 5;
-
     CreateMatriks(3, 3, &m1);
     CreateMatriks(3, 3, &m2);
+
+    MAT_ELMT(m1, 0, 0) = 'a';
+    MAT_ELMT(m1, 0, 1) = 'b';
+    MAT_ELMT(m1, 0, 2) = 'c';
+    MAT_ELMT(m1, 1, 0) = 'd';
+    MAT_ELMT(m1, 1, 1) = 'e';
+    MAT_ELMT(m1, 1, 2) = 'f';
+    MAT_ELMT(m1, 2, 0) = 'g';
+    MAT_ELMT(m1, 2, 1) = 'h';
+    MAT_ELMT(m1, 2, 2) = 'i';
+
     printf("Matrix :\n");
-    DisplayMatriks(m1);
+    DisplayCharMatriks(m1);
 
     CopyMatriks(m1, &m2);
     printf("Copy of Matrix :\n");
-    DisplayMatriks(m2);
+    DisplayCharMatriks(m2);
 
     return 0;
 }

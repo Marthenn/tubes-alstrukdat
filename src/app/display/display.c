@@ -72,21 +72,23 @@ void Help(){
     printf("    Merebus suatu bahan makanan\n");
     printf("11. KULKAS\n");
     printf("    Mengakses kulkas\n");
-    printf("11. WAIT x y\n");
+    printf("12. WAIT x y\n");
     printf("    Menunggu selama x jam dan y menit\n");
-    printf("12. UNDO\n");
+    printf("13. UNDO\n");
     printf("    Membatalkan perintah terakhir\n");
-    printf("13. REDO\n");
+    printf("14. REDO\n");
     printf("    Melakukan perintah yang dibatalkan\n");
-    printf("14. CATALOG\n");
+    printf("15. CATALOG\n");
     printf("    Melihat daftar bahan makanan yang tersedia\n");
-    printf("15. COOKBOOK\n");
+    printf("16. COOKBOOK\n");
     printf("    Melihat daftar resep yang tersedia\n");
-    printf("16. INVENTORY\n");
+    printf("17. INVENTORY\n");
     printf("    Melihat bahan makanan yang ada di inventory\n");
-    printf("17. HELP\n");
+    printf("18. REKOMENDASI\n");
+    printf("    Melihat rekomendasi makanan yang dapat dibuat\n");
+    printf("19. HELP\n");
     printf("    Menampilkan semua perintah yang tersedia\n");
-    printf("18. EXIT\n");
+    printf("20. EXIT\n");
     printf("    Keluar dari simulasi\n");
 }
 

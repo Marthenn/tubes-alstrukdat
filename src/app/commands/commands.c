@@ -596,7 +596,7 @@ void resetState(Simulator* simulator, Record record, Map *map, ListStatik foods)
     CopyListDinElType(record.KulkasDel, &l);
     for(i = 0; i < ListDinElTypeLength(l); i++)
     {
-        printf("undo idx : %d", l.buffer[i].val.mk.idx);
+        // printf("undo idx : %d", l.buffer[i].val.mk.idx);
         PutFood(simulator, l.buffer[i].val.mk.makanan, l.buffer[i].val.mk.kiriAtas.x, l.buffer[i].val.mk.kiriAtas.y, false, foods, false, l.buffer[i].val.mk.idx);
     }
     
@@ -717,7 +717,7 @@ void GetListChanges (Simulator *simulator, ListDinElType *addChanges, ListDinElT
             {
                 if (prevListRef.buffer[i].val.mk.idx != currentListRef.buffer[i].val.mk.idx)
                 {
-                    printf("idx saat found :%d\n", prevListRef.buffer[i].val.mk.idx);
+                    // printf("idx saat found :%d\n", prevListRef.buffer[i].val.mk.idx);
                     found = true;
                 }
 
@@ -728,7 +728,7 @@ void GetListChanges (Simulator *simulator, ListDinElType *addChanges, ListDinElT
             }
 
             val =  prevListRef.buffer[i];
-            printf("idx undo now :%d\n", val.val.mk.idx);
+            // printf("idx undo now :%d\n", val.val.mk.idx);
             InsertLastListDinElType(delChanges, val);
             
         }

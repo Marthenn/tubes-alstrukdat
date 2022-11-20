@@ -46,9 +46,7 @@ int main() {
 
     puts("Hapus makanan dengan ID 0");
     DeleteMakanan(&sim, 0);
-    DisplayPQ(sim.Inventory);
-    
-    puts("\nTest lain : ");
+    DisplayPQ(sim.Inventory); puts("");
 
     InsertMakanan(&sim, 0, 3);
     InsertMakanan(&sim, 1, 5);
@@ -56,11 +54,31 @@ int main() {
 
     printf("Waktu = ");
     CetakWaktuJJMM(GetTime(&sim));printf("\n");
-    DisplayInventory(sim);
+
     TakeTime(&sim, 0, 0, 7, foods);
     printf("Waktu = ");
     CetakWaktuJJMM(GetTime(&sim));printf("\n");
-    DisplayInventory(sim);
+    _assert(GetTime(&sim) == 12, "TIME 1");
+
+    ListDinElType notif;
+    notif = GetNotif(&sim);
+    puts("Notifikasi:");
+    PrintListDinElType(notif); printf("\n");
+
+    printf("\nFungsi terkait kulkas:\n");
+    Makanan kentang;
+    ListStatik ls;
+    CreateListStatik(&ls);
+    ElType el;
+    el = NewElType(3, (union Data){.m = kentang});
+    ListInsertAt(&ls, el, 0);
+    CreatePoint(&p, 3, 3);
+    CreateMakanan(&kentang, 1, NewWord("Kentang", 7), 1800, 10, NewWord("Chop", 4), p, 4, 3);
+    printf("Menaruh makanan di posisi (3,3) sampai (7,6)\n");
+    _assert(IsKulkasEmpty(sim), "KULKAS EMPTY 1");
+    PutFood(&sim, kentang, 3, 3, 0, ls, 1, 1);
+    //DisplayIntMatriks(sim.Kulkas);
+    _assert(!IsKulkasEmpty(sim), "KULKAS EMPTY 2");
     
     printf("Seluruh tes berhasil dijalankan.\n");
 
